@@ -1,7 +1,7 @@
 #ifndef SERVER_H_INCLUDE
 #define SERVER_H_INCLUDE
 
-#include "types.h"
+#include "tuxnet/string.h"
 
 namespace tuxnet
 {
@@ -25,7 +25,7 @@ namespace tuxnet
              *
              * @param listen_addresses array with address:port pairs.
              */
-            virtual void listen(string_vector listen_addresses);
+            virtual void listen(str_vector listen_addresses);
     };
 }
 

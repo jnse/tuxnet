@@ -8,8 +8,9 @@
 #include <string>
 #include <stdexcept>
 #include <system_error>
-#include "tuxnet/types.h"
+#include "tuxnet/string.h"
 #include "tuxnet/server.h"
+#include "tuxnet/log.h"
 
 namespace tuxnet
 {
@@ -25,9 +26,10 @@ namespace tuxnet
     }
 
     // Start listening for connections.
-    void server::listen(string_vector listen_addresses)
+    void server::listen(str_vector listen_addresses)
     {
-
+        log::debug("server::listen"); 
+        return;
         unsigned short port = 80;
         char* ip_address = nullptr;
         int domain = AF_INET; 
@@ -35,10 +37,15 @@ namespace tuxnet
         int fd = 0;
         int result = 0;
 
-        for (string_vector_it it = listen_addresses.begin();
+        for (auto it = listen_addresses.begin();
             it != listen_addresses.end() ; ++it)
         {
-            /// TODO parse address/port
+            // Parse IP and port.
+            str_vector ip_and_port = str_split((*it),":",2);
+            if (ip_and_port.size() != 2)
+            {
+
+            }
 
             // Look up address.
             in_addr ip_address_inaddr = {};
