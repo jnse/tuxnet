@@ -28,10 +28,8 @@ namespace tuxnet
     // Start listening for connections.
     void server::listen(str_vector listen_addresses)
     {
-        log::debug("server::listen"); 
-        return;
         unsigned short port = 80;
-        char* ip_address = nullptr;
+        const char* ip_address = nullptr;
         int domain = AF_INET; 
         int type = SOCK_STREAM;
         int fd = 0;
@@ -44,9 +42,11 @@ namespace tuxnet
             str_vector ip_and_port = str_split((*it),":",2);
             if (ip_and_port.size() != 2)
             {
-
+                log::get()->error("Invalid IP/port pair specified: "+(*it));
+                return;
             }
-
+            ip_address = ip_and_port[0].c_str();
+            port = std::stoi(ip_and_port[1]);
             // Look up address.
             in_addr ip_address_inaddr = {};
             result = inet_aton(ip_address, &ip_address_inaddr);
@@ -59,17 +59,17 @@ namespace tuxnet
                 errstr += " (";
                 errstr += strerror(errno);
                 errstr += ")";
-                throw std::system_error(2, std::generic_category(), errstr); 
+                log::get()->error(errstr);
+                return;
             }
-
             /// \TODO ipv6 support.
             /// \TODO UDP support.
             // Look up protocol number.
             protoent* protocol = getprotobyname("TCP");
             if (protocol == nullptr)
             {
-                throw std::system_error(1, std::generic_category(),
-                    "Could not get TCP protocol number.");
+                log::get()->error("Could not get TCP protocol number.");
+                return;
             }
             // Create socket.
             fd = socket(domain, SOCK_STREAM, protocol->p_proto);
@@ -80,14 +80,14 @@ namespace tuxnet
                 errstr += " (";
                 errstr += strerror(errno);
                 errstr += ")";
-                throw std::system_error(2, std::generic_category(), errstr);
+                log::get()->error(errstr);
+                return;
             }
             // Create a sockaddr structure representing the bind address.
            sockaddr_in bind_address = {};
             bind_address.sin_family = domain;
             bind_address.sin_port = htons(port);
             bind_address.sin_addr.s_addr = inet_netof(ip_address_inaddr);
-
             // Bind socket.
             result = bind(fd, 
                 const_cast<const sockaddr*>(
@@ -95,6 +95,13 @@ namespace tuxnet
                 ), 
                 sizeof(bind_address)
             );
+            if (result == -1)
+            {
+                log::get()->error("Could not bind socket.");
+                return;
+            }
+            // Listen on socket.
+            ::listen(fd, 5); /// @TODO : configurable backlog with net.core.somaxconn as default.
         }
     }
     
