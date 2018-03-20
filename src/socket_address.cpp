@@ -3,10 +3,60 @@
 namespace tuxnet
 {
 
+    /*************************************************************************
+     * socket_address                                                        *
+     *************************************************************************/
+
+    // Constructors / destructor. ---------------------------------------------
+
+    // Default/empty constructor.
+    socket_address::socket_address() : m_proto(L3_PROTO_NONE)
+    {
+
+    }
+
+    // Copy constructor.
+    socket_address::socket_address(const socket_address& other)
+    {
+        m_proto = other.m_proto;
+    }
+
+    // Constructor with initializing protocol.
+    socket_address::socket_address(const layer3_protocol proto)
+    {
+        m_proto = proto;
+    }
+
+    // Destructor.
+    socket_address::~socket_address()
+    {
+
+    }
+
+    // Setters. ---------------------------------------------------------------
+
+    // Sets socket address layer 3 protocol.
+    void socket_address::set_protocol(const layer3_protocol proto)
+    {
+        m_proto = proto;
+    }
+
+    // Getters. ---------------------------------------------------------------
+
+    const layer3_protocol socket_address::get_protocol() const
+    {
+        return m_proto;
+    }
+
+    /*************************************************************************
+     * ip4_socket_address                                                    *
+     *************************************************************************/
+
     // Constructors. ----------------------------------------------------------
 
     // Default/empty constructor.
-    ip4_socket_address::ip4_socket_address() : m_port(0)
+    ip4_socket_address::ip4_socket_address() : m_port(0), 
+        socket_address(L3_PROTO_IP4)
     {
 
     }
@@ -16,13 +66,16 @@ namespace tuxnet
     {
         m_ip = other.m_ip;
         m_port = other.m_port;
+        socket_address(L3_PROTO_IP4);
     }
 
     // Constructor with IPv4 IP and port.
-    ip4_socket_address::ip4_socket_address(const ip4_address& ip, in_port_t port)
+    ip4_socket_address::ip4_socket_address(const ip4_address& ip, 
+        in_port_t port)
     {
         m_ip = ip;
         m_port = port;
+        socket_address(L3_PROTO_IP4);
     }
 
     // Constructor with sockaddr_in struct.
@@ -31,6 +84,7 @@ namespace tuxnet
         ip4_socket_address();
         m_ip.set(saddr.sin_addr);
         m_port = saddr.sin_port;
+        socket_address(L3_PROTO_IP4);
     }
 
     // Setters. ---------------------------------------------------------------

@@ -1,19 +1,80 @@
 #ifndef SOCKET_ADDRESS_H_INCLUDE
 #define SOCKET_ADDRESS_H_INCLUDE
 
+#include <vector>
 #include <netinet/in.h>
+#include "tuxnet/protocol.h"
 #include "tuxnet/ip_address.h"
 
 namespace tuxnet
 {
 
     /**
-     * Class to hold an IPv4 address/port pair.
+     * Base class for IPv4 and IPv6 socket address objects.
      */
-    class ip4_socket_address
+    class socket_address
     {
 
-        // Private member functions. ------------------------------------------
+        // Private member variables. ------------------------------------------
+        
+        /// Stores the layer3 protocol of this socket address.
+        layer3_protocol m_proto;
+
+        public:
+
+            // Constructors / destructor. -------------------------------------
+
+            /// Default/empty constructor.
+            socket_address();
+
+            /**
+             * Copy constructor.
+             * @param other : socket_address to be copied into new object.
+             */
+            socket_address(const socket_address& other);
+
+            /** 
+             * Constructor with initializing protocol.
+             * @param proto : Layer3 protocol to set for this socket address.
+             */
+            socket_address(const layer3_protocol proto);
+
+            /// Destructor.
+            virtual ~socket_address();
+
+            // Setters. -------------------------------------------------------
+
+            /**
+             * Set layer3 protocol.
+             * @param proto Layer 3 protocol to use for this socket address.
+             */
+            void set_protocol(const layer3_protocol proto);
+
+            // Getters. -------------------------------------------------------
+
+            /**
+             * Get layer3 protocol.
+             * @returns Returns the layer3 protocol used by this 
+             *          socket address object.
+             */
+            const layer3_protocol get_protocol() const;
+
+    };
+
+    /*************************************************************************/
+
+    /// Collection of socket_address objects.
+    typedef std::vector<socket_address> socket_addresses;
+
+    /*************************************************************************/
+    
+    /**
+     * Class to hold an IPv4 address/port pair.
+     */
+    class ip4_socket_address : public socket_address
+    {
+
+        // Private member variables. ------------------------------------------
 
         // Internal storage of ipv4 address.
         ip4_address m_ip;
@@ -81,6 +142,17 @@ namespace tuxnet
             const sockaddr_in get_sockaddr_in() const;
 
     };
+
+    /*************************************************************************/
+    
+    /**
+     * IPV6 socket_address object (unimplemented).
+     */
+    class ip6_socket_address : public socket_address
+    {
+        /// @TODO Add IPv6 support.
+    };
+
 }
 
 #endif

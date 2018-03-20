@@ -84,7 +84,7 @@ namespace tuxnet
                 return;
             }
             // Create a sockaddr structure representing the bind address.
-           sockaddr_in bind_address = {};
+            sockaddr_in bind_address = {};
             bind_address.sin_family = domain;
             bind_address.sin_port = htons(port);
             bind_address.sin_addr.s_addr = inet_netof(ip_address_inaddr);

@@ -6,14 +6,14 @@ namespace tuxnet
     // Constructors. ----------------------------------------------------------
 
     // Default/empty constructor.
-    ip4_socket::ip4_socket()
+    ip4_socket::ip4_socket() : m_proto(L4_PROTO_NONE)
     {
     }
 
     // Constructor with local/remote saddrs.
     ip4_socket::ip4_socket(const ip4_socket_address& local, 
-        const ip4_socket_address& remote) : m_local_saddr(local), 
-        m_remote_saddr(remote)
+        const ip4_socket_address& remote, layer4_protocol proto) : 
+        m_local_saddr(local), m_remote_saddr(remote), m_proto(proto)
     {
     }
 
@@ -31,6 +31,12 @@ namespace tuxnet
         m_remote_saddr = saddr;
     }
 
+    // Sets the protocol to be used for this socket.
+    void ip4_socket::set_proto(layer4_protocol proto)
+    {
+        m_proto = proto;
+    }
+
     // Getters. ---------------------------------------------------------------
 
     // Gets ip/port information for local side of the connection.
@@ -43,6 +49,12 @@ namespace tuxnet
     const ip4_socket_address& ip4_socket::get_remote() const
     {
         return m_remote_saddr;
+    }
+
+    // Gets the protocol used for this socket.
+    const layer4_protocol ip4_socket::get_proto() const
+    {
+        return m_proto;
     }
 
 }

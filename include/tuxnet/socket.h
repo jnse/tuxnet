@@ -6,6 +6,7 @@
 #define SOCKET_H_INCLUDE
 
 #include "tuxnet/socket_address.h"
+#include "tuxnet/protocol.h"
 
 namespace tuxnet
 {
@@ -24,6 +25,8 @@ namespace tuxnet
         /// Stores the remote address/port pair.
         ip4_socket_address m_remote_saddr;
 
+        /// Stores the socket protocol.
+        layer4_protocol m_proto;
 
         public:
 
@@ -38,9 +41,10 @@ namespace tuxnet
              *                for the local end of the connection.
              * @param remote : Socket address object with ip/port information 
              *                 for the remote end of the connection.
+             * @param proto : Protocol to be used for the socket.
              */
             ip4_socket(const ip4_socket_address& local, 
-                const ip4_socket_address& remote);
+                const ip4_socket_address& remote, layer4_protocol proto);
 
             // Setters. -------------------------------------------------------
 
@@ -58,6 +62,12 @@ namespace tuxnet
              */
             void set_remote(const ip4_socket_address& saddr);
 
+            /**
+             * Sets the protocol to be used for this socket.
+             * @param proto : Protocol to be used for this socket.
+             */
+            void set_proto(layer4_protocol proto);
+
             // Getters. -------------------------------------------------------
 
             /**
@@ -74,6 +84,12 @@ namespace tuxnet
              */
             const ip4_socket_address& get_remote() const;
 
+            /**
+             * Gets the protocol used for this socket.
+             * @return Returns the protocol used for this socket.
+             */
+            const layer4_protocol get_proto() const;
+            
     };
 
 }
