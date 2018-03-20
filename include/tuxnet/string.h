@@ -21,6 +21,7 @@ namespace tuxnet
      **/
     str_vector str_split(const std::string& str, 
         const std::string& delim, int max_elem=-1);
+
 }
 
 #endif

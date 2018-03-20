@@ -21,62 +21,64 @@ namespace tuxnet
         // Internal storage of port number.
         in_port_t m_port;
 
-        // Constructors. ------------------------------------------------------
+        public:
 
-        /// Default/empty constructor.
-        ip4_socket_address();
+            // Constructors. --------------------------------------------------
 
-        /// Copy constructor.
-        ip4_socket_address(const ip4_socket_address& other);
+            /// Default/empty constructor.
+            ip4_socket_address();
 
-        /// Constructor with IPv4 IP and port.
-        ip4_socket_address(const ip4_address& ip, in_port_t port);
+            /// Copy constructor.
+            ip4_socket_address(const ip4_socket_address& other);
 
-        /// Constructor with sockaddr_in struct.
-        ip4_socket_address(const sockaddr_in& saddr);
+            /// Constructor with IPv4 IP and port.
+            ip4_socket_address(const ip4_address& ip, in_port_t port);
 
-        // Setters. -----------------------------------------------------------
+            /// Constructor with sockaddr_in struct.
+            ip4_socket_address(const sockaddr_in& saddr);
 
-        /**
-         * Sets the IPV4 address and port of this socket_address object using
-         * a populated sockadrr_in struct.
-         */
-        void set(const sockaddr_in& saddr);
+            // Setters. -------------------------------------------------------
 
-        /**
-         * Sets the IPv4 address of this socket_address object.
-         *
-         * @param ip : IPv4 address to set.
-         */
-        void set_ip(const ip4_address& ip);
+            /**
+             * Sets the IPV4 address and port of this socket_address object using
+             * a populated sockadrr_in struct.
+             */
+            void set(const sockaddr_in& saddr);
 
-        /** 
-         * Sets the port number of this socket_address object.
-         *
-         * @param port : Port number to set.
-         */
-        void set_port(in_port_t port);
+            /**
+             * Sets the IPv4 address of this socket_address object.
+             *
+             * @param ip : IPv4 address to set.
+             */
+            void set_ip(const ip4_address& ip);
 
-        // Getters. -----------------------------------------------------------
+            /** 
+             * Sets the port number of this socket_address object.
+             *
+             * @param port : Port number to set.
+             */
+            void set_port(in_port_t port);
+
+            // Getters. -------------------------------------------------------
         
-        /**
-         * Gets the IPv4 address associated with this socket_address object.
-         *
-         * @return Returns the IPv4 address associated with this object.
-         */
-        const ip4_address& get_ip() const;
+            /**
+             * Gets the IPv4 address associated with this socket_address object.
+             *
+             * @return Returns the IPv4 address associated with this object.
+             */
+            const ip4_address& get_ip() const;
 
-        /**
-         * Gets the port number associated with this socket_address object.
-         *
-         * @return Returns the port number associated with this object.
-         */
-        const in_port_t get_port() const;
+            /**
+             * Gets the port number associated with this socket_address object.
+             *
+             * @return Returns the port number associated with this object.
+             */
+            const in_port_t get_port() const;
 
-        /**
-         * Gets a sockaddr_in struct populated with the IP address and port.
-         */
-        const sockaddr_in get_sockaddr_in() const;
+            /**
+             * Gets a sockaddr_in struct populated with the IP address and port.
+             */
+            const sockaddr_in get_sockaddr_in() const;
 
     };
 }
