@@ -70,11 +70,10 @@ namespace tuxnet
     }
 
     // Constructor with IPv4 IP and port.
-    ip4_socket_address::ip4_socket_address(const ip4_address& ip, 
-        in_port_t port)
+    ip4_socket_address::ip4_socket_address(const ip4_address& ip, int port)
     {
         m_ip = ip;
-        m_port = port;
+        m_port = htons(port);
         socket_address(L3_PROTO_IP4);
     }
 

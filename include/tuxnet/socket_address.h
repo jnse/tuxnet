@@ -93,7 +93,7 @@ namespace tuxnet
             ip4_socket_address(const ip4_socket_address& other);
 
             /// Constructor with IPv4 IP and port.
-            ip4_socket_address(const ip4_address& ip, in_port_t port);
+            ip4_socket_address(const ip4_address& ip, int port);
 
             /// Constructor with sockaddr_in struct.
             ip4_socket_address(const sockaddr_in& saddr);

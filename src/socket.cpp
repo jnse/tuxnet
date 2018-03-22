@@ -8,6 +8,7 @@ namespace tuxnet
     // Default/empty constructor.
     ip4_socket::ip4_socket() : m_proto(L4_PROTO_NONE)
     {
+        
     }
 
     // Constructor with local/remote saddrs.
