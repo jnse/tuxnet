@@ -11,35 +11,88 @@
 
 namespace tuxnet
 {
+    /*************************************************************************
+     * ip_address                                                            *
+     *************************************************************************/
+
+    // Constructor / destructor.-----------------------------------------------
+
+    // Empty constructor.
+    ip_address::ip_address() : m_proto(L3_PROTO_NONE)
+    {
+
+    }
+
+    // Constructor with protocol constructor.
+    ip_address::ip_address(layer3_protocol proto) : m_proto(proto)
+    {
+
+    }
+
+    // Copy constructor.
+    ip_address::ip_address(const ip_address& other)
+    {
+
+        m_proto = other.m_proto;
+    }
+
+    // Destructor.
+    ip_address::~ip_address()
+    {
+
+    }
+
+    // Setters. ---------------------------------------------------------------
+
+    // Sets the layer3 protocol
+    void ip_address::set_protocol(const layer3_protocol& proto)
+    {
+        m_proto = proto;
+    }
+
+    // Getters. ---------------------------------------------------------------
+
+    const layer3_protocol& ip_address::get_protocol() const
+    {
+        return m_proto;
+    }
+
+    /*************************************************************************
+     * ip4_address                                                           *
+     *************************************************************************/
 
     // Constructors. ----------------------------------------------------------
 
     // Default/blank constructor.
-    ip4_address::ip4_address() : m_addr({})
+    ip4_address::ip4_address() : m_addr({}), ip_address(L3_PROTO_IP4)
     {
     }
 
     // Copy constructor.
     ip4_address::ip4_address(const ip4_address& other)
     {
+        ip_address(L3_PROTO_IP4);
         m_addr = other.m_addr;
     }
 
     // Constructor with digits.
     ip4_address::ip4_address(uint8_t a, uint8_t b, uint8_t c, uint8_t d)
     {
+        ip_address(L3_PROTO_IP4);
         set(a, b, c, d);
     }
 
     // Constructor with string.
     ip4_address::ip4_address(const std::string& ip_address)
     {
+        tuxnet::ip_address(L3_PROTO_IP4);
         set(ip_address);
     }
 
     // Constructor with in_addr.
     ip4_address::ip4_address(const in_addr& ip_address)
     {
+        tuxnet::ip_address(L3_PROTO_IP4);
         m_addr = ip_address;
     }
 

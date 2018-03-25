@@ -9,9 +9,77 @@
 #include <cstdint>
 #include <netinet/in.h>
 #include <string>
+#include "tuxnet/protocol.h"
 
 namespace tuxnet
 {
+
+    /**
+     * Base class for IPv4 and IPv6 addresses.
+     */
+    class ip_address
+    {
+
+        /// Stores IP protocol.
+        layer3_protocol m_proto;
+
+        public:
+
+            // Constructor/destructor. ----------------------------------------
+
+            // Default constructor.
+            ip_address();
+
+            /** 
+             * Constructor with protocol.
+             *
+             * @param proto : Layer 3 protocol.
+             */
+            ip_address(layer3_protocol proto);
+    
+            /**
+             * Copy constructor.
+             *
+             * @param other : ip_address object to be copied into new object.
+             */
+            ip_address(const ip_address& other);
+
+            /// Destructor.
+            virtual ~ip_address();
+        
+            // Setters. -------------------------------------------------------
+
+            /**
+             * Sets the IP address.
+             *
+             * @param ip_address IP address as string.
+             */
+            virtual void set(const std::string& ip_address){ };
+
+            /**
+             * Sets the layer3 protocol.
+             *
+             * @param proto Layer-3 protocol.
+             */
+            void set_protocol(const layer3_protocol& proto);
+
+            // Getters. -------------------------------------------------------
+
+            /**
+             * Gets the IP address.
+             *
+             * @return Returns the IP address as string.
+             */
+            virtual std::string const as_string() const{ };
+
+            /**
+             * Gets the layer3 protocol.
+             *
+             * @return Returns the layer3 protocol.
+             */
+            const layer3_protocol& get_protocol() const;
+
+    };
 
     /**
      * Stores an IPv4 address.
@@ -25,7 +93,7 @@ namespace tuxnet
      * should be used. The other getter/setters convert to/from
      * in_addr.
      */
-    class ip4_address
+    class ip4_address : public ip_address
     {
 
         // Private member variables. ------------------------------------------
@@ -92,6 +160,8 @@ namespace tuxnet
              * @param ip_address IP address as in_addr structure.
              */
             void set(const in_addr& ip_address);
+
+            // Getters. -------------------------------------------------------
 
             /**
              * Gets the IP address.
