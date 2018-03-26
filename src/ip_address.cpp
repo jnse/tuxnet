@@ -69,30 +69,30 @@ namespace tuxnet
     }
 
     // Copy constructor.
-    ip4_address::ip4_address(const ip4_address& other)
+    ip4_address::ip4_address(const ip4_address& other) : 
+        ip_address(L3_PROTO_IP4)
     {
-        ip_address(L3_PROTO_IP4);
         m_addr = other.m_addr;
     }
 
     // Constructor with digits.
-    ip4_address::ip4_address(uint8_t a, uint8_t b, uint8_t c, uint8_t d)
+    ip4_address::ip4_address(uint8_t a, uint8_t b, uint8_t c, uint8_t d) :
+        ip_address(L3_PROTO_IP4)
     {
-        ip_address(L3_PROTO_IP4);
         set(a, b, c, d);
     }
 
     // Constructor with string.
-    ip4_address::ip4_address(const std::string& ip_address)
+    ip4_address::ip4_address(const std::string& ip_address) :
+        tuxnet::ip_address(L3_PROTO_IP4)
     {
-        tuxnet::ip_address(L3_PROTO_IP4);
         set(ip_address);
     }
 
     // Constructor with in_addr.
-    ip4_address::ip4_address(const in_addr& ip_address)
+    ip4_address::ip4_address(const in_addr& ip_address) : 
+        tuxnet::ip_address(L3_PROTO_IP4)
     {
-        tuxnet::ip_address(L3_PROTO_IP4);
         m_addr = ip_address;
     }
 

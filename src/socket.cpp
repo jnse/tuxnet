@@ -1,3 +1,5 @@
+#include <string>
+#include <iostream>
 #include <string.h>
 #include "tuxnet/log.h"
 #include "tuxnet/socket.h"
@@ -41,24 +43,54 @@ namespace tuxnet
         m_local_saddr = saddr;
         if (m_local_saddr.get_protocol() == L3_PROTO_IP4)
         {
-            return ip4_bind(); 
+            return m_ip4_bind(); 
         }
         else if (m_local_saddr.get_protocol() == L3_PROTO_IP6)
         {
-            return ip6_bind();
+            return m_ip6_bind();
         }
         log::get()->error(std::string("Could not bind socket")
             + "(invalid/unset socket_address layer-3 protocol.)");
         return false;
     }
 
+    // Starts listening on given address/port pair.
+    bool socket::listen(const socket_address& saddr)
+    {
+        // Bind the socket.
+        if (bind(saddr) != true) return false;
+        return true;
+        /**
+         * @TODO : configurable backlog with net.core.somaxconn as default.
+         */
+        if (::listen(m_fd,5) == -1)
+        {
+            std::string errstr = "Could not listen on socket (error ";
+            errstr += std::to_string(errno) + " : ";
+            errstr += strerror(errno);
+            errstr += ").";
+            log::get()->error(errstr);
+            return false;
+        }
+        return true;
+    }
+
     // Private methods. -------------------------------------------------------
 
     // Bind socket to an IPv4 address.
-    bool socket::ip4_bind()
+    bool socket::m_ip4_bind()
     {
-        const sockaddr_in saddr = dynamic_cast<const ip4_socket_address*>(
-            &m_local_saddr)->get_sockaddr_in();
+        if (m_local_saddr.get_protocol() == L3_PROTO_NONE)
+        {
+            log::get()->error("No layer-3 protocol set for socket_address.");
+            return false;
+        }
+        const ip4_socket_address* p4saddr = dynamic_cast<
+            const ip4_socket_address*>(&m_local_saddr);
+        std::cout << std::to_string((long)p4saddr) << std::endl;
+        return true;
+        const sockaddr_in saddr = p4saddr->get_sockaddr_in();
+        return true;
         int result = ::bind(m_fd, reinterpret_cast<const sockaddr*>(&saddr), 
             sizeof(saddr));
         if (result == -1)
@@ -75,7 +107,7 @@ namespace tuxnet
     }
 
     // Bind socket to an IPv6 address.
-    bool socket::ip6_bind()
+    bool socket::m_ip6_bind()
     {
         /// @TODO : implement ipv6
     }

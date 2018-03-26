@@ -5,6 +5,7 @@
 #ifndef SOCKET_H_INCLUDE
 #define SOCKET_H_INCLUDE
 
+#include <vector>
 #include "tuxnet/socket_address.h"
 #include "tuxnet/protocol.h"
 
@@ -20,10 +21,10 @@ namespace tuxnet
         // Private member variables. ------------------------------------------
 
         /// Stores the local address/port pair.
-        socket_address m_local_saddr;
+        socket_address* const m_local_saddr;
 
         /// Stores the remote address/port pair.
-        socket_address m_remote_saddr;
+        socket_address* const m_remote_saddr;
 
         /// Stores the socket protocol.
         layer4_protocol m_proto;
@@ -34,11 +35,11 @@ namespace tuxnet
         // Private member functions. ------------------------------------------
 
         /// Binds the socket to an ipv4 address.
-        bool ip4_bind();
+        bool m_ip4_bind();
 
         /// Binds the socket to an ipv6 address.
         /// \@TODO add ipv6 support.
-        bool ip6_bind();
+        bool m_ip6_bind();
 
         public:
 
@@ -77,14 +78,26 @@ namespace tuxnet
             /**
              * Binds the socket to an address/port pair.
              *
-             * Automatically called by listen().
+             * This function is automatically called by listen(), and 
+             * connect(), so you shouldn't have to invoke it manually.
              *
              * @param saddr : socket_address object containing address/port.
              * @return Returns true on success, false on failure.
              */
             bool bind(const socket_address& saddr);
 
+            /**
+             * Listens on an address/port pair.
+             *
+             * @param saddr : socket_address object containing address/port.
+             * @return Returns true on success, false on failure.
+             */
+            bool listen(const socket_address& saddr);
+
     };
+
+    /// Collection of sockets.
+    typedef std::vector<tuxnet::socket*> sockets;
 
 }
 

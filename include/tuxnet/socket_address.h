@@ -15,10 +15,12 @@ namespace tuxnet
     class socket_address
     {
 
-        // Private member variables. ------------------------------------------
+        // Protected member variables. ----------------------------------------
         
-        /// Stores the layer3 protocol of this socket address.
-        layer3_protocol m_proto;
+        protected:
+
+            /// Stores the layer3 protocol of this socket address.
+            layer3_protocol m_proto;
 
         public:
 
@@ -37,7 +39,7 @@ namespace tuxnet
              * Constructor with initializing protocol.
              * @param proto : Layer3 protocol to set for this socket address.
              */
-            socket_address(const layer3_protocol proto);
+            socket_address(const layer3_protocol& proto);
 
             /// Destructor.
             virtual ~socket_address();
