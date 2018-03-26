@@ -1,3 +1,5 @@
+#include <string.h>
+#include "tuxnet/log.h"
 #include "tuxnet/socket.h"
 
 namespace tuxnet
@@ -5,57 +7,77 @@ namespace tuxnet
 
     // Constructors. ----------------------------------------------------------
 
-    // Default/empty constructor.
-    ip4_socket::ip4_socket() : m_proto(L4_PROTO_NONE)
-    {
-        
-    }
-
     // Constructor with local/remote saddrs.
-    ip4_socket::ip4_socket(const ip4_socket_address& local, 
-        const ip4_socket_address& remote, layer4_protocol proto) : 
-        m_local_saddr(local), m_remote_saddr(remote), m_proto(proto)
+    socket::socket(const layer4_protocol& proto) : m_proto(proto), m_fd(0)
     {
-    }
 
-    // Setters. ---------------------------------------------------------------
-
-    // Sets ip/port information for local side of the connection.
-    void ip4_socket::set_local(const ip4_socket_address& saddr)
-    {
-        m_local_saddr = saddr;
-    }
-
-    // Sets ip/port information for remote side of the connection.
-    void ip4_socket::set_remote(const ip4_socket_address& saddr)
-    {
-        m_remote_saddr = saddr;
-    }
-
-    // Sets the protocol to be used for this socket.
-    void ip4_socket::set_proto(layer4_protocol proto)
-    {
-        m_proto = proto;
     }
 
     // Getters. ---------------------------------------------------------------
 
     // Gets ip/port information for local side of the connection.
-    const ip4_socket_address& ip4_socket::get_local() const
+    const socket_address& socket::get_local() const
     {
         return m_local_saddr;
     }
 
     // Gets ip/port information for remote side of the connection.
-    const ip4_socket_address& ip4_socket::get_remote() const
+    const socket_address& socket::get_remote() const
     {
         return m_remote_saddr;
     }
 
     // Gets the protocol used for this socket.
-    const layer4_protocol ip4_socket::get_proto() const
+    const layer4_protocol socket::get_proto() const
     {
         return m_proto;
+    }
+
+    // Public methods. --------------------------------------------------------
+
+    // Binds the socket to an address/port pair.
+    bool socket::bind(const socket_address& saddr)
+    {
+        m_local_saddr = saddr;
+        if (m_local_saddr.get_protocol() == L3_PROTO_IP4)
+        {
+            return ip4_bind(); 
+        }
+        else if (m_local_saddr.get_protocol() == L3_PROTO_IP6)
+        {
+            return ip6_bind();
+        }
+        log::get()->error(std::string("Could not bind socket")
+            + "(invalid/unset socket_address layer-3 protocol.)");
+        return false;
+    }
+
+    // Private methods. -------------------------------------------------------
+
+    // Bind socket to an IPv4 address.
+    bool socket::ip4_bind()
+    {
+        const sockaddr_in saddr = dynamic_cast<const ip4_socket_address*>(
+            &m_local_saddr)->get_sockaddr_in();
+        int result = ::bind(m_fd, reinterpret_cast<const sockaddr*>(&saddr), 
+            sizeof(saddr));
+        if (result == -1)
+        {
+            std::string errstr = "Could not bind socket (error ";
+            errstr += std::to_string(errno);
+            errstr += " : ";
+            errstr += strerror(errno);
+            errstr += ").";
+            log::get()->error(errstr);
+            return false;
+        }
+        return true;
+    }
+
+    // Bind socket to an IPv6 address.
+    bool socket::ip6_bind()
+    {
+        /// @TODO : implement ipv6
     }
 
 }
