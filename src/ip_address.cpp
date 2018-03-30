@@ -107,7 +107,7 @@ namespace tuxnet
     // Sets the IP address using a string.
     void ip4_address::set(const std::string& ip_address)
     {
-        int errval = inet_aton(ip_address.c_str(), &m_addr);
+        int errval = inet_pton(AF_INET, ip_address.c_str(), &m_addr);
         if (errval != 1)
         {
             std::string errstr = "The address ";

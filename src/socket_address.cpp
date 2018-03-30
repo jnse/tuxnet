@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string.h>
 #include "tuxnet/socket_address.h"
 
 namespace tuxnet
@@ -126,8 +127,10 @@ namespace tuxnet
     const sockaddr_in ip4_socket_address::get_sockaddr_in() const
     {
         sockaddr_in result = {};
+        result.sin_family = AF_INET;
         result.sin_addr = m_ip.as_in_addr();
         result.sin_port = m_port;
+        memset(result.sin_zero,0,8); 
         return result;
     }
 
