@@ -1,6 +1,8 @@
 #ifndef PROTOCOL_H_INCLUDE
 #define PROTOCOL_H_INCLUDE
 
+#include <netdb.h>
+
 namespace tuxnet
 {
 
@@ -19,6 +21,15 @@ namespace tuxnet
         L4_PROTO_TCP = 1,
         L4_PROTO_UDP = 2
     };
+
+    /**
+     * Gets a protocol number from a layer-4 protocol enum value.
+     *
+     * @param proto : Layer-4 protocol enum value.
+     * @return Returns pointer to result of a getprotobyname() call.
+     *
+     */
+    int layer4_to_proto(const layer4_protocol& proto);
 
 }
 

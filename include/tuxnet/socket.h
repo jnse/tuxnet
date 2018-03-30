@@ -21,10 +21,10 @@ namespace tuxnet
         // Private member variables. ------------------------------------------
 
         /// Stores the local address/port pair.
-        socket_address* const m_local_saddr;
+        const socket_address* m_local_saddr;
 
         /// Stores the remote address/port pair.
-        socket_address* const m_remote_saddr;
+        const socket_address* m_remote_saddr;
 
         /// Stores the socket protocol.
         layer4_protocol m_proto;
@@ -58,14 +58,14 @@ namespace tuxnet
              * @return Returns socket_address object containing ip/port 
              *         information for local end of the connection.
              */
-            const socket_address& get_local() const;
+            const socket_address* get_local() const;
 
             /**
              * Gets ip/port information for remote side of the connection.
              * @return Returns socket_address object containing ip/port 
              *         information for remote end of the connection.
              */
-            const socket_address& get_remote() const;
+            const socket_address* get_remote() const;
 
             /**
              * Gets the protocol used for this socket.
@@ -84,7 +84,7 @@ namespace tuxnet
              * @param saddr : socket_address object containing address/port.
              * @return Returns true on success, false on failure.
              */
-            bool bind(const socket_address& saddr);
+            bool bind(const socket_address* saddr);
 
             /**
              * Listens on an address/port pair.
@@ -92,7 +92,7 @@ namespace tuxnet
              * @param saddr : socket_address object containing address/port.
              * @return Returns true on success, false on failure.
              */
-            bool listen(const socket_address& saddr);
+            bool listen(const socket_address* saddr);
 
     };
 

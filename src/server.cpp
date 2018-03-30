@@ -1,3 +1,4 @@
+#include <iostream>
 #include <string.h>
 #include <errno.h>
 #include <sys/types.h>
@@ -28,20 +29,21 @@ namespace tuxnet
     }
 
     // Start listening for connections.
-    void server::listen(const socket_addresses& saddrs, const layer4_protocol& proto)
+    bool server::listen(const socket_addresses& saddrs, const layer4_protocol& proto)
     {
         int domain = AF_INET; 
         int type = SOCK_STREAM;
         int fd = 0;
         int result = 0;
-
+        bool err = false;
         for (auto it = saddrs.begin(); it != saddrs.end() ; ++it)
         {
             // Create socket and start listening.
             socket* sock = new socket(proto);
             // Listen on socket.
-            sock->listen((*it));
+            if (sock->listen(*it) != true) err = true;
         }
+        return !err;
     }
     
 }

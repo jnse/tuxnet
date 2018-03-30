@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <string>
 #include <iostream>
 #include <string.h>
@@ -10,21 +11,22 @@ namespace tuxnet
     // Constructors. ----------------------------------------------------------
 
     // Constructor with local/remote saddrs.
-    socket::socket(const layer4_protocol& proto) : m_proto(proto), m_fd(0)
+    socket::socket(const layer4_protocol& proto) : 
+        m_local_saddr(0), m_remote_saddr(0),m_proto(proto), m_fd(0)
     {
-
+        m_fd = ::socket(AF_INET, SOCK_STREAM, layer4_to_proto(proto));
     }
 
     // Getters. ---------------------------------------------------------------
 
     // Gets ip/port information for local side of the connection.
-    const socket_address& socket::get_local() const
+    const socket_address* socket::get_local() const
     {
         return m_local_saddr;
     }
 
     // Gets ip/port information for remote side of the connection.
-    const socket_address& socket::get_remote() const
+    const socket_address* socket::get_remote() const
     {
         return m_remote_saddr;
     }
@@ -38,14 +40,14 @@ namespace tuxnet
     // Public methods. --------------------------------------------------------
 
     // Binds the socket to an address/port pair.
-    bool socket::bind(const socket_address& saddr)
+    bool socket::bind(const socket_address* saddr)
     {
         m_local_saddr = saddr;
-        if (m_local_saddr.get_protocol() == L3_PROTO_IP4)
+        if (m_local_saddr->get_protocol() == L3_PROTO_IP4)
         {
             return m_ip4_bind(); 
         }
-        else if (m_local_saddr.get_protocol() == L3_PROTO_IP6)
+        else if (m_local_saddr->get_protocol() == L3_PROTO_IP6)
         {
             return m_ip6_bind();
         }
@@ -55,10 +57,10 @@ namespace tuxnet
     }
 
     // Starts listening on given address/port pair.
-    bool socket::listen(const socket_address& saddr)
+    bool socket::listen(const socket_address* saddr)
     {
         // Bind the socket.
-        if (bind(saddr) != true) return false;
+        if (socket::bind(saddr) != true) return false;
         return true;
         /**
          * @TODO : configurable backlog with net.core.somaxconn as default.
@@ -80,17 +82,15 @@ namespace tuxnet
     // Bind socket to an IPv4 address.
     bool socket::m_ip4_bind()
     {
-        if (m_local_saddr.get_protocol() == L3_PROTO_NONE)
+        if (m_local_saddr->get_protocol() == L3_PROTO_NONE)
         {
             log::get()->error("No layer-3 protocol set for socket_address.");
             return false;
         }
         const ip4_socket_address* p4saddr = dynamic_cast<
-            const ip4_socket_address*>(&m_local_saddr);
-        std::cout << std::to_string((long)p4saddr) << std::endl;
-        return true;
+            const ip4_socket_address*>(m_local_saddr);
+        assert(p4saddr);
         const sockaddr_in saddr = p4saddr->get_sockaddr_in();
-        return true;
         int result = ::bind(m_fd, reinterpret_cast<const sockaddr*>(&saddr), 
             sizeof(saddr));
         if (result == -1)

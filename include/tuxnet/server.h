@@ -32,7 +32,7 @@ namespace tuxnet
              *        should listen on.
              * @param proto : Layer-4 protocol the server should listen on.
              */
-            virtual void listen(const socket_addresses& saddrs, 
+            virtual bool listen(const socket_addresses& saddrs, 
                 const layer4_protocol& proto);
     
     };

@@ -2,6 +2,7 @@
 add_library(tuxnet SHARED
     server.cpp
     string.cpp
+    protocol.cpp
     log.cpp
     ip_address.cpp
     socket_address.cpp

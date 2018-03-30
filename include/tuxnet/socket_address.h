@@ -66,7 +66,7 @@ namespace tuxnet
     /*************************************************************************/
 
     /// Collection of socket_address objects.
-    typedef std::vector<socket_address> socket_addresses;
+    typedef std::vector<socket_address*> socket_addresses;
 
     /*************************************************************************/
     
