@@ -2,6 +2,8 @@
 #include <string>
 #include <iostream>
 #include <string.h>
+#include <unistd.h>
+#include <sys/epoll.h>
 #include "tuxnet/log.h"
 #include "tuxnet/socket.h"
 
@@ -12,9 +14,19 @@ namespace tuxnet
 
     // Constructor with local/remote saddrs.
     socket::socket(const layer4_protocol& proto) : 
-        m_local_saddr(0), m_remote_saddr(0),m_proto(proto), m_fd(0)
+        m_local_saddr(nullptr), m_remote_saddr(nullptr), m_proto(proto), 
+        m_fd(0), m_epoll_fd(0), m_epoll_events(nullptr)
     {
         m_fd = ::socket(AF_INET, SOCK_STREAM, layer4_to_proto(proto));
+    }
+
+    // Destructor.
+    socket::~socket()
+    {
+        if (m_fd == 0)
+        {
+            close(m_fd);
+        }
     }
 
     // Getters. ---------------------------------------------------------------
@@ -61,7 +73,7 @@ namespace tuxnet
     {
         // Bind the socket.
         if (socket::bind(saddr) != true) return false;
-        return true;
+        // Listen on the socket.
         /**
          * @TODO : configurable backlog with net.core.somaxconn as default.
          */
@@ -74,7 +86,38 @@ namespace tuxnet
             log::get()->error(errstr);
             return false;
         }
+        // Set up epoll notifications.
+        m_epoll_fd = epoll_create1(EPOLL_CLOEXEC);
+        if (m_epoll_fd == -1)
+        {
+            std::string errstr = "epoll_create1 failed. (error ";
+            errstr += std::to_string(errno) + " : ";
+            errstr += strerror(errno);
+            errstr += ").";
+            log::get()->error(errstr);
+            return false; 
+        }
+        struct epoll_event event = {};
+        event.data.fd = m_fd;
+        event.events = EPOLLIN | EPOLLET;
+        if (epoll_ctl(m_epoll_fd, EPOLL_CTL_ADD, m_fd, &event) != 0)
+        {
+            std::string errstr = "EPOLL_CTL_ADD failed. (error ";
+            errstr += std::to_string(errno) + " : ";
+            errstr += strerror(errno);
+            errstr += ").";
+            log::get()->error(errstr);
+            return false;
+        }
+        /// TODO: finish epoll setup - split up in separate function, make maxevents configurable.
+        //m_events = 
         return true;
+    }
+
+    // Checks for any events on the socket.
+    void socket::poll()
+    {
+        
     }
 
     // Private methods. -------------------------------------------------------
@@ -103,6 +146,7 @@ namespace tuxnet
             log::get()->error(errstr);
             return false;
         }
+
         return true;
     }
 

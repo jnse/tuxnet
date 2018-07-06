@@ -5,6 +5,7 @@
 #ifndef SOCKET_H_INCLUDE
 #define SOCKET_H_INCLUDE
 
+#include <sys/epoll.h>
 #include <vector>
 #include "tuxnet/socket_address.h"
 #include "tuxnet/protocol.h"
@@ -32,6 +33,12 @@ namespace tuxnet
         /// Stores file descriptor for the socket.
         int m_fd;
 
+        /// Stores epoll file descriptor for polling the socket.
+        int m_epoll_fd;
+
+        /// epoll event buffer.
+        epoll_event* m_epoll_events;
+
         // Private member functions. ------------------------------------------
 
         /// Binds the socket to an ipv4 address.
@@ -43,13 +50,16 @@ namespace tuxnet
 
         public:
 
-            // Constructors. --------------------------------------------------
+            // ctor(s) / dtor. ------------------------------------------------
 
             /** 
              * Constructor with local/remote saddrs.
              * @param proto : Protocol to be used for the socket.
              */
             socket(const layer4_protocol& proto);
+
+            /// Destructor.
+            ~socket();
 
             // Getters. -------------------------------------------------------
 
@@ -93,6 +103,11 @@ namespace tuxnet
              * @return Returns true on success, false on failure.
              */
             bool listen(const socket_address* saddr);
+
+            /**
+             * Checks if any events happened on the socket.
+             */
+            void poll();
 
     };
 
