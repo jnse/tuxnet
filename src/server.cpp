@@ -42,6 +42,11 @@ namespace tuxnet
             socket* sock = new socket(proto);
             // Listen on socket.
             if (sock->listen(*it) != true) err = true;
+            /// @TODO remove test loop below.
+            while(true)
+            {
+                sock->poll();
+            }
         }
         return !err;
     }

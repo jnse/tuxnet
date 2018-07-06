@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string.h>
 #include <unistd.h>
+#include <iostream>
 #include <sys/epoll.h>
 #include "tuxnet/log.h"
 #include "tuxnet/socket.h"
@@ -13,11 +14,13 @@ namespace tuxnet
     // Constructors. ----------------------------------------------------------
 
     // Constructor with local/remote saddrs.
-    socket::socket(const layer4_protocol& proto) : 
+    socket::socket(const layer4_protocol& proto, int epoll_max_events) : 
         m_local_saddr(nullptr), m_remote_saddr(nullptr), m_proto(proto), 
-        m_fd(0), m_epoll_fd(0), m_epoll_events(nullptr)
+        m_fd(0), m_epoll_fd(0), m_epoll_events(nullptr), 
+        m_epoll_maxevents(epoll_max_events)
     {
         m_fd = ::socket(AF_INET, SOCK_STREAM, layer4_to_proto(proto));
+        m_epoll_events = new epoll_event[m_epoll_maxevents]();
     }
 
     // Destructor.
@@ -26,6 +29,10 @@ namespace tuxnet
         if (m_fd == 0)
         {
             close(m_fd);
+        }
+        if (m_epoll_events != nullptr)
+        {
+            delete[] m_epoll_events;
         }
     }
 
@@ -109,15 +116,32 @@ namespace tuxnet
             log::get()->error(errstr);
             return false;
         }
-        /// TODO: finish epoll setup - split up in separate function, make maxevents configurable.
-        //m_events = 
         return true;
     }
 
     // Checks for any events on the socket.
     void socket::poll()
     {
-        
+        int event_count = epoll_wait(
+            m_epoll_fd, m_epoll_events, m_epoll_maxevents, -1);
+        for (int n_event = 0 ; n_event < event_count ; ++n_event)
+        {
+            if (
+                (m_epoll_events[n_event].events & EPOLLERR)
+                or (m_epoll_events[n_event].events & EPOLLHUP)
+                or (not (m_epoll_events[n_event].events & EPOLLIN))
+            ) 
+            {
+                /// @TODO handle these (fire event) and remove debug msg.
+                std::cout << "epoll error." << std::endl;
+                continue;
+            }
+            else if (m_epoll_events[n_event].data.fd == m_fd)
+            {
+                // We have a notification on the listening socket.
+                /// @TODO make a call to accept() here.
+            }
+        }
     }
 
     // Private methods. -------------------------------------------------------

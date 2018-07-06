@@ -39,6 +39,9 @@ namespace tuxnet
         /// epoll event buffer.
         epoll_event* m_epoll_events;
 
+        /// epoll max_events (epoll event buffer size)
+        int m_epoll_maxevents;
+
         // Private member functions. ------------------------------------------
 
         /// Binds the socket to an ipv4 address.
@@ -55,8 +58,9 @@ namespace tuxnet
             /** 
              * Constructor with local/remote saddrs.
              * @param proto : Protocol to be used for the socket.
+             * @param epoll_max_events : (optional) Size of epoll event buffer.
              */
-            socket(const layer4_protocol& proto);
+            socket(const layer4_protocol& proto, int epoll_max_events=64);
 
             /// Destructor.
             ~socket();

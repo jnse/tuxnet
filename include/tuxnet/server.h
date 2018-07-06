@@ -34,7 +34,7 @@ namespace tuxnet
              */
             virtual bool listen(const socket_addresses& saddrs, 
                 const layer4_protocol& proto);
-    
+
     };
 
 }
