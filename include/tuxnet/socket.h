@@ -13,6 +13,42 @@
 namespace tuxnet
 {
 
+    /// Enum for the different states a socket can be in.
+    enum socket_state
+    {
+        /// SOCKET_STATE_UNINITIALIZED is the default initial state.
+        SOCKET_STATE_UNINITIALIZED=0,
+        /**
+         * SOCKET_STATE_LISTENING is for tcp server sockets in the 
+         * listening state.
+         **/
+        SOCKET_STATE_LISTENING,
+        /** 
+         * SOCKET_STATE_CONNECTING is for tcp client sockets that have not yet
+         *                         completed the tcp 3-way handshake after
+         *                         initiating a connection attempt with
+         *                         a server.
+         **/
+        SOCKET_STATE_CONNECTING,
+        /**
+         * SOCKET_STATE_CONNECTED is used for TCP client sockets which have 
+         *                        completed the 3-way handshake with a server.
+         **/
+        SOCKET_STATE_CONNECTED,
+        /**
+         * SOCKET_STATE_STATELESS is used for conectionless protocols 
+         *                        like UDP.
+         **/
+        SOCKET_STATE_STATELESS,
+        /// SOCKET_STATE_CLOSING is used for a socket that is shutting down.
+        SOCKET_STATE_CLOSING,
+        /**
+         * SOCKET_STATE_CLOSED is used for a socket that completed 
+         *                     shutting down.
+         **/
+        SOCKET_STATE_CLOSED
+    };
+
     /**
      * Network socket.
      */
@@ -41,6 +77,9 @@ namespace tuxnet
 
         /// epoll max_events (epoll event buffer size)
         int m_epoll_maxevents;
+
+        /// Stores the current state of the socket.
+        socket_state m_state;
 
         // Private member functions. ------------------------------------------
 

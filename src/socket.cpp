@@ -17,7 +17,8 @@ namespace tuxnet
     socket::socket(const layer4_protocol& proto, int epoll_max_events) : 
         m_local_saddr(nullptr), m_remote_saddr(nullptr), m_proto(proto), 
         m_fd(0), m_epoll_fd(0), m_epoll_events(nullptr), 
-        m_epoll_maxevents(epoll_max_events)
+        m_epoll_maxevents(epoll_max_events),
+        m_state(SOCKET_STATE_UNINITIALIZED)
     {
         m_fd = ::socket(AF_INET, SOCK_STREAM, layer4_to_proto(proto));
         m_epoll_events = new epoll_event[m_epoll_maxevents]();
@@ -116,14 +117,28 @@ namespace tuxnet
             log::get()->error(errstr);
             return false;
         }
+        m_state = SOCKET_STATE_LISTENING;
         return true;
     }
 
     // Checks for any events on the socket.
     void socket::poll()
     {
+        if (
+            (m_state != SOCKET_STATE_STATELESS)
+            and (m_state != SOCKET_STATE_LISTENING)
+            and (m_state != SOCKET_STATE_CONNECTED)
+        )
+        {
+            log::get()->error("Socket is not in a state in"
+                " which it can be polled.");
+            return;
+        }
         int event_count = epoll_wait(
             m_epoll_fd, m_epoll_events, m_epoll_maxevents, -1);
+        std::cout << "Got ";
+        std::cout << event_count;
+        std::cout << " events." << std::endl;
         for (int n_event = 0 ; n_event < event_count ; ++n_event)
         {
             if (
@@ -138,8 +153,35 @@ namespace tuxnet
             }
             else if (m_epoll_events[n_event].data.fd == m_fd)
             {
-                // We have a notification on the listening socket.
-                /// @TODO make a call to accept() here.
+                if (m_state == SOCKET_STATE_LISTENING)
+                {
+                    while(true)
+                    {
+                        struct sockaddr in_addr = {};
+                        socklen_t in_len = 0;
+                        int in_fd = accept(m_fd, &in_addr, &in_len);
+                        if (in_fd == -1)
+                        {
+                            if ((errno == EAGAIN) or (errno == EWOULDBLOCK))
+                            {
+
+                                break;
+                            }
+                            else
+                            {
+                                /// TODO: Could not accept, report error.
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            /// TODO get client port and ip, fire event, set up epoll fd for client fd.
+                            ///      add client fd to monitored fd's.
+                            std::cout << "accepted" << std::endl;
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
