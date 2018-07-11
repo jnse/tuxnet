@@ -91,16 +91,24 @@ namespace tuxnet
         bool m_ip4_bind();
 
         /// Binds the socket to an ipv6 address.
-        /// \@TODO add ipv6 support.
+        /// @TODO add ipv6 support.
         bool m_ip6_bind();
 
         /// Attempts to accept in incomming connection.
-        /// \@return Returns true on success, false otherwise.
+        /// @return Returns true on success, false otherwise.
         peer* m_try_accept();
 
-        /// Attempts to make a file-descriptor non-blocking.
-        /// \@return Returns true on success, false otherwise.
+        /**
+         * Attempts to make a file-descriptor non-blocking.
+         * @return Returns true on success, false otherwise.
+         */
         bool m_make_fd_nonblocking(int fd);
+
+        /**
+         * Adds a file-descriptor to epoll monitoring.
+         * @return Returns true on  success, false otherwise.
+         */
+        bool m_monitor_fd(int fd);
 
         public:
 

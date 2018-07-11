@@ -113,20 +113,12 @@ namespace tuxnet
             log::get()->error(errstr);
             return false; 
         }
-        epoll_event event = {};
-        event.data.fd = m_fd;
-        event.events = EPOLLIN | EPOLLET;
-        if (epoll_ctl(m_epoll_fd, EPOLL_CTL_ADD, m_fd, &event) != 0)
+        if (m_monitor_fd(m_fd) == true)
         {
-            std::string errstr = "EPOLL_CTL_ADD failed. (error ";
-            errstr += std::to_string(errno) + " : ";
-            errstr += strerror(errno);
-            errstr += ").";
-            log::get()->error(errstr);
-            return false;
+            m_state = SOCKET_STATE_LISTENING;
+            return true;
         }
-        m_state = SOCKET_STATE_LISTENING;
-        return true;
+        return false;
     }
 
     // Checks for any events on the socket.
@@ -142,6 +134,8 @@ namespace tuxnet
                 " which it can be polled.");
             return;
         }
+        /* Call epoll_wait to fetch a bunch of events and
+         * loop through them to handle them. */
         int event_count = epoll_wait(
             m_epoll_fd, m_epoll_events, m_epoll_maxevents, -1);
         for (int n_event = 0 ; n_event < event_count ; ++n_event)
@@ -152,44 +146,35 @@ namespace tuxnet
                 or (not (m_epoll_events[n_event].events & EPOLLIN))
             ) 
             {
-                /// @TODO handle these (fire event) and remove debug msg.
-                std::cout << "epoll error." << std::endl;
+                std::string errmsg = "epoll error: ";
+                errmsg += strerror(errno);
+                errmsg += " (";
+                errmsg += std::to_string(errno);
+                errmsg += ")";
+                log::get()->error(errmsg);
+                close(m_epoll_events[n_event].data.fd);
                 continue;
             }
             else if (m_epoll_events[n_event].data.fd == m_fd)
             {
+                /* An event came in on our socket.
+                 * This is typically a connection attempt.
+                 * If we're in a listening state, handle incomming
+                 * connections and fire an on_connect event. */
                 if (m_state == SOCKET_STATE_LISTENING)
                 {
                     peer* my_peer = m_try_accept();
                     if (my_peer != nullptr)
                     {
-                        m_peers.push_back(my_peer);
-                        epoll_event event = {};
-                        event.data.fd = my_peer->get_fd();
-                        m_make_fd_nonblocking(my_peer->get_fd());
-                        event.events = EPOLLIN | EPOLLET;
-                        if (epoll_ctl(
-                            m_epoll_fd, 
-                            EPOLL_CTL_ADD, 
-                            my_peer->get_fd(),
-                            &event) == -1)
-                        {
-                            std::string errmsg = "Could not add epoll event ";
-                            errmsg += "for connecting client: ";
-                            errmsg += strerror(errno);
-                            errmsg += " (errno=";
-                            errmsg += std::to_string(errno);
-                            errmsg += ", epoll_fd=";
-                            errmsg += std::to_string(m_epoll_fd);
-                            errmsg += ", peer_fd=";
-                            errmsg += std::to_string(my_peer->get_fd());
-                            errmsg += ")";
-                            log::get()->error(errmsg);
-                            continue;
-                        }
-                        on_connect(my_peer->get_saddr());
+                       m_peers.push_back(my_peer);
+                       on_connect(my_peer->get_saddr());
                     }
                 }
+            }
+            else
+            {
+                /* An event came in on one of the peer sockets.
+                 * This is typically peer data. */
             }
         }
     }
@@ -227,8 +212,11 @@ namespace tuxnet
             }
             else
             {
-                peer* my_peer = new peer(in_fd, in_addr);
-                return my_peer;
+                if (m_monitor_fd(in_fd) == true)
+                {
+                    peer* my_peer = new peer(in_fd, in_addr);
+                    return my_peer;
+                }
             }
         }
         else
@@ -262,8 +250,7 @@ namespace tuxnet
             log::get()->error(errstr);
             return false;
         }
-
-        return true;
+        return m_make_fd_nonblocking(m_fd);
     }
 
     // Bind socket to an IPv6 address.
@@ -306,5 +293,35 @@ namespace tuxnet
         return true;
     }
 
+    // Adds a file-descriptor to epoll monitoring.
+    bool socket::m_monitor_fd(int fd)
+    {
+        epoll_event event = {};
+        event.data.fd = fd;
+        if (not m_make_fd_nonblocking(fd))
+        {
+            return false;
+        }
+        event.events = EPOLLIN | EPOLLET;
+        if (epoll_ctl(
+            m_epoll_fd, 
+            EPOLL_CTL_ADD, 
+            fd,
+            &event) == -1)
+        {
+            std::string errmsg = "Could not add epoll event: ";
+            errmsg += strerror(errno);
+            errmsg += " (errno=";
+            errmsg += std::to_string(errno);
+            errmsg += ", epoll_fd=";
+            errmsg += std::to_string(m_epoll_fd);
+            errmsg += ", peer_fd=";
+            errmsg += std::to_string(fd);
+            errmsg += ")";
+            log::get()->error(errmsg);
+            return false;
+        }
+        return true;
+    }
 }
 
