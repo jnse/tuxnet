@@ -137,9 +137,6 @@ namespace tuxnet
         }
         int event_count = epoll_wait(
             m_epoll_fd, m_epoll_events, m_epoll_maxevents, -1);
-        std::cout << "Got ";
-        std::cout << event_count;
-        std::cout << " events." << std::endl;
         for (int n_event = 0 ; n_event < event_count ; ++n_event)
         {
             if (
@@ -156,56 +153,58 @@ namespace tuxnet
             {
                 if (m_state == SOCKET_STATE_LISTENING)
                 {
-                    while(true)
-                    {
-                        if (m_local_saddr->get_protocol() == L3_PROTO_IP4)
-                        {
-                            sockaddr* in_addr = nullptr;
-                            socklen_t in_len = 0;
-                            int in_fd = accept(m_fd, in_addr, &in_len);
-                            if (in_fd == -1)
-                            {
-                                if ((errno == EAGAIN) or (errno == EWOULDBLOCK))
-                                {
-                                    break;
-                                }
-                                else
-                                {
-                                    /// TODO: Could not accept, report error.
-                                    break;
-                                }
-                            }
-                            else
-                            {
-                                /// TODO monitor in_fd with epoll.
-                                /// TODO call on_connect()
-                                if (in_addr->sa_family == AF_INET)
-                                {
-                                    sockaddr_in* in_saddr = reinterpret_cast<sockaddr_in*>(
-                                        in_addr
-                                    );
-                                    peer* my_peer = new peer(in_fd, *in_saddr);
-                                    std::cout << "accepted" << std::endl;
-                                }
-                                else
-                                {
-                                    /// TODO: throw error about unsupported peer address family.
-                                }
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            /// TODO handle ipv6
-                            break;
-                        }
-                    }
+                    m_try_accept();
                 }
             }
         }
     }
 
     // Private methods. -------------------------------------------------------
+
+    // Try to accept an incomming connection.
+    bool socket::m_try_accept()
+    {
+        bool result = false;
+        while(true)
+        {
+            if (m_local_saddr->get_protocol() == L3_PROTO_IP4)
+            {
+                sockaddr_in in_addr = {};
+                socklen_t in_len = sizeof(sockaddr_in);
+                int in_fd = accept(
+                    m_fd, 
+                    reinterpret_cast<sockaddr*>(&in_addr), 
+                    &in_len
+                );
+                if (in_fd == -1)
+                {
+                    if ((errno == EAGAIN) or (errno == EWOULDBLOCK))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        /// TODO: Could not accept, report error.
+                        break;
+                    }
+                }
+                else
+                {
+                    /// TODO monitor in_fd with epoll.
+                    /// TODO call on_connect()
+                    peer* my_peer = new peer(in_fd, in_addr);
+                    result = true;
+                    break;
+                }
+            }
+            else
+            {
+                /// TODO handle ipv6
+                break;
+            }
+        }
+        return result;
+    }
 
     // Bind socket to an IPv4 address.
     bool socket::m_ip4_bind()

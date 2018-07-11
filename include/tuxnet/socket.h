@@ -90,6 +90,10 @@ namespace tuxnet
         /// \@TODO add ipv6 support.
         bool m_ip6_bind();
 
+        /// Attempts to accept in incomming connection.
+        /// \@return Returns true on success, false otherwise.
+        bool m_try_accept();
+
         public:
 
             // ctor(s) / dtor. ------------------------------------------------
