@@ -42,8 +42,26 @@ namespace tuxnet
             /// Destructor.
             ~peer();
 
+            // Getters. -------------------------------------------------------
+
+            /**
+             * Get file descriptor.
+             * @return Returns file descriptor associated with this peer 
+             *         connection.
+             */
+            int get_fd();
+
+            /**
+             * Get socket address.
+             * @return Returns a pointer the socket_address object containing 
+             *         the address and port pair for the peer.
+             */
+            socket_address* get_saddr();
+
     };
 
+    /// Collection of peers.
+    typedef std::vector<peer*> peers;
 
 }
 

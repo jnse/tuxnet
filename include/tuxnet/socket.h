@@ -9,6 +9,7 @@
 #include <vector>
 #include "tuxnet/socket_address.h"
 #include "tuxnet/protocol.h"
+#include "tuxnet/peer.h"
 
 namespace tuxnet
 {
@@ -81,6 +82,9 @@ namespace tuxnet
         /// Stores the current state of the socket.
         socket_state m_state;
 
+        /// Storage for peer connections.
+        peers m_peers;
+
         // Private member functions. ------------------------------------------
 
         /// Binds the socket to an ipv4 address.
@@ -92,7 +96,11 @@ namespace tuxnet
 
         /// Attempts to accept in incomming connection.
         /// \@return Returns true on success, false otherwise.
-        bool m_try_accept();
+        peer* m_try_accept();
+
+        /// Attempts to make a file-descriptor non-blocking.
+        /// \@return Returns true on success, false otherwise.
+        bool m_make_fd_nonblocking(int fd);
 
         public:
 
@@ -169,7 +177,7 @@ namespace tuxnet
              * @param peer IP and port of the client that initiated the
              *             connection attempt.
              */
-            void on_connect(const socket_address* peer);
+            virtual void on_connect(socket_address* const peer){ };
 
     };
 

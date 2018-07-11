@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include <netinet/in.h>
 #include "tuxnet/peer.h"
 #include "tuxnet/socket_address.h"
@@ -24,12 +25,30 @@ namespace tuxnet
     // Destructor.
     peer::~peer()
     {
-        m_fd = 0;
+        if (m_fd != 0)
+        {
+            close(m_fd);
+            m_fd = 0;
+        }
         if (m_saddr != nullptr)
         {
             delete m_saddr;
             m_saddr = nullptr;
         }
+    }
+
+    // Getters. ---------------------------------------------------------------
+
+    // Get file descriptor.
+    int peer::get_fd()
+    {
+        return m_fd;
+    }
+
+    // Get socket address.
+    socket_address* peer::get_saddr()
+    {
+        return m_saddr;
     }
 
 }

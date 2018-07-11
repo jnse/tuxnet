@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <iostream>
 #include <sys/epoll.h>
 #include "tuxnet/log.h"
@@ -35,6 +36,12 @@ namespace tuxnet
         if (m_epoll_events != nullptr)
         {
             delete[] m_epoll_events;
+        }
+        for (auto cur_peer = m_peers.begin(); 
+            cur_peer != m_peers.end(); ++cur_peer)
+        {
+            delete (*cur_peer);
+            (*cur_peer) = nullptr;
         }
     }
 
@@ -106,7 +113,7 @@ namespace tuxnet
             log::get()->error(errstr);
             return false; 
         }
-        struct epoll_event event = {};
+        epoll_event event = {};
         event.data.fd = m_fd;
         event.events = EPOLLIN | EPOLLET;
         if (epoll_ctl(m_epoll_fd, EPOLL_CTL_ADD, m_fd, &event) != 0)
@@ -153,7 +160,36 @@ namespace tuxnet
             {
                 if (m_state == SOCKET_STATE_LISTENING)
                 {
-                    m_try_accept();
+                    peer* my_peer = m_try_accept();
+                    if (my_peer != nullptr)
+                    {
+                        m_peers.push_back(my_peer);
+                        epoll_event event = {};
+                        event.data.fd = my_peer->get_fd();
+                        m_make_fd_nonblocking(my_peer->get_fd());
+                        event.events = EPOLLIN | EPOLLET;
+                        /// @FIXME always erroring out with 'invalid argument (errno=22).
+                        if (epoll_ctl(
+                            m_fd, 
+                            EPOLL_CTL_ADD, 
+                            my_peer->get_fd(),
+                            &event) == -1)
+                        {
+                            std::string errmsg = "Could not add epoll event ";
+                            errmsg += "for connecting client: ";
+                            errmsg += strerror(errno);
+                            errmsg += " (errno=";
+                            errmsg += std::to_string(errno);
+                            errmsg += ", my_fd=";
+                            errmsg += std::to_string(m_fd);
+                            errmsg += ", peer_fd=";
+                            errmsg += std::to_string(my_peer->get_fd());
+                            errmsg += ")";
+                            log::get()->error(errmsg);
+                            continue;
+                        }
+                        on_connect(my_peer->get_saddr());
+                    }
                 }
             }
         }
@@ -162,48 +198,45 @@ namespace tuxnet
     // Private methods. -------------------------------------------------------
 
     // Try to accept an incomming connection.
-    bool socket::m_try_accept()
+    peer* socket::m_try_accept()
     {
-        bool result = false;
-        while(true)
+        if (m_local_saddr->get_protocol() == L3_PROTO_IP4)
         {
-            if (m_local_saddr->get_protocol() == L3_PROTO_IP4)
+            sockaddr_in in_addr = {};
+            socklen_t in_len = sizeof(sockaddr_in);
+            int in_fd = accept(
+                m_fd, 
+                reinterpret_cast<sockaddr*>(&in_addr), 
+                &in_len
+            );
+            if (in_fd == -1)
             {
-                sockaddr_in in_addr = {};
-                socklen_t in_len = sizeof(sockaddr_in);
-                int in_fd = accept(
-                    m_fd, 
-                    reinterpret_cast<sockaddr*>(&in_addr), 
-                    &in_len
-                );
-                if (in_fd == -1)
+                if ((errno == EAGAIN) or (errno == EWOULDBLOCK))
                 {
-                    if ((errno == EAGAIN) or (errno == EWOULDBLOCK))
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        /// TODO: Could not accept, report error.
-                        break;
-                    }
+                    return nullptr;
                 }
                 else
                 {
-                    /// TODO monitor in_fd with epoll.
-                    /// TODO call on_connect()
-                    peer* my_peer = new peer(in_fd, in_addr);
-                    result = true;
-                    break;
+                    std::string errmsg = "Could not accept a connection: ";
+                    errmsg += strerror(errno);
+                    errmsg += " (";
+                    errmsg += std::to_string(errno);
+                    errmsg += ")";
+                    log::get()->error(errmsg);
+                    return nullptr;
                 }
             }
             else
             {
-                /// TODO handle ipv6
-                break;
+                peer* my_peer = new peer(in_fd, in_addr);
+                return my_peer;
             }
         }
-        return result;
+        else
+        {
+            /// TODO handle ipv6
+        }
+        return nullptr;
     }
 
     // Bind socket to an IPv4 address.
@@ -238,6 +271,40 @@ namespace tuxnet
     bool socket::m_ip6_bind()
     {
         /// @TODO : implement ipv6
+    }
+
+    // Attempts to make a file-descriptor non-blocking.
+    bool socket::m_make_fd_nonblocking(int fd)
+    {
+        int flags = fcntl(fd, F_GETFL, 0);
+        if (flags == -1)
+        {
+            std::string errmsg = "F_GETFL fcntl failed when attempting to ";
+            errmsg += "make file-descriptor non-blocking: ";
+            errmsg += strerror(errno);
+            errmsg += " (errno=";
+            errmsg += std::to_string(errno);
+            errmsg += ", fd=";
+            errmsg += std::to_string(fd);
+            errmsg += ")";
+            log::get()->error(errmsg);
+            return false;
+        }
+        flags |= O_NONBLOCK;
+        if (fcntl(fd, F_SETFL, flags) == -1)
+        {
+            std::string errmsg = "F_SETFL fcntl failed when attempting to ";
+            errmsg += "make file-descriptor non-blocking: ";
+            errmsg += strerror(errno);
+            errmsg += " (errno=";
+            errmsg += std::to_string(errno);
+            errmsg += ", fd=";
+            errmsg += std::to_string(fd);
+            errmsg += ")";
+            log::get()->error(errmsg);
+            return false;
+        }
+        return true;
     }
 
 }
