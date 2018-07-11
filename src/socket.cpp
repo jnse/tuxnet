@@ -7,6 +7,7 @@
 #include <sys/epoll.h>
 #include "tuxnet/log.h"
 #include "tuxnet/socket.h"
+#include "tuxnet/peer.h"
 
 namespace tuxnet
 {
@@ -157,27 +158,45 @@ namespace tuxnet
                 {
                     while(true)
                     {
-                        struct sockaddr in_addr = {};
-                        socklen_t in_len = 0;
-                        int in_fd = accept(m_fd, &in_addr, &in_len);
-                        if (in_fd == -1)
+                        if (m_local_saddr->get_protocol() == L3_PROTO_IP4)
                         {
-                            if ((errno == EAGAIN) or (errno == EWOULDBLOCK))
+                            sockaddr* in_addr = nullptr;
+                            socklen_t in_len = 0;
+                            int in_fd = accept(m_fd, in_addr, &in_len);
+                            if (in_fd == -1)
                             {
-
-                                break;
+                                if ((errno == EAGAIN) or (errno == EWOULDBLOCK))
+                                {
+                                    break;
+                                }
+                                else
+                                {
+                                    /// TODO: Could not accept, report error.
+                                    break;
+                                }
                             }
                             else
                             {
-                                /// TODO: Could not accept, report error.
+                                /// TODO monitor in_fd with epoll.
+                                /// TODO call on_connect()
+                                if (in_addr->sa_family == AF_INET)
+                                {
+                                    sockaddr_in* in_saddr = reinterpret_cast<sockaddr_in*>(
+                                        in_addr
+                                    );
+                                    peer* my_peer = new peer(in_fd, *in_saddr);
+                                    std::cout << "accepted" << std::endl;
+                                }
+                                else
+                                {
+                                    /// TODO: throw error about unsupported peer address family.
+                                }
                                 break;
                             }
                         }
                         else
                         {
-                            /// TODO get client port and ip, fire event, set up epoll fd for client fd.
-                            ///      add client fd to monitored fd's.
-                            std::cout << "accepted" << std::endl;
+                            /// TODO handle ipv6
                             break;
                         }
                     }

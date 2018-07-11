@@ -6,6 +6,7 @@ add_library(tuxnet SHARED
     log.cpp
     ip_address.cpp
     socket_address.cpp
+    peer.cpp
     socket.cpp
 )
 

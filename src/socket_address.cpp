@@ -134,5 +134,15 @@ namespace tuxnet
         return result;
     }
 
+    /*************************************************************************
+     * ip6_socket_address                                                    *
+     *************************************************************************/
+    
+    // Constructor with sockaddr_in6 struct.
+    ip6_socket_address::ip6_socket_address(const sockaddr_in6& saddr)
+    {
+        /// TODO implement ipv6 support.
+    }
+
 }
 

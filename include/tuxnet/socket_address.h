@@ -152,7 +152,16 @@ namespace tuxnet
      */
     class ip6_socket_address : public socket_address
     {
-        /// @TODO Add IPv6 support.
+
+        public:
+
+        // Ctor(s) / dtor. ----------------------------------------------------
+
+        /// TODO add ipv6 support.
+
+        /// Constructor with sockaddr_in6 struct.
+        ip6_socket_address(const sockaddr_in6& saddr);
+
     };
 
 }

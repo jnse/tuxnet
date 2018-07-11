@@ -152,6 +152,21 @@ namespace tuxnet
              */
             void poll();
 
+            // Events. --------------------------------------------------------
+
+            /**
+             * Connect event.
+             *
+             * This event fires when a listening socket receives a client
+             * connection. Typically you would either deny (or ignore) the
+             * connection attempt here, or accept the connection from the
+             * client by calling accept().
+             *
+             * @param peer IP and port of the client that initiated the
+             *             connection attempt.
+             */
+            void on_connect(const socket_address* peer);
+
     };
 
     /// Collection of sockets.
