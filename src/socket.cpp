@@ -168,9 +168,8 @@ namespace tuxnet
                         event.data.fd = my_peer->get_fd();
                         m_make_fd_nonblocking(my_peer->get_fd());
                         event.events = EPOLLIN | EPOLLET;
-                        /// @FIXME always erroring out with 'invalid argument (errno=22).
                         if (epoll_ctl(
-                            m_fd, 
+                            m_epoll_fd, 
                             EPOLL_CTL_ADD, 
                             my_peer->get_fd(),
                             &event) == -1)
@@ -180,8 +179,8 @@ namespace tuxnet
                             errmsg += strerror(errno);
                             errmsg += " (errno=";
                             errmsg += std::to_string(errno);
-                            errmsg += ", my_fd=";
-                            errmsg += std::to_string(m_fd);
+                            errmsg += ", epoll_fd=";
+                            errmsg += std::to_string(m_epoll_fd);
                             errmsg += ", peer_fd=";
                             errmsg += std::to_string(my_peer->get_fd());
                             errmsg += ")";
