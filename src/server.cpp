@@ -41,7 +41,7 @@ namespace tuxnet
             // Create socket and start listening.
             socket* sock = new socket(proto);
             // Listen on socket.
-            if (sock->listen(*it) != true) err = true;
+            if (sock->listen(*it, this) != true) err = true;
             /// @TODO remove test loop below.
             while(true)
             {
@@ -50,6 +50,13 @@ namespace tuxnet
         }
         return !err;
     }
-    
+
+    // Events. ----------------------------------------------------------------
+
+    void server::on_connect(peer* remote_peer)
+    {
+        log::get()->debug("Received connection.");
+    }
+
 }
 

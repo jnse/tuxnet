@@ -14,6 +14,9 @@
 namespace tuxnet
 {
 
+    // Forward declaration for tuxnet::server
+    class server;
+
     /// Enum for the different states a socket can be in.
     enum socket_state
     {
@@ -110,6 +113,12 @@ namespace tuxnet
          */
         bool m_monitor_fd(int fd);
 
+        /**
+         * Pointer to server object owning this socket.
+         * in case we're a listener socket.
+         */
+        server* m_server;
+
         public:
 
             // ctor(s) / dtor. ------------------------------------------------
@@ -163,29 +172,18 @@ namespace tuxnet
              * Listens on an address/port pair.
              *
              * @param saddr : socket_address object containing address/port.
+             * @param server : (optional) pointer to tuxnet::server instance 
+             *                 owning this socket if called from a 
+             *                 server object.
              * @return Returns true on success, false on failure.
              */
-            bool listen(const socket_address* saddr);
+            bool listen(const socket_address* saddr, 
+                server* server_object=nullptr);
 
             /**
              * Checks if any events happened on the socket.
              */
             void poll();
-
-            // Events. --------------------------------------------------------
-
-            /**
-             * Connect event.
-             *
-             * This event fires when a listening socket receives a client
-             * connection. Typically you would either deny (or ignore) the
-             * connection attempt here, or accept the connection from the
-             * client by calling accept().
-             *
-             * @param peer IP and port of the client that initiated the
-             *             connection attempt.
-             */
-            virtual void on_connect(socket_address* const peer){ };
 
     };
 

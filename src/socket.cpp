@@ -9,6 +9,7 @@
 #include "tuxnet/log.h"
 #include "tuxnet/socket.h"
 #include "tuxnet/peer.h"
+#include "tuxnet/server.h"
 
 namespace tuxnet
 {
@@ -19,7 +20,7 @@ namespace tuxnet
     socket::socket(const layer4_protocol& proto, int epoll_max_events) : 
         m_local_saddr(nullptr), m_remote_saddr(nullptr), m_proto(proto), 
         m_fd(0), m_epoll_fd(0), m_epoll_events(nullptr), 
-        m_epoll_maxevents(epoll_max_events),
+        m_epoll_maxevents(epoll_max_events), m_server(nullptr),
         m_state(SOCKET_STATE_UNINITIALIZED)
     {
         m_fd = ::socket(AF_INET, SOCK_STREAM, layer4_to_proto(proto));
@@ -85,7 +86,7 @@ namespace tuxnet
     }
 
     // Starts listening on given address/port pair.
-    bool socket::listen(const socket_address* saddr)
+    bool socket::listen(const socket_address* saddr, server* server_object)
     {
         // Bind the socket.
         if (socket::bind(saddr) != true) return false;
@@ -116,6 +117,7 @@ namespace tuxnet
         if (m_monitor_fd(m_fd) == true)
         {
             m_state = SOCKET_STATE_LISTENING;
+            m_server = server_object;
             return true;
         }
         return false;
@@ -166,8 +168,11 @@ namespace tuxnet
                     peer* my_peer = m_try_accept();
                     if (my_peer != nullptr)
                     {
-                       m_peers.push_back(my_peer);
-                       on_connect(my_peer->get_saddr());
+                        m_peers.push_back(my_peer);
+                        if (m_server != nullptr)
+                        {
+                            m_server->on_connect(my_peer);
+                        }
                     }
                 }
             }

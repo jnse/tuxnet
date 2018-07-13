@@ -3,6 +3,7 @@
 
 #include "tuxnet/string.h"
 #include "tuxnet/socket_address.h"
+#include "tuxnet/peer.h"
 #include "tuxnet/socket.h"
 
 namespace tuxnet
@@ -10,9 +11,13 @@ namespace tuxnet
     class server
     {
 
+        friend class socket;
+        /// Listening sockets.
         sockets listen_sockets;
 
         public:
+
+            // Ctor(s) / dtor. ------------------------------------------------
 
             /**
              * Constructor.
@@ -24,6 +29,8 @@ namespace tuxnet
              */
             virtual ~server();
 
+            // Methods. -------------------------------------------------------
+
             /**
              * Start listening for connections.
              *
@@ -34,6 +41,12 @@ namespace tuxnet
              */
             virtual bool listen(const socket_addresses& saddrs, 
                 const layer4_protocol& proto);
+
+        protected:
+
+            // Events. --------------------------------------------------------
+
+            virtual void on_connect(peer* remote_peer);
 
     };
 
