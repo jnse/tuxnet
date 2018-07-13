@@ -13,7 +13,7 @@ namespace tuxnet
 
         friend class socket;
         /// Listening sockets.
-        sockets listen_sockets;
+        sockets m_listen_sockets;
 
         public:
 
@@ -42,11 +42,20 @@ namespace tuxnet
             virtual bool listen(const socket_addresses& saddrs, 
                 const layer4_protocol& proto);
 
+            /**
+             * Poll the server to process events.
+             *
+             * Processes events for incomming connections and/or data.
+             * @return Returns true on success, false on error.
+             */
+            bool poll();
+
         protected:
 
             // Events. --------------------------------------------------------
 
             virtual void on_connect(peer* remote_peer);
+            virtual void on_receive(peer* remote_peer);
 
     };
 

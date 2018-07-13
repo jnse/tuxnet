@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
     }
     while(true)
     {
-        sleep(1);
+        if (server.poll() != true) break;
     }
     return 0;
 }

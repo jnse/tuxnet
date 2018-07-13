@@ -7,6 +7,7 @@
 
 #include <sys/epoll.h>
 #include <vector>
+#include <unordered_map>
 #include "tuxnet/socket_address.h"
 #include "tuxnet/protocol.h"
 #include "tuxnet/peer.h"
@@ -114,6 +115,14 @@ namespace tuxnet
         bool m_monitor_fd(int fd);
 
         /**
+         * Finds a peer matching given file descriptor.
+         * @param fd File descriptor to look for in peers.
+         * @return Returns a pointer to the found peer, or nullptr 
+         *         if not found.
+         */
+        peer* m_find_peer(int fd);
+
+        /**
          * Pointer to server object owning this socket.
          * in case we're a listener socket.
          */
@@ -182,8 +191,9 @@ namespace tuxnet
 
             /**
              * Checks if any events happened on the socket.
+             * @return Returns true on success, false on error.
              */
-            void poll();
+            bool poll();
 
     };
 

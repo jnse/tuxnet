@@ -41,9 +41,13 @@ namespace tuxnet
         for (auto cur_peer = m_peers.begin(); 
             cur_peer != m_peers.end(); ++cur_peer)
         {
-            delete (*cur_peer);
-            (*cur_peer) = nullptr;
+            if (cur_peer->second != nullptr)
+            {
+                delete (cur_peer->second);
+                cur_peer->second = nullptr;
+            }
         }
+        peers().swap(m_peers);
     }
 
     // Getters. ---------------------------------------------------------------
@@ -124,8 +128,9 @@ namespace tuxnet
     }
 
     // Checks for any events on the socket.
-    void socket::poll()
+    bool socket::poll()
     {
+        bool result = false;
         if (
             (m_state != SOCKET_STATE_STATELESS)
             and (m_state != SOCKET_STATE_LISTENING)
@@ -134,7 +139,7 @@ namespace tuxnet
         {
             log::get()->error("Socket is not in a state in"
                 " which it can be polled.");
-            return;
+            return result;
         }
         /* Call epoll_wait to fetch a bunch of events and
          * loop through them to handle them. */
@@ -168,10 +173,11 @@ namespace tuxnet
                     peer* my_peer = m_try_accept();
                     if (my_peer != nullptr)
                     {
-                        m_peers.push_back(my_peer);
+                        m_peers.insert({my_peer->get_fd(), my_peer});
                         if (m_server != nullptr)
                         {
                             m_server->on_connect(my_peer);
+                            result = true;
                         }
                     }
                 }
@@ -180,8 +186,28 @@ namespace tuxnet
             {
                 /* An event came in on one of the peer sockets.
                  * This is typically peer data. */
+                auto client_peer_it =  m_peers.find(
+                    m_epoll_events[n_event].data.fd);
+                if (client_peer_it == m_peers.end())
+                {
+                    std::string errstr = "Received an event with a file";
+                    errstr += "descriptor number not found in the server's list";
+                    errstr += " of peers. (fd = ";
+                    errstr += std::to_string(m_epoll_events[n_event].data.fd);
+                    errstr += ")";
+                    return false;
+                }
+                if (m_state == SOCKET_STATE_LISTENING)
+                {
+                    if (m_server != nullptr)
+                    {
+                        m_server->on_receive(client_peer_it->second);
+                    }
+                }
+                result = true;
             }
         }
+        return result;
     }
 
     // Private methods. -------------------------------------------------------

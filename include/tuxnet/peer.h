@@ -2,6 +2,7 @@
 #define PEER_H_INCLUDE
 
 #include <netinet/in.h>
+#include <unordered_map>
 #include "tuxnet/socket_address.h"
 
 namespace tuxnet
@@ -61,7 +62,7 @@ namespace tuxnet
     };
 
     /// Collection of peers.
-    typedef std::vector<peer*> peers;
+    typedef std::unordered_map<int, peer*> peers;
 
 }
 

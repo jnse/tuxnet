@@ -11,6 +11,7 @@
 #include <system_error>
 #include "tuxnet/string.h"
 #include "tuxnet/server.h"
+#include "tuxnet/socket.h"
 #include "tuxnet/log.h"
 
 namespace tuxnet
@@ -25,7 +26,12 @@ namespace tuxnet
     // Destructor
     server::~server()
     {
-
+        for (auto it = m_listen_sockets.begin(); 
+            it != m_listen_sockets.end(); ++it)
+        {
+            delete (*it);
+        }
+        sockets().swap(m_listen_sockets);
     }
 
     // Start listening for connections.
@@ -41,14 +47,32 @@ namespace tuxnet
             // Create socket and start listening.
             socket* sock = new socket(proto);
             // Listen on socket.
-            if (sock->listen(*it, this) != true) err = true;
-            /// @TODO remove test loop below.
-            while(true)
+            if (sock->listen(*it, this) == true)
             {
-                sock->poll();
+                m_listen_sockets.push_back(sock);
+            }
+            else
+            {
+                err = true;
             }
         }
         return !err;
+    }
+
+    bool server::poll()
+    {
+        bool result = true;
+        for (auto it = m_listen_sockets.begin(); 
+            it != m_listen_sockets.end(); ++it)
+        {
+            socket* cur_sock = (*it);
+            if (cur_sock == nullptr) continue;
+            if (cur_sock->poll() != true)
+            {
+                result = false;
+            }
+        }
+        return result;
     }
 
     // Events. ----------------------------------------------------------------
@@ -56,6 +80,11 @@ namespace tuxnet
     void server::on_connect(peer* remote_peer)
     {
         log::get()->debug("Received connection.");
+    }
+
+    void server::on_receive(peer* remote_peer)
+    {
+        log::get()->debug("Received data.");
     }
 
 }
