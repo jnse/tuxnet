@@ -1,0 +1,4 @@
+<map id="tuxnet::server::on_disconnect" name="tuxnet::server::on_disconnect">
+<area shape="rect" id="node2" href="$da/d32/classtuxnet_1_1socket.html#a2c085c7179072996c7b91afdfa1bc0f6" title="tuxnet::socket::poll" alt="" coords="177,13,311,39"/>
+<area shape="rect" id="node3" href="$d1/d32/classtuxnet_1_1server.html#a58bde94043200e4adbbeffafcb8f2ef8" title="tuxnet::server::poll" alt="" coords="359,13,489,39"/>
+</map>

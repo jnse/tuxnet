@@ -1,0 +1,10 @@
+<map id="tuxnet::log::error" name="tuxnet::log::error">
+<area shape="rect" id="node2" href="$d4/d3f/classtuxnet_1_1ip4__address.html#a6a6fae54c57c4ca8cbe3ac9c4aebb888" title="tuxnet::ip4_address::set" alt="" coords="171,5,333,32"/>
+<area shape="rect" id="node3" href="$da/d30/namespacetuxnet.html#aad6343fd5e50b2c582f73962d57bb235" title="tuxnet::layer4_to_proto" alt="" coords="175,56,329,83"/>
+<area shape="rect" id="node5" href="$da/d32/classtuxnet_1_1socket.html#af8b1d6b0b6bb82dea4946e215bb56ddb" title="tuxnet::socket::bind" alt="" coords="183,107,321,133"/>
+<area shape="rect" id="node6" href="$da/d32/classtuxnet_1_1socket.html#aec3eb275c744f2354cc7b6779631e5af" title="tuxnet::socket::listen" alt="" coords="385,132,529,159"/>
+<area shape="rect" id="node8" href="$da/d32/classtuxnet_1_1socket.html#a2c085c7179072996c7b91afdfa1bc0f6" title="tuxnet::socket::poll" alt="" coords="185,208,319,235"/>
+<area shape="rect" id="node4" href="$da/d32/classtuxnet_1_1socket.html#a598f4da43441b738edadcc695f40a22b" title="tuxnet::socket::socket" alt="" coords="381,56,533,83"/>
+<area shape="rect" id="node7" href="$d1/d32/classtuxnet_1_1server.html#a0621db9ac039f00c1f20a35a004e91d5" title="tuxnet::server::listen" alt="" coords="581,132,723,159"/>
+<area shape="rect" id="node9" href="$d1/d32/classtuxnet_1_1server.html#a58bde94043200e4adbbeffafcb8f2ef8" title="tuxnet::server::poll" alt="" coords="392,208,523,235"/>
+</map>
