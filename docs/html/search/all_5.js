@@ -9,6 +9,7 @@ var searchData=
   ['get_5fip',['get_ip',['../d4/de5/classtuxnet_1_1ip4__socket__address.html#a106ae0b49531c2011928e437c57f43a5',1,'tuxnet::ip4_socket_address']]],
   ['get_5fkeepalive',['get_keepalive',['../da/d32/classtuxnet_1_1socket.html#a83da7e91cbd75897a3475afa47959920',1,'tuxnet::socket']]],
   ['get_5fkeepalive_5finterval',['get_keepalive_interval',['../da/d32/classtuxnet_1_1socket.html#a7ed970a765a2292cdca20f50d5357d5d',1,'tuxnet::socket']]],
+  ['get_5fkeepalive_5fretry',['get_keepalive_retry',['../da/d32/classtuxnet_1_1socket.html#ab1a2e3bce4f081e8b58fbb1e94c925ab',1,'tuxnet::socket']]],
   ['get_5fkeepalive_5ftimeout',['get_keepalive_timeout',['../da/d32/classtuxnet_1_1socket.html#a0f58dc68f31b88d833cb5e06e10fc3f0',1,'tuxnet::socket']]],
   ['get_5flocal',['get_local',['../da/d32/classtuxnet_1_1socket.html#a3a6d6bcb4f5211a3c5268dfa05ffb7b7',1,'tuxnet::socket']]],
   ['get_5fport',['get_port',['../d4/de5/classtuxnet_1_1ip4__socket__address.html#a466f18ab1f4a206ee96c2f79a3f40427',1,'tuxnet::ip4_socket_address']]],

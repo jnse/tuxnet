@@ -6,6 +6,7 @@ var classtuxnet_1_1socket =
     [ "close", "da/d32/classtuxnet_1_1socket.html#accb64eb3f3faac8e79a0e690deb55bdb", null ],
     [ "get_keepalive", "da/d32/classtuxnet_1_1socket.html#a83da7e91cbd75897a3475afa47959920", null ],
     [ "get_keepalive_interval", "da/d32/classtuxnet_1_1socket.html#a7ed970a765a2292cdca20f50d5357d5d", null ],
+    [ "get_keepalive_retry", "da/d32/classtuxnet_1_1socket.html#ab1a2e3bce4f081e8b58fbb1e94c925ab", null ],
     [ "get_keepalive_timeout", "da/d32/classtuxnet_1_1socket.html#a0f58dc68f31b88d833cb5e06e10fc3f0", null ],
     [ "get_local", "da/d32/classtuxnet_1_1socket.html#a3a6d6bcb4f5211a3c5268dfa05ffb7b7", null ],
     [ "get_proto", "da/d32/classtuxnet_1_1socket.html#a11f9ceaabdf337c0bea6d48ab7421643", null ],
