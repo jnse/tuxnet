@@ -48,9 +48,7 @@ int main(int argc, char* argv[])
         &saddr_http, &saddr_https
     };
     // Start listening.
-    bool success = server.listen(
-        const_cast<const tuxnet::socket_addresses&>(saddrs), 
-        tuxnet::L4_PROTO_TCP);
+    bool success = server.listen(saddrs, tuxnet::L4_PROTO_TCP);
     if (success != true)
     {
         return 1;
