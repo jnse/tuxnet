@@ -6,7 +6,10 @@
 namespace tuxnet
 {
 
-    /// \TODO finish me.
+    /**
+     * The tuxnet logging interface.
+     * @todo finish me.
+     */
     class log
     {
 

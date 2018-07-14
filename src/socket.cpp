@@ -17,10 +17,19 @@ namespace tuxnet
     // Constructors. ----------------------------------------------------------
 
     // Constructor with local/remote saddrs.
-    socket::socket(const layer4_protocol& proto, int epoll_max_events) : 
-        m_local_saddr(nullptr), m_remote_saddr(nullptr), m_proto(proto), 
-        m_fd(0), m_epoll_fd(0), m_epoll_events(nullptr), 
-        m_epoll_maxevents(epoll_max_events), m_server(nullptr),
+    socket::socket(const layer4_protocol& proto, int epoll_max_events) :
+
+        m_epoll_events(nullptr), 
+        m_epoll_maxevents(epoll_max_events), 
+        m_epoll_fd(0), 
+        m_fd(0),
+        m_keepalive(true),
+        m_keepalive_interval(15),
+        m_keepalive_timeout(10),
+        m_local_saddr(nullptr), 
+        m_remote_saddr(nullptr), 
+        m_proto(proto), 
+        m_server(nullptr),
         m_state(SOCKET_STATE_UNINITIALIZED)
     {
         m_fd = ::socket(AF_INET, SOCK_STREAM, layer4_to_proto(proto));
@@ -39,28 +48,64 @@ namespace tuxnet
 
     // Getters. ---------------------------------------------------------------
 
+    // Gets whether or not keepalive is enabled for this socket.
+    bool socket::get_keepalive() const
+    {
+        return m_keepalive;
+    }
+
+    // Returns the keepalive interval for this socket.
+    int socket::get_keepalive_interval() const
+    {
+        return m_keepalive_interval;
+    }
+
+    // Returns the keepalive timeout for this socket.
+    int socket::get_keepalive_timeout() const
+    {
+        return m_keepalive_timeout;
+    }
+
     // Gets ip/port information for local side of the connection.
-    const socket_address* socket::get_local() const
+    const socket_address* const socket::get_local() const
     {
         return m_local_saddr;
     }
 
+    // Gets the protocol used for this socket.
+    layer4_protocol socket::get_proto() const
+    {
+        return m_proto;
+    }
+
     // Gets ip/port information for remote side of the connection.
-    const socket_address* socket::get_remote() const
+    const socket_address* const socket::get_remote() const
     {
         return m_remote_saddr;
     }
 
-    // Gets the protocol used for this socket.
-    const layer4_protocol socket::get_proto() const
+    // Sets whether or not keepalive should be enabled for this socket.
+    void socket::set_keepalive(bool keepalive_enabled)
     {
-        return m_proto;
+        m_keepalive = keepalive_enabled;
+    }
+
+    // Sets the keepalive interval.
+    void socket::set_keepalive_interval(int interval)
+    {
+        m_keepalive_interval = interval;
+    }
+
+    // Sets the keepalive timeout.
+    void socket::set_keepalive_timeout(int timeout)
+    {
+        m_keepalive_timeout = timeout;
     }
 
     // Public methods. --------------------------------------------------------
 
     // Binds the socket to an address/port pair.
-    bool socket::bind(const socket_address* saddr)
+    bool socket::bind(const socket_address* const saddr)
     {
         m_local_saddr = saddr;
         if (m_local_saddr->get_protocol() == L3_PROTO_IP4)
@@ -77,13 +122,13 @@ namespace tuxnet
     }
 
     // Starts listening on given address/port pair.
-    bool socket::listen(const socket_address* saddr, server* server_object)
+    bool socket::listen(const socket_address* const saddr, server* server_object)
     {
         // Bind the socket.
         if (socket::bind(saddr) != true) return false;
         // Listen on the socket.
         /**
-         * @TODO : configurable backlog with net.core.somaxconn as default.
+         * @todo : configurable backlog with net.core.somaxconn as default.
          */
         if (::listen(m_fd,5) == -1)
         {
@@ -323,7 +368,7 @@ namespace tuxnet
     // Bind socket to an IPv6 address.
     bool socket::m_ip6_bind()
     {
-        /// @TODO : implement ipv6
+        /// @todo : implement ipv6
     }
 
     // Attempts to make a file-descriptor non-blocking.

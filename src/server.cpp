@@ -65,7 +65,7 @@ namespace tuxnet
         for (auto it = m_listen_sockets.begin(); 
             it != m_listen_sockets.end(); ++it)
         {
-            /// @TODO Each socket needs to be poll'ed in a separate thread in
+            /// @todo Each socket needs to be poll'ed in a separate thread in
             //        order to properly handle multiple listeners.
             socket* cur_sock = (*it);
             if (cur_sock == nullptr) continue;

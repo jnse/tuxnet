@@ -57,7 +57,7 @@ namespace tuxnet
     /**
      * Network socket.
      *
-     * @TODO Implement a keepalive mechanism to detect closed connections.
+     * @todo Implement a keepalive mechanism to detect closed connections.
      *       (send 0 bytes periodically at a configurable keepalive interval).
      */
     class socket
@@ -65,32 +65,41 @@ namespace tuxnet
 
         // Private member variables. ------------------------------------------
 
-        /// Stores the local address/port pair.
-        const socket_address* m_local_saddr;
-
-        /// Stores the remote address/port pair.
-        const socket_address* m_remote_saddr;
-
-        /// Stores the socket protocol.
-        layer4_protocol m_proto;
-
-        /// Stores file descriptor for the socket.
-        int m_fd;
-
-        /// Stores epoll file descriptor for polling the socket.
-        int m_epoll_fd;
-
         /// epoll event buffer.
         epoll_event* m_epoll_events;
 
         /// epoll max_events (epoll event buffer size)
         int m_epoll_maxevents;
 
-        /// Stores the current state of the socket.
-        socket_state m_state;
+        /// Stores epoll file descriptor for polling the socket.
+        int m_epoll_fd;
+
+        /// Stores file descriptor for the socket.
+        int m_fd;
+
+        /// Use (or don't) keepalive for this socket.
+        bool m_keepalive;
+
+        /// Keepalive packet interval (in seconds).
+        int m_keepalive_interval;
+
+        /// Keepalive timeout (in seconds).
+        int m_keepalive_timeout;
+
+        /// Stores the local address/port pair.
+        const socket_address* m_local_saddr;
 
         /// Storage for peer connections.
         peers m_peers;
+
+        /// Stores the socket protocol.
+        layer4_protocol m_proto;
+
+        /// Stores the remote address/port pair.
+        const socket_address* m_remote_saddr;
+
+        /// Stores the current state of the socket.
+        socket_state m_state;
 
         // Private member functions. ------------------------------------------
 
@@ -98,7 +107,7 @@ namespace tuxnet
         bool m_ip4_bind();
 
         /// Binds the socket to an ipv6 address.
-        /// @TODO add ipv6 support.
+        /// @todo add ipv6 support.
         bool m_ip6_bind();
 
         /// Attempts to accept in incomming connection.
@@ -143,28 +152,119 @@ namespace tuxnet
             /// Destructor.
             ~socket();
 
-            // Getters. -------------------------------------------------------
+            // Getters / setters. ----------------------------------------------
+
+            /**
+             * Gets whether or not keepalive is enabled for this socket.
+             * 
+             * See tuxnet::socket::set_keepalive() for more
+             * details on the keepalive mechanism.
+             *
+             * @return Returns true if keepalive is enabled, false otherwise.
+             */
+            bool get_keepalive() const;
+
+            /**
+             * Returns the keepalive interval for this socket.
+             *
+             * See tuxnet::socket::set_keepalive() for more
+             * details on the keepalive mechanism.
+             *
+             * @return Returns the keepalive interval for this socket
+             *         (in seconds).
+             */
+            int get_keepalive_interval() const;
+
+            /**
+             * Returns the keepalive timeout for this socket.
+             *
+             * See tuxnet::socket::set_keepalive() for more
+             * details on the keepalive mechanism.
+             */
+            int get_keepalive_timeout() const;
 
             /**
              * Gets ip/port information for local side of the connection.
              * @return Returns socket_address object containing ip/port 
              *         information for local end of the connection.
              */
-            const socket_address* get_local() const;
+            const socket_address* const get_local() const;
+
+            /**
+             * Gets the protocol used for this socket.
+             * @return Returns the protocol used for this socket.
+             */
+            layer4_protocol get_proto() const;
 
             /**
              * Gets ip/port information for remote side of the connection.
              * @return Returns socket_address object containing ip/port 
              *         information for remote end of the connection.
              */
-            const socket_address* get_remote() const;
+            const socket_address* const get_remote() const;
 
             /**
-             * Gets the protocol used for this socket.
-             * @return Returns the protocol used for this socket.
+             * Sets whether or not keepalive should be enabled for this socket.
+             *
+             * This is only relevant for TCP sockets.
+             *
+             * The keepalive mechanism is used for detecting dropped 
+             * connections for when peers don't (or can't) gracefully
+             * disconnect, thus preventing a half-open state.
+             *
+             * The way this works is by sending 0-byte packets periodically 
+             * to ping the connection. Since these packets still need to be
+             * ACK'ed, we can poll with a timeout and disconnect the socket if
+             * the timeout hits. The duration of this timeout is configurable
+             * with tuxnet::socket::set_keepalive_timeout()
+             *
+             * Because this mechanism takes advantage of the TCP
+             * guaranteed-delivery mechanism (every packet needs to be
+             * acknowledged), on a non-TCP socket the keepalive mechanism 
+             * is not used, and calls to tuxnet::socket::set_keepalive() and
+             * tuxnet::socket::set_keepalive_timeout(), and 
+             * tuxnet:;socket::set_keepalive_interval() are a no-op.
+             *
+             * The keepalive mechanism is on by default, so you don't have to
+             * call tuxnet::socket::set_keepalive unless you explicitly want
+             * to disable it (or re-enable it after disabling it).
+             *
+             * @param keepalive_enabled : Set this to false to disable 
+             *                            the keepalive mechanism, or set it to
+             *                            true to enable it.
              */
-            const layer4_protocol get_proto() const;
-           
+            void set_keepalive(bool keepalive_enabled);
+            
+            /**
+             * Sets the keepalive interval.
+             *
+             * Governs how frequently we send TCP keepalive packets.
+             *
+             * Default is every 15 seconds.
+             *
+             * See tuxnet::socket::set_keepalive() for more information on the
+             * TCP keepalive system.
+             *
+             * @param interval : TCP keepalive interval in seconds.
+             */
+            void set_keepalive_interval(int interval);
+
+            /**
+             * Sets the keepalive timeout.
+             *
+             * If a TCP keepalive packet is sent, this governs how long until
+             * we give up waiting for the ACK and consider the connection 
+             * dropped.
+             *
+             * Default is 10 seconds.
+             *
+             * See tuxnet::socket::set_keepalive() for more information on the
+             * TCP keepalive system.
+             *
+             * @param timeout : Sets the TCP keepalive timeout (in seconds).
+             */
+            void set_keepalive_timeout(int timeout);
+
             // Methods. -------------------------------------------------------
 
             /**
@@ -176,7 +276,7 @@ namespace tuxnet
              * @param saddr : socket_address object containing address/port.
              * @return Returns true on success, false on failure.
              */
-            bool bind(const socket_address* saddr);
+            bool bind(const socket_address* const saddr);
 
             /// Closes the socket.
             void close();
@@ -185,12 +285,12 @@ namespace tuxnet
              * Listens on an address/port pair.
              *
              * @param saddr : socket_address object containing address/port.
-             * @param server : (optional) pointer to tuxnet::server instance 
-             *                 owning this socket if called from a 
+             * @param server_object : (optional) pointer to tuxnet::server
+             *                 instance owning this socket if called from a 
              *                 server object.
              * @return Returns true on success, false on failure.
              */
-            bool listen(const socket_address* saddr, 
+            bool listen(const socket_address* const saddr, 
                 server* server_object=nullptr);
 
             /**
