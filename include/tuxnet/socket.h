@@ -252,7 +252,11 @@ namespace tuxnet
              * call tuxnet::socket::set_keepalive unless you explicitly want
              * to disable it (or re-enable it after disabling it).
              *
-             * Underneath the hood, these functions correspond to the following
+             * Underneath the hood, the TCP keepalive mechanism is handled 
+             * entirely by the kernel, and is enabled by setting options on
+             * the socket's file descriptor using setsockopt().
+             *
+             * These functions correspond to the following
              * setsockopt options:
              *
              * | tuxnet function          | setsockopt option          |
@@ -278,7 +282,7 @@ namespace tuxnet
              *
              * Governs how frequently we send TCP keepalive packets.
              *
-             * Default is every 15 seconds.
+             * Default is every 5 seconds.
              *
              * See tuxnet::socket::set_keepalive() for more information on the
              * TCP keepalive system.
@@ -298,6 +302,9 @@ namespace tuxnet
              * See tuxnet::socket::set_keepalive() for more information on the
              * TCP keepalive system.
              *
+             * The default is 3 probes before the connection is considered
+             * dead.
+             *
              * @param retries : Number of TCP keepalive retries before giving
              *                  up on the remote peer.
              */
@@ -308,11 +315,10 @@ namespace tuxnet
              *
              * @note This is only relevant for TCP sockets.
              *
-             * If a TCP keepalive packet is sent, this governs how long until
-             * we give up waiting for the ACK and consider the connection 
-             * dropped.
+             * This governs how long a connection should be idle before
+             * the kernel should start sending keepalive probes.
              *
-             * Default is 10 seconds.
+             * The default is 10 seconds.
              *
              * See tuxnet::socket::set_keepalive() for more information on the
              * TCP keepalive system.

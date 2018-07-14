@@ -606,7 +606,8 @@ Public Member Functions</h2></td></tr>
 <p>The way this works is by sending 0-byte packets periodically to ping the connection. Since these packets still need to be ACK'ed, we can poll and disconnect the socket if there is no reply.</p>
 <p>Because this mechanism takes advantage of the TCP guaranteed-delivery mechanism (every packet needs to be acknowledged), on a non-TCP socket the keepalive mechanism is not used, and calls to <a class="el" href="../../da/d32/classtuxnet_1_1socket.html#acc4929c68f5538cf3e21d301697c06d1" title="Sets whether or not keepalive should be enabled for this socket. ">tuxnet::socket::set_keepalive()</a>, <a class="el" href="../../da/d32/classtuxnet_1_1socket.html#aa643d1834337de470f9b8c2f74ce551f" title="Sets the keepalive timeout. ">tuxnet::socket::set_keepalive_timeout()</a>, and <a class="el" href="../../da/d32/classtuxnet_1_1socket.html#a28e45882cd2e7678ef240f94864a4b51" title="Sets the keepalive interval. ">tuxnet::socket::set_keepalive_interval()</a> are a no-op.</p>
 <p>The keepalive mechanism is on by default, so you don't have to call <a class="el" href="../../da/d32/classtuxnet_1_1socket.html#acc4929c68f5538cf3e21d301697c06d1" title="Sets whether or not keepalive should be enabled for this socket. ">tuxnet::socket::set_keepalive</a> unless you explicitly want to disable it (or re-enable it after disabling it).</p>
-<p>Underneath the hood, these functions correspond to the following setsockopt options:</p>
+<p>Underneath the hood, the TCP keepalive mechanism is handled entirely by the kernel, and is enabled by setting options on the socket's file descriptor using setsockopt().</p>
+<p>These functions correspond to the following setsockopt options:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">tuxnet function  </th><th class="markdownTableHeadNone">setsockopt option   </th></tr>
@@ -650,7 +651,7 @@ Public Member Functions</h2></td></tr>
 <p>Sets the keepalive interval. </p>
 <dl class="section note"><dt>Note</dt><dd>This is only relevant for TCP sockets.</dd></dl>
 <p>Governs how frequently we send TCP keepalive packets.</p>
-<p>Default is every 15 seconds.</p>
+<p>Default is every 5 seconds.</p>
 <p>See <a class="el" href="../../da/d32/classtuxnet_1_1socket.html#acc4929c68f5538cf3e21d301697c06d1" title="Sets whether or not keepalive should be enabled for this socket. ">tuxnet::socket::set_keepalive()</a> for more information on the TCP keepalive system.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -683,6 +684,7 @@ Public Member Functions</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>This is only relevant for TCP sockets.</dd></dl>
 <p>Governs how many TCP keepalive probes should be sent until the connection can be considered dropped.</p>
 <p>See <a class="el" href="../../da/d32/classtuxnet_1_1socket.html#acc4929c68f5538cf3e21d301697c06d1" title="Sets whether or not keepalive should be enabled for this socket. ">tuxnet::socket::set_keepalive()</a> for more information on the TCP keepalive system.</p>
+<p>The default is 3 probes before the connection is considered dead.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">retries</td><td>: Number of TCP keepalive retries before giving up on the remote peer. </td></tr>
@@ -712,8 +714,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Sets the keepalive timeout. </p>
 <dl class="section note"><dt>Note</dt><dd>This is only relevant for TCP sockets.</dd></dl>
-<p>If a TCP keepalive packet is sent, this governs how long until we give up waiting for the ACK and consider the connection dropped.</p>
-<p>Default is 10 seconds.</p>
+<p>This governs how long a connection should be idle before the kernel should start sending keepalive probes.</p>
+<p>The default is 10 seconds.</p>
 <p>See <a class="el" href="../../da/d32/classtuxnet_1_1socket.html#acc4929c68f5538cf3e21d301697c06d1" title="Sets whether or not keepalive should be enabled for this socket. ">tuxnet::socket::set_keepalive()</a> for more information on the TCP keepalive system.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
