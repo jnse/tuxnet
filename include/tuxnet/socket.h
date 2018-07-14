@@ -56,6 +56,9 @@ namespace tuxnet
 
     /**
      * Network socket.
+     *
+     * @TODO Implement a keepalive mechanism to detect closed connections.
+     *       (send 0 bytes periodically at a configurable keepalive interval).
      */
     class socket
     {
@@ -115,12 +118,10 @@ namespace tuxnet
         bool m_monitor_fd(int fd);
 
         /**
-         * Finds a peer matching given file descriptor.
-         * @param fd File descriptor to look for in peers.
-         * @return Returns a pointer to the found peer, or nullptr 
-         *         if not found.
+         * Clean up after peer(s) with given file descriptor.
+         * @param fd File-descriptor of peer to reap.
          */
-        peer* m_find_peer(int fd);
+        void m_remove_peer(int fd);
 
         /**
          * Pointer to server object owning this socket.
@@ -176,6 +177,9 @@ namespace tuxnet
              * @return Returns true on success, false on failure.
              */
             bool bind(const socket_address* saddr);
+
+            /// Closes the socket.
+            void close();
 
             /**
              * Listens on an address/port pair.

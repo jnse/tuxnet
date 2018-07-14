@@ -30,24 +30,11 @@ namespace tuxnet
     // Destructor.
     socket::~socket()
     {
-        if (m_fd == 0)
-        {
-            close(m_fd);
-        }
+        close();
         if (m_epoll_events != nullptr)
         {
             delete[] m_epoll_events;
         }
-        for (auto cur_peer = m_peers.begin(); 
-            cur_peer != m_peers.end(); ++cur_peer)
-        {
-            if (cur_peer->second != nullptr)
-            {
-                delete (cur_peer->second);
-                cur_peer->second = nullptr;
-            }
-        }
-        peers().swap(m_peers);
     }
 
     // Getters. ---------------------------------------------------------------
@@ -127,6 +114,32 @@ namespace tuxnet
         return false;
     }
 
+    // Closes the socket.
+    void socket::close()
+    {
+        m_state = SOCKET_STATE_CLOSING;
+        if (m_fd != 0) 
+        {
+            ::close(m_fd);
+            m_fd = 0;
+        }
+        for (auto it = m_peers.begin(); it != m_peers.end(); ++it)
+        {
+            if (it->first != 0)
+            {
+                ::close(it->first);
+                it->first = 0;
+            }
+            if (it->second != nullptr)
+            {
+                delete it->second;
+                it->second = nullptr;
+            }
+        }
+        peers().swap(m_peers);
+        m_state = SOCKET_STATE_CLOSED;
+    }
+
     // Checks for any events on the socket.
     bool socket::poll()
     {
@@ -147,19 +160,43 @@ namespace tuxnet
             m_epoll_fd, m_epoll_events, m_epoll_maxevents, -1);
         for (int n_event = 0 ; n_event < event_count ; ++n_event)
         {
+            int event_fd = m_epoll_events[n_event].data.fd;
             if (
                 (m_epoll_events[n_event].events & EPOLLERR)
                 or (m_epoll_events[n_event].events & EPOLLHUP)
                 or (not (m_epoll_events[n_event].events & EPOLLIN))
             ) 
             {
-                std::string errmsg = "epoll error: ";
-                errmsg += strerror(errno);
-                errmsg += " (";
-                errmsg += std::to_string(errno);
-                errmsg += ")";
-                log::get()->error(errmsg);
-                close(m_epoll_events[n_event].data.fd);
+                if (event_fd == m_fd)
+                {
+                    // Error on our socket. :(
+                    log::get->error("epoll error on the listening socket.");
+                    close();
+                }
+                else if (m_state == SOCKET_STATE_LISTENING)
+                {
+                    // I'm a server, and I received an error on a client 
+                    // socket. Consider connection dropped, so clean it up,
+                    // and fire a disconnection event.
+                    m_remove_peer(event_fd);
+                    if (m_server != nullptr)
+                    {
+                        auto client_peer_it =  m_peers.find(event_fd);
+                        if (client_peer_it == m_peers.end())
+                        {
+                            std::string errstr = "Received an error on a ";
+                            errstr += "file-descriptor for which there is no ";
+                            errstr += "corresponding client. (fd=";
+                            errstr += std::to_string(event_fd) + ")";
+                            log::get()->error(errstr);
+                        }
+                        else
+                        {
+                            m_server->on_disconnect(client_peer_it->second);
+                            m_remove_peer(client_peer_it->first);;
+                        }
+                    }
+                }
                 continue;
             }
             else if (m_epoll_events[n_event].data.fd == m_fd)
@@ -353,6 +390,34 @@ namespace tuxnet
             return false;
         }
         return true;
+    }
+
+    // Remove a peer, cleanup after a client disconnects.
+    void socket::m_remove_peer(int fd)
+    {
+        auto client_peer_it =  m_peers.find(
+            m_epoll_events[n_event].data.fd);
+        if (client_peer_it != m_peers.end())
+        {
+            if (client_peer_it->first != 0)
+            {
+                ::close(client_peer_it->first);
+                client_peer_it->first = 0;
+                fd = 0;
+            }
+            if (client_peer_it->second != nullptr)
+            {
+                delete client_peer_it->second;
+                client_peer_it->second = nullptr;
+            }
+        }
+        else
+        {
+            if (fd != 0)
+            {
+                ::close(fd);
+            }
+        }
     }
 }
 

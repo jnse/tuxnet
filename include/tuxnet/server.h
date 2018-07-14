@@ -56,6 +56,7 @@ namespace tuxnet
 
             virtual void on_connect(peer* remote_peer);
             virtual void on_receive(peer* remote_peer);
+            virtual void on_disconnect(peer* remote_peer);
 
     };
 

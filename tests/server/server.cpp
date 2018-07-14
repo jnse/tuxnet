@@ -35,17 +35,20 @@ class my_server : public tuxnet::server
 
 int main(int argc, char* argv[])
 {
+    std::cout.setf(std::ios::unitbuf);
     // Instantiate server object.
     tuxnet::server server;
     // Define ip and port pairs to listen on.
     tuxnet::ip4_socket_address saddr_http(
         tuxnet::ip4_address("127.0.0.1"), 8080
     );
+    /*
     tuxnet::ip4_socket_address saddr_https(
         tuxnet::ip4_address("127.0.0.1"), 8443
     );
+    */
     tuxnet::socket_addresses saddrs = {
-        &saddr_http, &saddr_https
+        &saddr_http
     };
     // Start listening.
     bool success = server.listen(saddrs, tuxnet::L4_PROTO_TCP);

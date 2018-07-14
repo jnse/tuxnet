@@ -65,6 +65,8 @@ namespace tuxnet
         for (auto it = m_listen_sockets.begin(); 
             it != m_listen_sockets.end(); ++it)
         {
+            /// @TODO Each socket needs to be poll'ed in a separate thread in
+            //        order to properly handle multiple listeners.
             socket* cur_sock = (*it);
             if (cur_sock == nullptr) continue;
             if (cur_sock->poll() != true)
@@ -87,6 +89,12 @@ namespace tuxnet
     void server::on_receive(peer* remote_peer)
     {
         log::get()->debug("Received data.");
+    }
+
+    // Client disconnected.
+    void server::on_disconnect(peer* remote_peer)
+    {
+        log::get()->debug("Lost connection.");
     }
 
 }
