@@ -128,7 +128,6 @@ namespace tuxnet
             if (it->first != 0)
             {
                 ::close(it->first);
-                it->first = 0;
             }
             if (it->second != nullptr)
             {
@@ -170,7 +169,7 @@ namespace tuxnet
                 if (event_fd == m_fd)
                 {
                     // Error on our socket. :(
-                    log::get->error("epoll error on the listening socket.");
+                    log::get()->error("epoll error on the listening socket.");
                     close();
                 }
                 else if (m_state == SOCKET_STATE_LISTENING)
@@ -395,14 +394,12 @@ namespace tuxnet
     // Remove a peer, cleanup after a client disconnects.
     void socket::m_remove_peer(int fd)
     {
-        auto client_peer_it =  m_peers.find(
-            m_epoll_events[n_event].data.fd);
+        auto client_peer_it =  m_peers.find(fd);
         if (client_peer_it != m_peers.end())
         {
             if (client_peer_it->first != 0)
             {
                 ::close(client_peer_it->first);
-                client_peer_it->first = 0;
                 fd = 0;
             }
             if (client_peer_it->second != nullptr)
