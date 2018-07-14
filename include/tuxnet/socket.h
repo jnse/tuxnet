@@ -68,11 +68,11 @@ namespace tuxnet
         /// epoll event buffer.
         epoll_event* m_epoll_events;
 
-        /// epoll max_events (epoll event buffer size)
-        int m_epoll_maxevents;
-
         /// Stores epoll file descriptor for polling the socket.
         int m_epoll_fd;
+
+        /// epoll max_events (epoll event buffer size)
+        int m_epoll_maxevents;
 
         /// Stores file descriptor for the socket.
         int m_fd;
@@ -82,6 +82,9 @@ namespace tuxnet
 
         /// Keepalive packet interval (in seconds).
         int m_keepalive_interval;
+
+        /// Keepalive retries
+        int m_keepalive_retry;
 
         /// Keepalive timeout (in seconds).
         int m_keepalive_timeout;
@@ -98,10 +101,22 @@ namespace tuxnet
         /// Stores the remote address/port pair.
         const socket_address* m_remote_saddr;
 
+        /**
+         * Pointer to server object owning this socket.
+         * in case we're a listener socket.
+         */
+        server* m_server;
+
         /// Stores the current state of the socket.
         socket_state m_state;
 
         // Private member functions. ------------------------------------------
+
+        /**
+         * Enables keepalive on the socket if m_keepalive is true.
+         * @return Returns true on success, false on error.
+         */
+        bool m_enable_keepalive();
 
         /// Binds the socket to an ipv4 address.
         bool m_ip4_bind();
@@ -109,10 +124,6 @@ namespace tuxnet
         /// Binds the socket to an ipv6 address.
         /// @todo add ipv6 support.
         bool m_ip6_bind();
-
-        /// Attempts to accept in incomming connection.
-        /// @return Returns true on success, false otherwise.
-        peer* m_try_accept();
 
         /**
          * Attempts to make a file-descriptor non-blocking.
@@ -132,11 +143,9 @@ namespace tuxnet
          */
         void m_remove_peer(int fd);
 
-        /**
-         * Pointer to server object owning this socket.
-         * in case we're a listener socket.
-         */
-        server* m_server;
+        /// Attempts to accept in incomming connection.
+        /// @return Returns true on success, false otherwise.
+        peer* m_try_accept();
 
         public:
 
@@ -174,6 +183,17 @@ namespace tuxnet
              *         (in seconds).
              */
             int get_keepalive_interval() const;
+
+            /**
+             * @brief Returns the keepalive retries for this socket.
+             *
+             * See tuxnet::socket::set_keepalive() for more
+             * details on the keepalive mechanism.
+             *
+             * @return Returns the number of TCP keepalive probes are to be
+             *         sent before considering the remote peer to be dead.
+             */
+            int get_keepalive_retry() const;
 
             /**
              * @brief Returns the keepalive timeout for this socket.
@@ -217,9 +237,8 @@ namespace tuxnet
              *
              * The way this works is by sending 0-byte packets periodically 
              * to ping the connection. Since these packets still need to be
-             * ACK'ed, we can poll with a timeout and disconnect the socket if
-             * the timeout hits. The duration of this timeout is configurable
-             * with tuxnet::socket::set_keepalive_timeout()
+             * ACK'ed, we can poll and disconnect the socket if there is no
+             * reply.
              *
              * Because this mechanism takes advantage of the TCP
              * guaranteed-delivery mechanism (every packet needs to be
@@ -231,6 +250,19 @@ namespace tuxnet
              * The keepalive mechanism is on by default, so you don't have to
              * call tuxnet::socket::set_keepalive unless you explicitly want
              * to disable it (or re-enable it after disabling it).
+             *
+             * Underneath the hood, these functions correspond to the following
+             * setsockopt options:
+             *
+             * | tuxnet function          | setsockopt option          |
+             * | ------------------------ | -------------------------- |
+             * | set_keepalive()          | SOL_SOCKET, SO_KEEPALIVE   |
+             * | set_keepalive_interval() | IPPROTO_TCP, TCP_KEEPINTVL |
+             * | set_keepalive_timeout()  | IPPROTO_TCP, TCP_KEEPIDLE  |
+             * | set_keepalive_retry()    | IPPROTO_TCP, TCP_KEEPCNT   |
+             *
+             * These are described in 
+             * [man (7) TCP](http://man7.org/linux/man-pages/man7/socket.7.html)
              *
              * @param keepalive_enabled : Set this to false to disable 
              *                            the keepalive mechanism, or set it to
@@ -253,6 +285,22 @@ namespace tuxnet
              * @param interval : TCP keepalive interval in seconds.
              */
             void set_keepalive_interval(int interval);
+
+            /**
+             * @brief Sets the keepalive retries.
+             *
+             * @note This is only relevant for TCP sockets.
+             *
+             * Governs how many TCP keepalive probes should be sent until the
+             * connection can be considered dropped.
+             *
+             * See tuxnet::socket::set_keepalive() for more information on the
+             * TCP keepalive system.
+             *
+             * @param retries : Number of TCP keepalive retries before giving
+             *                  up on the remote peer.
+             */
+            void set_keepalive_retry(int retries);
 
             /**
              * @brief Sets the keepalive timeout.

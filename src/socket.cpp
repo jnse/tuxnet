@@ -6,6 +6,7 @@
 #include <fcntl.h>
 #include <iostream>
 #include <sys/epoll.h>
+#include <netinet/tcp.h>
 #include "tuxnet/log.h"
 #include "tuxnet/socket.h"
 #include "tuxnet/peer.h"
@@ -18,17 +19,18 @@ namespace tuxnet
 
     // Constructor with local/remote saddrs.
     socket::socket(const layer4_protocol& proto, int epoll_max_events) :
-
         m_epoll_events(nullptr), 
-        m_epoll_maxevents(epoll_max_events), 
         m_epoll_fd(0), 
+        m_epoll_maxevents(epoll_max_events), 
         m_fd(0),
         m_keepalive(true),
-        m_keepalive_interval(15),
+        m_keepalive_interval(5),
+        m_keepalive_retry(3),
         m_keepalive_timeout(10),
-        m_local_saddr(nullptr), 
-        m_remote_saddr(nullptr), 
+        m_local_saddr(nullptr),
+        m_peers({}),
         m_proto(proto), 
+        m_remote_saddr(nullptr), 
         m_server(nullptr),
         m_state(SOCKET_STATE_UNINITIALIZED)
     {
@@ -46,7 +48,7 @@ namespace tuxnet
         }
     }
 
-    // Getters. ---------------------------------------------------------------
+    // Getters / setters. -----------------------------------------------------
 
     // Gets whether or not keepalive is enabled for this socket.
     bool socket::get_keepalive() const
@@ -58,6 +60,12 @@ namespace tuxnet
     int socket::get_keepalive_interval() const
     {
         return m_keepalive_interval;
+    }
+
+    // Returns the keepalive retries for this socket.
+    int socket::get_keepalive_retry() const
+    {
+        return m_keepalive_retry;
     }
 
     // Returns the keepalive timeout for this socket.
@@ -94,6 +102,12 @@ namespace tuxnet
     void socket::set_keepalive_interval(int interval)
     {
         m_keepalive_interval = interval;
+    }
+
+    // Sets the keepalive retries.
+    void socket::set_keepalive_retry(int retries)
+    {
+        m_keepalive_retry = retries;
     }
 
     // Sets the keepalive timeout.
@@ -293,49 +307,33 @@ namespace tuxnet
 
     // Private methods. -------------------------------------------------------
 
-    // Try to accept an incomming connection.
-    peer* socket::m_try_accept()
+    // Enables keepalive on the socket.
+    bool socket::m_enable_keepalive()
     {
-        if (m_local_saddr->get_protocol() == L3_PROTO_IP4)
+        if (m_keepalive != true) return true;
+        int enable = 1;
+        if (setsockopt(m_fd, SOL_SOCKET, SO_KEEPALIVE, &enable, sizeof(int))
+            == -1)
         {
-            sockaddr_in in_addr = {};
-            socklen_t in_len = sizeof(sockaddr_in);
-            int in_fd = accept(
-                m_fd, 
-                reinterpret_cast<sockaddr*>(&in_addr), 
-                &in_len
-            );
-            if (in_fd == -1)
-            {
-                if ((errno == EAGAIN) or (errno == EWOULDBLOCK))
-                {
-                    return nullptr;
-                }
-                else
-                {
-                    std::string errmsg = "Could not accept a connection: ";
-                    errmsg += strerror(errno);
-                    errmsg += " (";
-                    errmsg += std::to_string(errno);
-                    errmsg += ")";
-                    log::get()->error(errmsg);
-                    return nullptr;
-                }
-            }
-            else
-            {
-                if (m_monitor_fd(in_fd) == true)
-                {
-                    peer* my_peer = new peer(in_fd, in_addr);
-                    return my_peer;
-                }
-            }
+            std::string errstr = "setsockopt(...SOL_SOCKET, SO_KEEPALIVE...)";
+            errstr += " failed: ";
+            errstr += strerror(errno);
+            errstr += " (errno=" + std::to_string(errno)+", ";
+            errstr += " fd=", std::to_string(m_fd);
+            log::get()->error(errstr);
+            return false;
         }
-        else
+        if (setsockopt(m_fd, IPPROTO_TCP, TCP_KEEPIDLE, &m_keepalive_timeout,
+            sizeof(int)) == -1)
         {
-            /// TODO handle ipv6
+            std::string errstr = "setsockopt(...IPPROTO_TCP, TCP_KEEPIDLE...)";
+            errstr += " failed: ";
+            errstr += strerror(errno);
+            errstr += " (errno=" + std::to_string(errno)+", ";
+            errstr += " fd=", std::to_string(m_fd);
+            log::get()->error(errstr);
+            return false; 
         }
-        return nullptr;
     }
 
     // Bind socket to an IPv4 address.
@@ -461,5 +459,51 @@ namespace tuxnet
             }
         }
     }
+
+    // Try to accept an incomming connection.
+    peer* socket::m_try_accept()
+    {
+        if (m_local_saddr->get_protocol() == L3_PROTO_IP4)
+        {
+            sockaddr_in in_addr = {};
+            socklen_t in_len = sizeof(sockaddr_in);
+            int in_fd = accept(
+                m_fd, 
+                reinterpret_cast<sockaddr*>(&in_addr), 
+                &in_len
+            );
+            if (in_fd == -1)
+            {
+                if ((errno == EAGAIN) or (errno == EWOULDBLOCK))
+                {
+                    return nullptr;
+                }
+                else
+                {
+                    std::string errmsg = "Could not accept a connection: ";
+                    errmsg += strerror(errno);
+                    errmsg += " (";
+                    errmsg += std::to_string(errno);
+                    errmsg += ")";
+                    log::get()->error(errmsg);
+                    return nullptr;
+                }
+            }
+            else
+            {
+                if (m_monitor_fd(in_fd) == true)
+                {
+                    peer* my_peer = new peer(in_fd, in_addr);
+                    return my_peer;
+                }
+            }
+        }
+        else
+        {
+            /// TODO handle ipv6
+        }
+        return nullptr;
+    }
+
 }
 
