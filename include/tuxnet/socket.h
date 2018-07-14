@@ -221,9 +221,9 @@ namespace tuxnet
              * Because this mechanism takes advantage of the TCP
              * guaranteed-delivery mechanism (every packet needs to be
              * acknowledged), on a non-TCP socket the keepalive mechanism 
-             * is not used, and calls to tuxnet::socket::set_keepalive() and
-             * tuxnet::socket::set_keepalive_timeout(), and 
-             * tuxnet:;socket::set_keepalive_interval() are a no-op.
+             * is not used, and calls to tuxnet::socket::set_keepalive(),
+             * tuxnet::socket::set_keepalive_timeout(), and
+             * tuxnet::socket::set_keepalive_interval() are a no-op.
              *
              * The keepalive mechanism is on by default, so you don't have to
              * call tuxnet::socket::set_keepalive unless you explicitly want

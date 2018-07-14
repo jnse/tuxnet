@@ -118,6 +118,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a6178e022eaa9e2e8268e5789bf6425be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc4929c68f5538cf3e21d301697c06d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d32/classtuxnet_1_1socket.html#acc4929c68f5538cf3e21d301697c06d1">set_keepalive</a> (bool keepalive_enabled)</td></tr>
 <tr class="separator:acc4929c68f5538cf3e21d301697c06d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28e45882cd2e7678ef240f94864a4b51"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d32/classtuxnet_1_1socket.html#a28e45882cd2e7678ef240f94864a4b51">set_keepalive_interval</a> (int interval)</td></tr>
+<tr class="separator:a28e45882cd2e7678ef240f94864a4b51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa643d1834337de470f9b8c2f74ce551f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d32/classtuxnet_1_1socket.html#aa643d1834337de470f9b8c2f74ce551f">set_keepalive_timeout</a> (int timeout)</td></tr>
 <tr class="separator:aa643d1834337de470f9b8c2f74ce551f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01c3b22ec6965e29236ac6ab114eacaa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d32/classtuxnet_1_1socket.html#a01c3b22ec6965e29236ac6ab114eacaa">bind</a> (const <a class="el" href="../../d4/d0d/classtuxnet_1_1socket__address.html">socket_address</a> *const saddr)</td></tr>
@@ -238,7 +240,7 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns true on success, false on failure. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d81/socket_8cpp_source.html#l00084">84</a> of file <a class="el" href="../../d8/d81/socket_8cpp_source.html">socket.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d81/socket_8cpp_source.html#l00108">108</a> of file <a class="el" href="../../d8/d81/socket_8cpp_source.html">socket.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -278,7 +280,7 @@ Here is the caller graph for this function:</div>
 
 <p>Closes the socket. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d81/socket_8cpp_source.html#l00139">139</a> of file <a class="el" href="../../d8/d81/socket_8cpp_source.html">socket.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d81/socket_8cpp_source.html#l00163">163</a> of file <a class="el" href="../../d8/d81/socket_8cpp_source.html">socket.cpp</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -353,6 +355,8 @@ Here is the caller graph for this function:</div>
 <p>Returns the keepalive timeout for this socket.</p>
 <p>See <a class="el" href="../../da/d32/classtuxnet_1_1socket.html#acc4929c68f5538cf3e21d301697c06d1">tuxnet::socket::set_keepalive()</a> for more details on the keepalive mechanism. </p>
 
+<p class="definition">Definition at line <a class="el" href="../../d8/d81/socket_8cpp_source.html#l00064">64</a> of file <a class="el" href="../../d8/d81/socket_8cpp_source.html">socket.cpp</a>.</p>
+
 </div>
 </div>
 <a id="a3a6d6bcb4f5211a3c5268dfa05ffb7b7"></a>
@@ -371,7 +375,7 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 <p>Gets ip/port information for local side of the connection. </p><dl class="section return"><dt>Returns</dt><dd>Returns <a class="el" href="../../d4/d0d/classtuxnet_1_1socket__address.html">socket_address</a> object containing ip/port information for local end of the connection. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d81/socket_8cpp_source.html#l00064">64</a> of file <a class="el" href="../../d8/d81/socket_8cpp_source.html">socket.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d81/socket_8cpp_source.html#l00070">70</a> of file <a class="el" href="../../d8/d81/socket_8cpp_source.html">socket.cpp</a>.</p>
 
 </div>
 </div>
@@ -391,7 +395,7 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 <p>Gets the protocol used for this socket. </p><dl class="section return"><dt>Returns</dt><dd>Returns the protocol used for this socket. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d81/socket_8cpp_source.html#l00070">70</a> of file <a class="el" href="../../d8/d81/socket_8cpp_source.html">socket.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d81/socket_8cpp_source.html#l00076">76</a> of file <a class="el" href="../../d8/d81/socket_8cpp_source.html">socket.cpp</a>.</p>
 
 </div>
 </div>
@@ -411,7 +415,7 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 <p>Gets ip/port information for remote side of the connection. </p><dl class="section return"><dt>Returns</dt><dd>Returns <a class="el" href="../../d4/d0d/classtuxnet_1_1socket__address.html">socket_address</a> object containing ip/port information for remote end of the connection. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d81/socket_8cpp_source.html#l00076">76</a> of file <a class="el" href="../../d8/d81/socket_8cpp_source.html">socket.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d81/socket_8cpp_source.html#l00082">82</a> of file <a class="el" href="../../d8/d81/socket_8cpp_source.html">socket.cpp</a>.</p>
 
 </div>
 </div>
@@ -451,7 +455,7 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>Returns true on success, false on failure. </dd></dl>
 <dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000002">Todo:</a></b></dt><dd>: configurable backlog with net.core.somaxconn as default. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d81/socket_8cpp_source.html#l00101">101</a> of file <a class="el" href="../../d8/d81/socket_8cpp_source.html">socket.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d81/socket_8cpp_source.html#l00125">125</a> of file <a class="el" href="../../d8/d81/socket_8cpp_source.html">socket.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -490,7 +494,7 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 <p>Checks if any events happened on the socket. </p><dl class="section return"><dt>Returns</dt><dd>Returns true on success, false on error. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d81/socket_8cpp_source.html#l00164">164</a> of file <a class="el" href="../../d8/d81/socket_8cpp_source.html">socket.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d81/socket_8cpp_source.html#l00188">188</a> of file <a class="el" href="../../d8/d81/socket_8cpp_source.html">socket.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -536,7 +540,7 @@ Here is the caller graph for this function:</div>
 <p>This is only relevant for TCP sockets.</p>
 <p>The keepalive mechanism is used for detecting dropped connections for when peers don't (or can't) gracefully disconnect, thus preventing a half-open state.</p>
 <p>The way this works is by sending 0-byte packets periodically to ping the connection. Since these packets still need to be ACK'ed, we can poll with a timeout and disconnect the socket if the timeout hits. The duration of this timeout is configurable with <a class="el" href="../../da/d32/classtuxnet_1_1socket.html#aa643d1834337de470f9b8c2f74ce551f">tuxnet::socket::set_keepalive_timeout()</a></p>
-<p>Because this mechanism takes advantage of the TCP guaranteed-delivery mechanism (every packet needs to be acknowledged), on a non-TCP socket the keepalive mechanism is not used, and calls to <a class="el" href="../../da/d32/classtuxnet_1_1socket.html#acc4929c68f5538cf3e21d301697c06d1">tuxnet::socket::set_keepalive()</a> and <a class="el" href="../../da/d32/classtuxnet_1_1socket.html#aa643d1834337de470f9b8c2f74ce551f">tuxnet::socket::set_keepalive_timeout()</a>, and tuxnet:;socket::set_keepalive_interval() are a no-op.</p>
+<p>Because this mechanism takes advantage of the TCP guaranteed-delivery mechanism (every packet needs to be acknowledged), on a non-TCP socket the keepalive mechanism is not used, and calls to <a class="el" href="../../da/d32/classtuxnet_1_1socket.html#acc4929c68f5538cf3e21d301697c06d1">tuxnet::socket::set_keepalive()</a>, <a class="el" href="../../da/d32/classtuxnet_1_1socket.html#aa643d1834337de470f9b8c2f74ce551f">tuxnet::socket::set_keepalive_timeout()</a>, and <a class="el" href="../../da/d32/classtuxnet_1_1socket.html#a28e45882cd2e7678ef240f94864a4b51">tuxnet::socket::set_keepalive_interval()</a> are a no-op.</p>
 <p>The keepalive mechanism is on by default, so you don't have to call <a class="el" href="../../da/d32/classtuxnet_1_1socket.html#acc4929c68f5538cf3e21d301697c06d1">tuxnet::socket::set_keepalive</a> unless you explicitly want to disable it (or re-enable it after disabling it).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -544,6 +548,38 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d8/d81/socket_8cpp_source.html#l00088">88</a> of file <a class="el" href="../../d8/d81/socket_8cpp_source.html">socket.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a28e45882cd2e7678ef240f94864a4b51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28e45882cd2e7678ef240f94864a4b51">&#9670;&nbsp;</a></span>set_keepalive_interval()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tuxnet::socket::set_keepalive_interval </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>interval</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets the keepalive interval.</p>
+<p>Governs how frequently we send TCP keepalive packets.</p>
+<p>Default is every 15 seconds.</p>
+<p>See <a class="el" href="../../da/d32/classtuxnet_1_1socket.html#acc4929c68f5538cf3e21d301697c06d1">tuxnet::socket::set_keepalive()</a> for more information on the TCP keepalive system.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">interval</td><td>: TCP keepalive interval in seconds. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d8/d81/socket_8cpp_source.html#l00094">94</a> of file <a class="el" href="../../d8/d81/socket_8cpp_source.html">socket.cpp</a>.</p>
 
 </div>
 </div>
@@ -562,7 +598,18 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Sets the keepalive timeout. </p>
+<p>Sets the keepalive timeout.</p>
+<p>If a TCP keepalive packet is sent, this governs how long until we give up waiting for the ACK and consider the connection dropped.</p>
+<p>Default is 10 seconds.</p>
+<p>See <a class="el" href="../../da/d32/classtuxnet_1_1socket.html#acc4929c68f5538cf3e21d301697c06d1">tuxnet::socket::set_keepalive()</a> for more information on the TCP keepalive system.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timeout</td><td>: Sets the TCP keepalive timeout (in seconds). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d8/d81/socket_8cpp_source.html#l00100">100</a> of file <a class="el" href="../../d8/d81/socket_8cpp_source.html">socket.cpp</a>.</p>
 
 </div>
 </div>
