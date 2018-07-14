@@ -12,6 +12,15 @@ namespace tuxnet
     {
 
         friend class socket;
+
+        /// Keepalive enabled?
+        bool m_keepalive;
+        /// Keepalive interval.
+        int m_keepalive_interval;
+        /// Keepalive retries.
+        int m_keepalive_retries;
+        /// Keepalive timeout.
+        int m_keepalive_timeout;
         /// Listening sockets.
         sockets m_listen_sockets;
 
@@ -19,20 +28,44 @@ namespace tuxnet
 
             // Ctor(s) / dtor. ------------------------------------------------
 
-            /**
-             * Constructor.
-             */
+            /// Constructor.
             server();
 
-            /**
-             * Destructor.
-             */
+            /// Destructor.
             virtual ~server();
 
             // Methods. -------------------------------------------------------
 
             /**
-             * Start listening for connections.
+             * @brief Configures TCP keepalive settings.
+             *
+             * @note Only relevant for TCP servers.
+             *
+             * Allows you to tune the TCP keepalive timeout, interval, 
+             * and retry settings that will be used for client connections.
+             *
+             * These settings govern detection of broken connections and 
+             * half-open states by pinging the other end with 0-byte packets
+             * which need to be ACK'd by the peer.
+             *
+             * A lot more details on this can be found under the documentation
+             * for tuxnet::socket::set_keepalive()
+             *
+             * @param enabled : Set to false to disable, or true to enable.
+             *                  (it's enabled by default, so you don't have
+             *                  to call this to enable keepalive).
+             * @param timeout : (optional) How long a client can be idle until
+             *                  we should start sending keepalive probes.
+             * @param interval : (optional) Delay between keepalive probes.
+             * @param retries : (optional) How many times a probe can fail 
+             *                  (no ack received from client) until we consider
+             *                  the client dead and disconnected.
+             */
+            void configure_keepalive(bool enabled, int timeout=10, 
+                int interval=5, int retries=3);
+
+            /**
+             * @brief Start listening for connections.
              *
              * @param saddrs : Array of socket address objects containing
              *        ip/port/protocol information for which ports the server
@@ -43,9 +76,10 @@ namespace tuxnet
                 const layer4_protocol& proto);
 
             /**
-             * Poll the server to process events.
+             * @brief Poll the server to process events.
              *
              * Processes events for incomming connections and/or data.
+             *
              * @return Returns true on success, false on error.
              */
             bool poll();

@@ -17,8 +17,15 @@
 namespace tuxnet
 {
 
+    // Ctor(s) / dtor. --------------------------------------------------------
+
     // Constructor.
-    server::server()
+    server::server() : 
+        m_keepalive(true), 
+        m_keepalive_interval(5),
+        m_keepalive_retries(3), 
+        m_keepalive_timeout(10),
+        m_listen_sockets({})
     {
         
     }
@@ -34,6 +41,18 @@ namespace tuxnet
         sockets().swap(m_listen_sockets);
     }
 
+    // Methods. ---------------------------------------------------------------
+
+    // Configures TCP keepalive settings.
+    void server::configure_keepalive(bool enabled, int timeout, int interval,
+        int retries)
+    {
+        m_keepalive = enabled;
+        m_keepalive_timeout = timeout;
+        m_keepalive_interval = interval;
+        m_keepalive_retries = retries;
+    }
+
     // Start listening for connections.
     bool server::listen(const socket_addresses& saddrs, const layer4_protocol& proto)
     {
@@ -46,6 +65,10 @@ namespace tuxnet
         {
             // Create socket and start listening.
             socket* sock = new socket(proto);
+            sock->set_keepalive(m_keepalive);
+            sock->set_keepalive_interval(m_keepalive_interval);
+            sock->set_keepalive_retry(m_keepalive_retries);
+            sock->set_keepalive_timeout(m_keepalive_timeout);
             // Listen on socket.
             if (sock->listen(*it, this) == true)
             {
