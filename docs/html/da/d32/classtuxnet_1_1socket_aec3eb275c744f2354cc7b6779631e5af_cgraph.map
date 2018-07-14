@@ -1,6 +1,0 @@
-<map id="tuxnet::socket::listen" name="tuxnet::socket::listen">
-<area shape="rect" id="node2" href="$da/d32/classtuxnet_1_1socket.html#af8b1d6b0b6bb82dea4946e215bb56ddb" title="tuxnet::socket::bind" alt="" coords="197,64,335,91"/>
-<area shape="rect" id="node4" href="$df/d0f/classtuxnet_1_1log.html#a891c2a3bd50975f2701e0789ff58256d" title="tuxnet::log::get" alt="" coords="407,5,517,32"/>
-<area shape="rect" id="node5" href="$df/d0f/classtuxnet_1_1log.html#a34b5fef1b7d45c9837bcdf6be4838f19" title="tuxnet::log::error" alt="" coords="403,123,521,149"/>
-<area shape="rect" id="node3" href="$d4/d0d/classtuxnet_1_1socket__address.html#a0c64517b72026f2693b5e106ea5c769e" title="tuxnet::socket_address\l::get_protocol" alt="" coords="383,57,541,98"/>
-</map>
