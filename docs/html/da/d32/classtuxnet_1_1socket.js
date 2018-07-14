@@ -14,5 +14,6 @@ var classtuxnet_1_1socket =
     [ "poll", "da/d32/classtuxnet_1_1socket.html#a2c085c7179072996c7b91afdfa1bc0f6", null ],
     [ "set_keepalive", "da/d32/classtuxnet_1_1socket.html#acc4929c68f5538cf3e21d301697c06d1", null ],
     [ "set_keepalive_interval", "da/d32/classtuxnet_1_1socket.html#a28e45882cd2e7678ef240f94864a4b51", null ],
+    [ "set_keepalive_retry", "da/d32/classtuxnet_1_1socket.html#a1a93a1b6745cac442b44f3cefc81d431", null ],
     [ "set_keepalive_timeout", "da/d32/classtuxnet_1_1socket.html#aa643d1834337de470f9b8c2f74ce551f", null ]
 ];

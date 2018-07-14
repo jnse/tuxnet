@@ -7,6 +7,7 @@ var searchData=
   ['set_5fip',['set_ip',['../d4/de5/classtuxnet_1_1ip4__socket__address.html#aa5bd038e344c56a04d6f50f387dde6f9',1,'tuxnet::ip4_socket_address']]],
   ['set_5fkeepalive',['set_keepalive',['../da/d32/classtuxnet_1_1socket.html#acc4929c68f5538cf3e21d301697c06d1',1,'tuxnet::socket']]],
   ['set_5fkeepalive_5finterval',['set_keepalive_interval',['../da/d32/classtuxnet_1_1socket.html#a28e45882cd2e7678ef240f94864a4b51',1,'tuxnet::socket']]],
+  ['set_5fkeepalive_5fretry',['set_keepalive_retry',['../da/d32/classtuxnet_1_1socket.html#a1a93a1b6745cac442b44f3cefc81d431',1,'tuxnet::socket']]],
   ['set_5fkeepalive_5ftimeout',['set_keepalive_timeout',['../da/d32/classtuxnet_1_1socket.html#aa643d1834337de470f9b8c2f74ce551f',1,'tuxnet::socket']]],
   ['set_5fport',['set_port',['../d4/de5/classtuxnet_1_1ip4__socket__address.html#a0d1a437f0a8f341cacfa0cc445d52b92',1,'tuxnet::ip4_socket_address']]],
   ['set_5fprotocol',['set_protocol',['../de/db3/classtuxnet_1_1ip__address.html#a87a6ab390f7b7f91b5c164fd2b3da120',1,'tuxnet::ip_address::set_protocol()'],['../d4/d0d/classtuxnet_1_1socket__address.html#a8731f286a0d7357b7e98a7f8cd823d9a',1,'tuxnet::socket_address::set_protocol()']]],
