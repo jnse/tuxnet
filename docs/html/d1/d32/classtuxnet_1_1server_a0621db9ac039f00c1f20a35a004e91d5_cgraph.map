@@ -1,7 +1,11 @@
 <map id="tuxnet::server::listen" name="tuxnet::server::listen">
-<area shape="rect" id="node2" href="$da/d32/classtuxnet_1_1socket.html#a147391244176f557c52c9f32c2efc1ef" title="Listens on an address/port pair. " alt="" coords="195,64,339,91"/>
-<area shape="rect" id="node3" href="$da/d32/classtuxnet_1_1socket.html#a01c3b22ec6965e29236ac6ab114eacaa" title="Binds the socket to an address/port pair. " alt="" coords="387,64,524,91"/>
-<area shape="rect" id="node5" href="$df/d0f/classtuxnet_1_1log.html#a891c2a3bd50975f2701e0789ff58256d" title="tuxnet::log::get" alt="" coords="597,5,706,32"/>
-<area shape="rect" id="node6" href="$df/d0f/classtuxnet_1_1log.html#a34b5fef1b7d45c9837bcdf6be4838f19" title="tuxnet::log::error" alt="" coords="593,123,710,149"/>
-<area shape="rect" id="node4" href="$d4/d0d/classtuxnet_1_1socket__address.html#a0c64517b72026f2693b5e106ea5c769e" title="tuxnet::socket_address\l::get_protocol" alt="" coords="572,57,731,98"/>
+<area shape="rect" id="node2" href="$da/d32/classtuxnet_1_1socket.html#acc4929c68f5538cf3e21d301697c06d1" title="Sets whether or not keepalive should be enabled for this socket. " alt="" coords="201,5,332,47"/>
+<area shape="rect" id="node3" href="$da/d32/classtuxnet_1_1socket.html#a28e45882cd2e7678ef240f94864a4b51" title="Sets the keepalive interval. " alt="" coords="200,71,333,112"/>
+<area shape="rect" id="node4" href="$da/d32/classtuxnet_1_1socket.html#a1a93a1b6745cac442b44f3cefc81d431" title="Sets the keepalive retries. " alt="" coords="201,136,332,177"/>
+<area shape="rect" id="node5" href="$da/d32/classtuxnet_1_1socket.html#aa643d1834337de470f9b8c2f74ce551f" title="Sets the keepalive timeout. " alt="" coords="199,201,334,243"/>
+<area shape="rect" id="node6" href="$da/d32/classtuxnet_1_1socket.html#a147391244176f557c52c9f32c2efc1ef" title="Listens on an address/port pair. " alt="" coords="195,267,339,294"/>
+<area shape="rect" id="node7" href="$da/d32/classtuxnet_1_1socket.html#a01c3b22ec6965e29236ac6ab114eacaa" title="Binds the socket to an address/port pair. " alt="" coords="387,267,524,294"/>
+<area shape="rect" id="node9" href="$df/d0f/classtuxnet_1_1log.html#a891c2a3bd50975f2701e0789ff58256d" title="tuxnet::log::get" alt="" coords="597,209,706,235"/>
+<area shape="rect" id="node10" href="$df/d0f/classtuxnet_1_1log.html#a34b5fef1b7d45c9837bcdf6be4838f19" title="tuxnet::log::error" alt="" coords="593,326,710,353"/>
+<area shape="rect" id="node8" href="$d4/d0d/classtuxnet_1_1socket__address.html#a0c64517b72026f2693b5e106ea5c769e" title="tuxnet::socket_address\l::get_protocol" alt="" coords="572,260,731,301"/>
 </map>
