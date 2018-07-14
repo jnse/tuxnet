@@ -1,5 +1,5 @@
 <map id="tuxnet::socket_address::get_protocol" name="tuxnet::socket_address::get_protocol">
-<area shape="rect" id="node2" href="$da/d32/classtuxnet_1_1socket.html#a01c3b22ec6965e29236ac6ab114eacaa" title="tuxnet::socket::bind" alt="" coords="212,13,349,39"/>
-<area shape="rect" id="node3" href="$da/d32/classtuxnet_1_1socket.html#a147391244176f557c52c9f32c2efc1ef" title="tuxnet::socket::listen" alt="" coords="397,13,541,39"/>
+<area shape="rect" id="node2" href="$da/d32/classtuxnet_1_1socket.html#a01c3b22ec6965e29236ac6ab114eacaa" title="Binds the socket to an address/port pair. " alt="" coords="212,13,349,39"/>
+<area shape="rect" id="node3" href="$da/d32/classtuxnet_1_1socket.html#a147391244176f557c52c9f32c2efc1ef" title="Listens on an address/port pair. " alt="" coords="397,13,541,39"/>
 <area shape="rect" id="node4" href="$d1/d32/classtuxnet_1_1server.html#a0621db9ac039f00c1f20a35a004e91d5" title="tuxnet::server::listen" alt="" coords="589,13,731,39"/>
 </map>

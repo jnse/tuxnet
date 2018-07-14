@@ -143,7 +143,7 @@ namespace tuxnet
             // ctor(s) / dtor. ------------------------------------------------
 
             /** 
-             * Constructor with local/remote saddrs.
+             * @brief Constructor with local/remote saddrs.
              * @param proto : Protocol to be used for the socket.
              * @param epoll_max_events : (optional) Size of epoll event buffer.
              */
@@ -155,7 +155,7 @@ namespace tuxnet
             // Getters / setters. ----------------------------------------------
 
             /**
-             * Gets whether or not keepalive is enabled for this socket.
+             * @brief Gets whether or not keepalive is enabled for this socket.
              * 
              * See tuxnet::socket::set_keepalive() for more
              * details on the keepalive mechanism.
@@ -165,7 +165,7 @@ namespace tuxnet
             bool get_keepalive() const;
 
             /**
-             * Returns the keepalive interval for this socket.
+             * @brief Returns the keepalive interval for this socket.
              *
              * See tuxnet::socket::set_keepalive() for more
              * details on the keepalive mechanism.
@@ -176,7 +176,7 @@ namespace tuxnet
             int get_keepalive_interval() const;
 
             /**
-             * Returns the keepalive timeout for this socket.
+             * @brief Returns the keepalive timeout for this socket.
              *
              * See tuxnet::socket::set_keepalive() for more
              * details on the keepalive mechanism.
@@ -184,29 +184,32 @@ namespace tuxnet
             int get_keepalive_timeout() const;
 
             /**
-             * Gets ip/port information for local side of the connection.
+             * @brief Gets ip/port information for local side of the 
+             *        connection.
              * @return Returns socket_address object containing ip/port 
              *         information for local end of the connection.
              */
             const socket_address* const get_local() const;
 
             /**
-             * Gets the protocol used for this socket.
+             * @brief Gets the protocol used for this socket.
              * @return Returns the protocol used for this socket.
              */
             layer4_protocol get_proto() const;
 
             /**
-             * Gets ip/port information for remote side of the connection.
+             * @brief Gets ip/port information for remote side of the 
+             *        connection.
              * @return Returns socket_address object containing ip/port 
              *         information for remote end of the connection.
              */
             const socket_address* const get_remote() const;
 
             /**
-             * Sets whether or not keepalive should be enabled for this socket.
+             * @brief Sets whether or not keepalive should be enabled for this 
+             *        socket.
              *
-             * This is only relevant for TCP sockets.
+             * @note This is only relevant for TCP sockets.
              *
              * The keepalive mechanism is used for detecting dropped 
              * connections for when peers don't (or can't) gracefully
@@ -236,7 +239,9 @@ namespace tuxnet
             void set_keepalive(bool keepalive_enabled);
             
             /**
-             * Sets the keepalive interval.
+             * @brief Sets the keepalive interval.
+             *
+             * @note This is only relevant for TCP sockets.
              *
              * Governs how frequently we send TCP keepalive packets.
              *
@@ -250,7 +255,9 @@ namespace tuxnet
             void set_keepalive_interval(int interval);
 
             /**
-             * Sets the keepalive timeout.
+             * @brief Sets the keepalive timeout.
+             *
+             * @note This is only relevant for TCP sockets.
              *
              * If a TCP keepalive packet is sent, this governs how long until
              * we give up waiting for the ACK and consider the connection 
@@ -268,7 +275,7 @@ namespace tuxnet
             // Methods. -------------------------------------------------------
 
             /**
-             * Binds the socket to an address/port pair.
+             * @brief Binds the socket to an address/port pair.
              *
              * This function is automatically called by listen(), and 
              * connect(), so you shouldn't have to invoke it manually.
@@ -282,7 +289,7 @@ namespace tuxnet
             void close();
 
             /**
-             * Listens on an address/port pair.
+             * @brief Listens on an address/port pair.
              *
              * @param saddr : socket_address object containing address/port.
              * @param server_object : (optional) pointer to tuxnet::server
@@ -294,7 +301,7 @@ namespace tuxnet
                 server* server_object=nullptr);
 
             /**
-             * Checks if any events happened on the socket.
+             * @brief Checks if any events happened on the socket.
              * @return Returns true on success, false on error.
              */
             bool poll();
