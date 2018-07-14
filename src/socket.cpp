@@ -308,32 +308,55 @@ namespace tuxnet
     // Private methods. -------------------------------------------------------
 
     // Enables keepalive on the socket.
-    bool socket::m_enable_keepalive()
+    bool socket::m_enable_keepalive(int fd)
     {
         if (m_keepalive != true) return true;
         int enable = 1;
-        if (setsockopt(m_fd, SOL_SOCKET, SO_KEEPALIVE, &enable, sizeof(int))
+        if (setsockopt(fd, SOL_SOCKET, SO_KEEPALIVE, &enable, sizeof(int))
             == -1)
         {
             std::string errstr = "setsockopt(...SOL_SOCKET, SO_KEEPALIVE...)";
             errstr += " failed: ";
             errstr += strerror(errno);
             errstr += " (errno=" + std::to_string(errno)+", ";
-            errstr += " fd=", std::to_string(m_fd);
+            errstr += " fd=", std::to_string(fd);
             log::get()->error(errstr);
             return false;
         }
-        if (setsockopt(m_fd, IPPROTO_TCP, TCP_KEEPIDLE, &m_keepalive_timeout,
+        if (setsockopt(fd, IPPROTO_TCP, TCP_KEEPINTVL, &m_keepalive_interval,
+            sizeof(int)) == -1)
+        {
+            std::string errstr = "setsockopt(...IPPROTO_TCP, TCP_KEEPINTVL...";
+            errstr += ") failed: ";
+            errstr += strerror(errno);
+            errstr += " (errno=" + std::to_string(errno)+", ";
+            errstr += " fd=", std::to_string(fd);
+            log::get()->error(errstr);
+            return false;  
+        }
+        if (setsockopt(fd, IPPROTO_TCP, TCP_KEEPCNT, &m_keepalive_retry,
+            sizeof(int)) == -1)
+        {
+            std::string errstr = "setsockopt(...IPPROTO_TCP, TCP_KEEPCNT...";
+            errstr += ") failed: ";
+            errstr += strerror(errno);
+            errstr += " (errno=" + std::to_string(errno)+", ";
+            errstr += " fd=", std::to_string(fd);
+            log::get()->error(errstr);
+            return false;   
+        }
+        if (setsockopt(fd, IPPROTO_TCP, TCP_KEEPIDLE, &m_keepalive_timeout,
             sizeof(int)) == -1)
         {
             std::string errstr = "setsockopt(...IPPROTO_TCP, TCP_KEEPIDLE...)";
             errstr += " failed: ";
             errstr += strerror(errno);
             errstr += " (errno=" + std::to_string(errno)+", ";
-            errstr += " fd=", std::to_string(m_fd);
+            errstr += " fd=", std::to_string(fd);
             log::get()->error(errstr);
             return false; 
         }
+        return true;
     }
 
     // Bind socket to an IPv4 address.
@@ -491,6 +514,13 @@ namespace tuxnet
             }
             else
             {
+                if (m_enable_keepalive(in_fd) != true)
+                {
+                    log::get()->error("Could not enable keepalive on peer"
+                        "socket.");
+                    if (in_fd > 0) ::close(in_fd);
+                    return nullptr;
+                }           
                 if (m_monitor_fd(in_fd) == true)
                 {
                     peer* my_peer = new peer(in_fd, in_addr);
@@ -500,7 +530,7 @@ namespace tuxnet
         }
         else
         {
-            /// TODO handle ipv6
+            /// @todo handle ipv6
         }
         return nullptr;
     }

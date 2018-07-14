@@ -113,10 +113,11 @@ namespace tuxnet
         // Private member functions. ------------------------------------------
 
         /**
-         * Enables keepalive on the socket if m_keepalive is true.
+         * @brief Enables keepalive on the socket if m_keepalive is true.
+         * @param fd : File descriptor to enable keepalive for.
          * @return Returns true on success, false on error.
          */
-        bool m_enable_keepalive();
+        bool m_enable_keepalive(int fd);
 
         /// Binds the socket to an ipv4 address.
         bool m_ip4_bind();
