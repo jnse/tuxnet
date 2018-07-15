@@ -1,4 +1,3 @@
 <map id="tuxnet::peer::get_fd" name="tuxnet::peer::get_fd">
 <area shape="rect" id="node2" href="$da/d32/classtuxnet_1_1socket.html#a2c085c7179072996c7b91afdfa1bc0f6" title="Checks if any events happened on the socket. " alt="" coords="188,5,321,32"/>
-<area shape="rect" id="node3" href="$d1/d32/classtuxnet_1_1server.html#a58bde94043200e4adbbeffafcb8f2ef8" title="Poll the server to process events. " alt="" coords="369,5,500,32"/>
 </map>
