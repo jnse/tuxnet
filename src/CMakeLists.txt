@@ -10,4 +10,4 @@ add_library(tuxnet SHARED
     socket.cpp
 )
 
-target_link_libraries(tuxnet "pthread" "ssl" "crypto")
+target_link_libraries(tuxnet pthread)
