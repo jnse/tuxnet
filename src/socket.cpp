@@ -29,7 +29,7 @@ namespace tuxnet
         m_keepalive_timeout(10),
         m_local_saddr(nullptr),
         m_peers({}),
-        m_proto(proto), 
+        m_proto(proto),
         m_remote_saddr(nullptr), 
         m_server(nullptr),
         m_state(SOCKET_STATE_UNINITIALIZED)
@@ -182,7 +182,7 @@ namespace tuxnet
             ::close(m_fd);
             m_fd = 0;
         }
-        for (auto it = m_peers.begin(); it != m_peers.end(); ++it)
+        for (auto it = m_peers.get().begin(); it != m_peers.get().end(); ++it)
         {
             if (it->first != 0)
             {
@@ -194,7 +194,7 @@ namespace tuxnet
                 it->second = nullptr;
             }
         }
-        peers().swap(m_peers);
+        m_peers.atomic([](peers& p){ peers().swap(p); });
         m_state = SOCKET_STATE_CLOSED;
     }
 
@@ -238,8 +238,8 @@ namespace tuxnet
                     m_remove_peer(event_fd);
                     if (m_server != nullptr)
                     {
-                        auto client_peer_it =  m_peers.find(event_fd);
-                        if (client_peer_it == m_peers.end())
+                        auto client_peer_it =  m_peers.get().find(event_fd);
+                        if (client_peer_it == m_peers.get().end())
                         {
                             std::string errstr = "Received an error on a ";
                             errstr += "file-descriptor for which there is no ";
@@ -267,7 +267,7 @@ namespace tuxnet
                     peer* my_peer = m_try_accept();
                     if (my_peer != nullptr)
                     {
-                        m_peers.insert({my_peer->get_fd(), my_peer});
+                        m_peers.get().insert({my_peer->get_fd(), my_peer});
                         if (m_server != nullptr)
                         {
                             m_server->on_connect(my_peer);
@@ -279,9 +279,9 @@ namespace tuxnet
             {
                 /* An event came in on one of the peer sockets.
                  * This is typically peer data. */
-                auto client_peer_it =  m_peers.find(
+                auto client_peer_it =  m_peers.get().find(
                     m_epoll_events[n_event].data.fd);
-                if (client_peer_it == m_peers.end())
+                if (client_peer_it == m_peers.get().end())
                 {
                     std::string errstr = "Received an event with a file";
                     errstr += "descriptor number not found in the server's list";
@@ -457,8 +457,8 @@ namespace tuxnet
     // Remove a peer, cleanup after a client disconnects.
     void socket::m_remove_peer(int fd)
     {
-        auto client_peer_it =  m_peers.find(fd);
-        if (client_peer_it != m_peers.end())
+        auto client_peer_it =  m_peers.get().find(fd);
+        if (client_peer_it != m_peers.get().end())
         {
             if (client_peer_it->first != 0)
             {

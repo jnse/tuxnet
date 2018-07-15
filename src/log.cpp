@@ -12,11 +12,9 @@ namespace tuxnet
     // Get pointer to log instance.
     log& log::get()
     {
-        std::call_once(m_instance_allocated,[]
-            {
-                m_instance.reset(new log);
-            }
-        );
+        std::call_once(m_instance_allocated,[]{
+            m_instance.reset(new log);
+        });
         return *m_instance.get();
     }
 

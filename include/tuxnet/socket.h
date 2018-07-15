@@ -10,6 +10,7 @@
 #include <unordered_map>
 #include "tuxnet/socket_address.h"
 #include "tuxnet/protocol.h"
+#include "tuxnet/lockable.h"
 #include "tuxnet/peer.h"
 
 namespace tuxnet
@@ -93,7 +94,7 @@ namespace tuxnet
         const socket_address* m_local_saddr;
 
         /// Storage for peer connections.
-        peers m_peers;
+        lockable<peers> m_peers;
 
         /// Stores the socket protocol.
         layer4_protocol m_proto;
