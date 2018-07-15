@@ -9,6 +9,7 @@
 #include <string>
 #include <stdexcept>
 #include <system_error>
+#include <future>
 #include "tuxnet/string.h"
 #include "tuxnet/server.h"
 #include "tuxnet/socket.h"
@@ -39,6 +40,16 @@ namespace tuxnet
             delete (*it);
         }
         sockets().swap(m_listen_sockets);
+    }
+
+    // Private member functions. ----------------------------------------------
+
+    // Call poll on a single socket asynchronously.
+    bool server::m_poll_single(socket* const sock)
+    {
+        if (sock == nullptr) return false;
+        while(sock->poll() == true){ }
+        return true;
     }
 
     // Methods. ---------------------------------------------------------------
@@ -85,17 +96,20 @@ namespace tuxnet
     bool server::poll()
     {
         bool result = true;
+        std::vector<std::thread*> threads; 
         for (auto it = m_listen_sockets.begin(); 
             it != m_listen_sockets.end(); ++it)
         {
-            /// @todo Each socket needs to be poll'ed in a separate thread in
-            //        order to properly handle multiple listeners.
             socket* cur_sock = (*it);
             if (cur_sock == nullptr) continue;
-            if (cur_sock->poll() != true)
-            {
-                result = false;
-            }
+            threads.push_back(new std::thread(m_poll_single, cur_sock));
+        }
+        for (auto it = threads.begin(); it != threads.end(); ++it)
+        {
+            if ((*it) == nullptr) continue;
+            (*it)->join();
+            delete (*it);
+            (*it) = nullptr;
         }
         return result;
     }
@@ -105,19 +119,19 @@ namespace tuxnet
     // Client connected.
     void server::on_connect(peer* remote_peer)
     {
-        log::get()->debug("Received connection.");
+        log::get().debug("Received connection.");
     }
 
     // Received data.
     void server::on_receive(peer* remote_peer)
     {
-        log::get()->debug("Received data.");
+        log::get().debug("Received data.");
     }
 
     // Client disconnected.
     void server::on_disconnect(peer* remote_peer)
     {
-        log::get()->debug("Lost connection.");
+        log::get().debug("Lost connection.");
     }
 
 }

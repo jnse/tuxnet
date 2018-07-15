@@ -130,7 +130,7 @@ namespace tuxnet
         {
             return m_ip6_bind();
         }
-        log::get()->error(std::string("Could not bind socket")
+        log::get().error(std::string("Could not bind socket")
             + "(invalid/unset socket_address layer-3 protocol.)");
         return false;
     }
@@ -150,7 +150,7 @@ namespace tuxnet
             errstr += std::to_string(errno) + " : ";
             errstr += strerror(errno);
             errstr += ").";
-            log::get()->error(errstr);
+            log::get().error(errstr);
             return false;
         }
         // Set up epoll notifications.
@@ -161,7 +161,7 @@ namespace tuxnet
             errstr += std::to_string(errno) + " : ";
             errstr += strerror(errno);
             errstr += ").";
-            log::get()->error(errstr);
+            log::get().error(errstr);
             return false; 
         }
         if (m_monitor_fd(m_fd) == true)
@@ -201,16 +201,15 @@ namespace tuxnet
     // Checks for any events on the socket.
     bool socket::poll()
     {
-        bool result = false;
         if (
             (m_state != SOCKET_STATE_STATELESS)
             and (m_state != SOCKET_STATE_LISTENING)
             and (m_state != SOCKET_STATE_CONNECTED)
         )
         {
-            log::get()->error("Socket is not in a state in"
+            log::get().error("Socket is not in a state in"
                 " which it can be polled.");
-            return result;
+            return false;
         }
         /* Call epoll_wait to fetch a bunch of events and
          * loop through them to handle them. */
@@ -228,7 +227,7 @@ namespace tuxnet
                 if (event_fd == m_fd)
                 {
                     // Error on our socket. :(
-                    log::get()->error("epoll error on the listening socket.");
+                    log::get().error("epoll error on the listening socket.");
                     close();
                 }
                 else if (m_state == SOCKET_STATE_LISTENING)
@@ -246,12 +245,12 @@ namespace tuxnet
                             errstr += "file-descriptor for which there is no ";
                             errstr += "corresponding client. (fd=";
                             errstr += std::to_string(event_fd) + ")";
-                            log::get()->error(errstr);
+                            log::get().error(errstr);
                         }
                         else
                         {
                             m_server->on_disconnect(client_peer_it->second);
-                            m_remove_peer(client_peer_it->first);;
+                            m_remove_peer(client_peer_it->first);
                         }
                     }
                 }
@@ -272,7 +271,6 @@ namespace tuxnet
                         if (m_server != nullptr)
                         {
                             m_server->on_connect(my_peer);
-                            result = true;
                         }
                     }
                 }
@@ -299,10 +297,9 @@ namespace tuxnet
                         m_server->on_receive(client_peer_it->second);
                     }
                 }
-                result = true;
             }
         }
-        return result;
+        return true;
     }
 
     // Private methods. -------------------------------------------------------
@@ -320,7 +317,7 @@ namespace tuxnet
             errstr += strerror(errno);
             errstr += " (errno=" + std::to_string(errno)+", ";
             errstr += " fd=", std::to_string(fd);
-            log::get()->error(errstr);
+            log::get().error(errstr);
             return false;
         }
         if (setsockopt(fd, IPPROTO_TCP, TCP_KEEPINTVL, &m_keepalive_interval,
@@ -331,7 +328,7 @@ namespace tuxnet
             errstr += strerror(errno);
             errstr += " (errno=" + std::to_string(errno)+", ";
             errstr += " fd=", std::to_string(fd);
-            log::get()->error(errstr);
+            log::get().error(errstr);
             return false;  
         }
         if (setsockopt(fd, IPPROTO_TCP, TCP_KEEPCNT, &m_keepalive_retry,
@@ -342,7 +339,7 @@ namespace tuxnet
             errstr += strerror(errno);
             errstr += " (errno=" + std::to_string(errno)+", ";
             errstr += " fd=", std::to_string(fd);
-            log::get()->error(errstr);
+            log::get().error(errstr);
             return false;   
         }
         if (setsockopt(fd, IPPROTO_TCP, TCP_KEEPIDLE, &m_keepalive_timeout,
@@ -353,7 +350,7 @@ namespace tuxnet
             errstr += strerror(errno);
             errstr += " (errno=" + std::to_string(errno)+", ";
             errstr += " fd=", std::to_string(fd);
-            log::get()->error(errstr);
+            log::get().error(errstr);
             return false; 
         }
         return true;
@@ -364,7 +361,7 @@ namespace tuxnet
     {
         if (m_local_saddr->get_protocol() == L3_PROTO_NONE)
         {
-            log::get()->error("No layer-3 protocol set for socket_address.");
+            log::get().error("No layer-3 protocol set for socket_address.");
             return false;
         }
         const ip4_socket_address* p4saddr = dynamic_cast<
@@ -380,7 +377,7 @@ namespace tuxnet
             errstr += " : ";
             errstr += strerror(errno);
             errstr += ").";
-            log::get()->error(errstr);
+            log::get().error(errstr);
             return false;
         }
         return m_make_fd_nonblocking(m_fd);
@@ -406,7 +403,7 @@ namespace tuxnet
             errmsg += ", fd=";
             errmsg += std::to_string(fd);
             errmsg += ")";
-            log::get()->error(errmsg);
+            log::get().error(errmsg);
             return false;
         }
         flags |= O_NONBLOCK;
@@ -420,7 +417,7 @@ namespace tuxnet
             errmsg += ", fd=";
             errmsg += std::to_string(fd);
             errmsg += ")";
-            log::get()->error(errmsg);
+            log::get().error(errmsg);
             return false;
         }
         return true;
@@ -451,7 +448,7 @@ namespace tuxnet
             errmsg += ", peer_fd=";
             errmsg += std::to_string(fd);
             errmsg += ")";
-            log::get()->error(errmsg);
+            log::get().error(errmsg);
             return false;
         }
         return true;
@@ -508,7 +505,7 @@ namespace tuxnet
                     errmsg += " (";
                     errmsg += std::to_string(errno);
                     errmsg += ")";
-                    log::get()->error(errmsg);
+                    log::get().error(errmsg);
                     return nullptr;
                 }
             }
@@ -516,7 +513,7 @@ namespace tuxnet
             {
                 if (m_enable_keepalive(in_fd) != true)
                 {
-                    log::get()->error("Could not enable keepalive on peer"
+                    log::get().error("Could not enable keepalive on peer"
                         "socket.");
                     if (in_fd > 0) ::close(in_fd);
                     return nullptr;

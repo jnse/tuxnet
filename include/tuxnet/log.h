@@ -1,6 +1,8 @@
 #ifndef TUXNET_LOG_INCLUDE
 #define TUXNET_LOG_INCLUDE
 
+#include <memory>
+#include <mutex>
 #include <string>
 
 namespace tuxnet
@@ -14,8 +16,10 @@ namespace tuxnet
     {
 
         /// Holds singleton pointer to itself, instantiated on first use.
-        static log* m_this_ptr;
-        
+        static std::unique_ptr<log> m_instance;
+        /// once_flag indicating if instance has already been allocated.
+        static std::once_flag m_instance_allocated;
+
         public:
 
             /**
@@ -24,7 +28,7 @@ namespace tuxnet
              * @return Returns a pointer to the log object singleton.
              *         Class is instantiated on first use.
              **/
-            static log* get();
+            static log& get();
 
             /**
              * Log an informational message.

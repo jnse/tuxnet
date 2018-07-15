@@ -24,7 +24,7 @@ namespace tuxnet
         }
         if (!p)
         {
-            log::get()->error(std::string("Could not get protocol ")
+            log::get().error(std::string("Could not get protocol ")
                 + std::to_string(proto));
             return 0;
         }

@@ -42,14 +42,10 @@ int main(int argc, char* argv[])
     tuxnet::ip4_socket_address saddr_http(
         tuxnet::ip4_address("127.0.0.1"), 8080
     );
-    /*
     tuxnet::ip4_socket_address saddr_https(
         tuxnet::ip4_address("127.0.0.1"), 8443
     );
-    */
-    tuxnet::socket_addresses saddrs = {
-        &saddr_http
-    };
+    tuxnet::socket_addresses saddrs = { &saddr_http, &saddr_https };
     // Start listening.
     bool success = server.listen(saddrs, tuxnet::L4_PROTO_TCP);
     if (success != true)

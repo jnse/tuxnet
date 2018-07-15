@@ -117,7 +117,7 @@ namespace tuxnet
             errstr += " (";
             errstr += strerror(errno);
             errstr += ")";
-            log::get()->error(errstr);
+            log::get().error(errstr);
         }
     }
 

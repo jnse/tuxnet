@@ -1,6 +1,7 @@
 #ifndef SERVER_H_INCLUDE
 #define SERVER_H_INCLUDE
 
+#include <future>
 #include "tuxnet/string.h"
 #include "tuxnet/socket_address.h"
 #include "tuxnet/peer.h"
@@ -13,6 +14,8 @@ namespace tuxnet
 
         friend class socket;
 
+        // Private member variables. ------------------------------------------
+
         /// Keepalive enabled?
         bool m_keepalive;
         /// Keepalive interval.
@@ -23,6 +26,19 @@ namespace tuxnet
         int m_keepalive_timeout;
         /// Listening sockets.
         sockets m_listen_sockets;
+
+        // Private member functions. ------------------------------------------
+
+        /** 
+         * Polls a single socket.
+         *
+         * Calls poll on the given socket asynchronously.
+         *
+         * @param sock Socket to call poll() on.
+         * @return Returns a future which returns true on success, 
+         *         false on failure
+         */
+        static bool m_poll_single(socket* const sock);
 
         public:
 

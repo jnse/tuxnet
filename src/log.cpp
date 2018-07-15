@@ -1,17 +1,23 @@
+#include <mutex>
 #include <iostream>
 #include "tuxnet/log.h"
 
 namespace tuxnet
 {
 
-    // Initialize log instance pointer.
-    log* log::m_this_ptr = 0;
+    /// Init log class static members.
+    std::unique_ptr<log> log::m_instance;
+    std::once_flag log::m_instance_allocated;
 
     // Get pointer to log instance.
-    log* log::get()
+    log& log::get()
     {
-        if (m_this_ptr == nullptr) m_this_ptr = new log();
-        return m_this_ptr;
+        std::call_once(m_instance_allocated,[]
+            {
+                m_instance.reset(new log);
+            }
+        );
+        return *m_instance.get();
     }
 
     //  Log an informational message.
