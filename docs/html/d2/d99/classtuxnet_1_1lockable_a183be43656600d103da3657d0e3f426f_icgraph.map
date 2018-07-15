@@ -1,0 +1,5 @@
+<map id="tuxnet::lockable::get" name="tuxnet::lockable::get">
+<area shape="rect" id="node2" href="$da/d32/classtuxnet_1_1socket.html#accb64eb3f3faac8e79a0e690deb55bdb" title="Closes the socket. " alt="" coords="193,5,337,32"/>
+<area shape="rect" id="node4" href="$da/d32/classtuxnet_1_1socket.html#a2c085c7179072996c7b91afdfa1bc0f6" title="Checks if any events happened on the socket. " alt="" coords="399,56,532,83"/>
+<area shape="rect" id="node3" href="$da/d32/classtuxnet_1_1socket.html#a76f04d3715b9b877c451f549b7982f9b" title="Destructor. " alt="" coords="385,5,545,32"/>
+</map>

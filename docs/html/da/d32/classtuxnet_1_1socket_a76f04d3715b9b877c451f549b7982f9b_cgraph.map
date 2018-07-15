@@ -1,3 +1,5 @@
 <map id="tuxnet::socket::~socket" name="tuxnet::socket::~socket">
-<area shape="rect" id="node2" href="$da/d32/classtuxnet_1_1socket.html#accb64eb3f3faac8e79a0e690deb55bdb" title="Closes the socket. " alt="" coords="213,5,357,32"/>
+<area shape="rect" id="node2" href="$da/d32/classtuxnet_1_1socket.html#accb64eb3f3faac8e79a0e690deb55bdb" title="Closes the socket. " alt="" coords="213,31,357,57"/>
+<area shape="rect" id="node3" href="$d2/d99/classtuxnet_1_1lockable.html#a183be43656600d103da3657d0e3f426f" title="Get an instance of the managed object. " alt="" coords="416,5,556,32"/>
+<area shape="rect" id="node4" href="$d2/d99/classtuxnet_1_1lockable.html#a34be1edd3d5c38d553796a0c6e0f93f2" title="Perform an atomic operation on the object. " alt="" coords="405,56,567,83"/>
 </map>

@@ -1,10 +1,12 @@
 <map id="tuxnet::socket::poll" name="tuxnet::socket::poll">
-<area shape="rect" id="node2" href="$df/d0f/classtuxnet_1_1log.html#ab1741bef0f42314fa515a64154f44ab9" title="tuxnet::log::get" alt="" coords="387,50,497,76"/>
-<area shape="rect" id="node3" href="$df/d0f/classtuxnet_1_1log.html#a34b5fef1b7d45c9837bcdf6be4838f19" title="tuxnet::log::error" alt="" coords="200,231,317,258"/>
-<area shape="rect" id="node4" href="$da/d32/classtuxnet_1_1socket.html#accb64eb3f3faac8e79a0e690deb55bdb" title="Closes the socket. " alt="" coords="187,282,331,308"/>
-<area shape="rect" id="node5" href="$d1/d32/classtuxnet_1_1server.html#a800d48cec34e7f259b618367733b92dc" title="on_disconnect event. " alt="" coords="197,34,321,76"/>
-<area shape="rect" id="node7" href="$d3/daa/classtuxnet_1_1peer.html#a3232c179a9a0fe3e215463451edf8e51" title="tuxnet::peer::get_fd" alt="" coords="191,332,326,359"/>
-<area shape="rect" id="node8" href="$d1/d32/classtuxnet_1_1server.html#ae397031646f4b747f67899491928d014" title="on_connect event. " alt="" coords="197,100,321,141"/>
-<area shape="rect" id="node9" href="$d1/d32/classtuxnet_1_1server.html#a2cb6aafc9e1955a2ab997de05f0cede8" title="on_receive event. " alt="" coords="197,165,321,206"/>
-<area shape="rect" id="node6" href="$df/d0f/classtuxnet_1_1log.html#acd937b31ebb857fa513e1d388a39ec83" title="tuxnet::log::debug" alt="" coords="379,107,505,134"/>
+<area shape="rect" id="node2" href="$df/d0f/classtuxnet_1_1log.html#ab1741bef0f42314fa515a64154f44ab9" title="tuxnet::log::get" alt="" coords="405,53,514,79"/>
+<area shape="rect" id="node3" href="$df/d0f/classtuxnet_1_1log.html#a34b5fef1b7d45c9837bcdf6be4838f19" title="tuxnet::log::error" alt="" coords="200,234,317,261"/>
+<area shape="rect" id="node4" href="$da/d32/classtuxnet_1_1socket.html#accb64eb3f3faac8e79a0e690deb55bdb" title="Closes the socket. " alt="" coords="187,335,331,362"/>
+<area shape="rect" id="node5" href="$d2/d99/classtuxnet_1_1lockable.html#a183be43656600d103da3657d0e3f426f" title="Get an instance of the managed object. " alt="" coords="389,285,529,311"/>
+<area shape="rect" id="node7" href="$d1/d32/classtuxnet_1_1server.html#a800d48cec34e7f259b618367733b92dc" title="on_disconnect event. " alt="" coords="197,37,321,79"/>
+<area shape="rect" id="node9" href="$d3/daa/classtuxnet_1_1peer.html#a3232c179a9a0fe3e215463451edf8e51" title="tuxnet::peer::get_fd" alt="" coords="191,386,326,413"/>
+<area shape="rect" id="node10" href="$d1/d32/classtuxnet_1_1server.html#ae397031646f4b747f67899491928d014" title="on_connect event. " alt="" coords="197,103,321,144"/>
+<area shape="rect" id="node11" href="$d1/d32/classtuxnet_1_1server.html#a2cb6aafc9e1955a2ab997de05f0cede8" title="on_receive event. " alt="" coords="197,168,321,209"/>
+<area shape="rect" id="node6" href="$d2/d99/classtuxnet_1_1lockable.html#a34be1edd3d5c38d553796a0c6e0f93f2" title="Perform an atomic operation on the object. " alt="" coords="379,335,540,362"/>
+<area shape="rect" id="node8" href="$df/d0f/classtuxnet_1_1log.html#acd937b31ebb857fa513e1d388a39ec83" title="tuxnet::log::debug" alt="" coords="396,110,523,137"/>
 </map>
