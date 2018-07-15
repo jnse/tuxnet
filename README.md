@@ -9,7 +9,7 @@ Dependencies
 You won't need much other than a Linux system and a decently recent gcc
 compiler.
 
-* >= gcc-7.0.0
+* gcc 7 or greater (for C++17 support).
 * Linux (probably at least >2.6.8 but you probably want 3.x or 4.x at this
   point anyway).
 * pthread (If you have a Linux system you probably already have it).
