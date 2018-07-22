@@ -98,7 +98,52 @@ namespace tuxnet
     // Read string until token.
     std::string peer::read_string_until(std::string token)
     {
-
+        char buffer;
+        std::string result;
+        if (m_fd == 0)
+        {
+            log::get().error("Read operation on a closed socket.");
+            return "";
+        }
+        while (true)
+        {
+            int count = read(m_fd, &buffer, 1 * sizeof(char));
+            if (count > 0)
+            {
+                if (result.find(token) != std::string::npos)
+                {
+                    break;
+                }
+                else
+                {
+                    result += buffer;
+                }
+            }
+            else
+            {
+                if (errno == EAGAIN)
+                {
+                    continue;
+                }
+                else if (errno == 0)
+                {
+                    // Client disconnected.
+                    /// @todo: call disconnect.
+                    break;
+                }
+                else
+                {
+                 
+                    std::string errstr = "Socket read error : ";
+                    errstr += strerror(errno);
+                    errstr += " (errno="  + std::to_string(errno);
+                    errstr += ")";
+                    log::get().error(errstr);
+                    break;
+                }
+            }
+        }
+        return result;
     }
 
     // Reads a line of text.

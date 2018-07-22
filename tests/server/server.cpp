@@ -28,7 +28,6 @@ class my_server : public tuxnet::server
         // Runs when a client sends data.
         virtual void on_receive(tuxnet::peer* remote_peer)
         {
-
             std::string text = remote_peer->read_line();
             std::cout << "Received data: " << text << std::endl;
         }
