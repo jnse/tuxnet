@@ -59,6 +59,24 @@ namespace tuxnet
              */
             socket_address* get_saddr();
 
+            // Methods. -------------------------------------------------------
+
+            /**
+             * Reads up to a given number of characters from the 
+             * peer socket.
+             */
+            std::string read_string(int characters);
+
+            /**
+             * Reads string until token is sent.
+             */
+            std::string read_string_until(std::string token);
+
+            /**
+             * Reads a line of text.
+             */
+            std::string read_line();
+
     };
 
     /// Collection of peers.

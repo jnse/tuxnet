@@ -116,7 +116,6 @@ namespace tuxnet
 
     // Events. ----------------------------------------------------------------
 
-    // Client connected.
     void server::on_connect(peer* remote_peer)
     {
         log::get().debug("Received connection.");

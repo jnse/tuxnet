@@ -20,15 +20,17 @@ class my_server : public tuxnet::server
     protected:
 
         // Runs when a client connects.
-        void on_connect(tuxnet::peer* remote_peer)
+        virtual void on_connect(tuxnet::peer* remote_peer)
         {
             std::cout << "Received connection" << std::endl;
         }
 
         // Runs when a client sends data.
-        void on_receive(tuxnet::peer* remote_peer)
+        virtual void on_receive(tuxnet::peer* remote_peer)
         {
-            std::cout << "Received data" << std::endl;
+
+            std::string text = remote_peer->read_line();
+            std::cout << "Received data: " << text << std::endl;
         }
 
 };
@@ -37,7 +39,7 @@ int main(int argc, char* argv[])
 {
     std::cout.setf(std::ios::unitbuf);
     // Instantiate server object.
-    tuxnet::server server;
+    my_server server;
     // Define ip and port pairs to listen on.
     tuxnet::ip4_socket_address saddr_http(
         tuxnet::ip4_address("127.0.0.1"), 8080
