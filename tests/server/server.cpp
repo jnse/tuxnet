@@ -22,16 +22,28 @@ class my_server : public tuxnet::server
         // Runs when a client connects.
         virtual void on_connect(tuxnet::peer* remote_peer)
         {
-            std::cout << "Received connection" << std::endl;
+            std::cout << "Received connection (clients = ";
+            std::cout << std::to_string(num_clients());
+            std::cout << ")." << std::endl;
         }
 
         // Runs when a client sends data.
         virtual void on_receive(tuxnet::peer* remote_peer)
         {
             std::string text = remote_peer->read_line();
-            std::cout << "Received data: " << text << std::endl;
+            if (text != "")
+            {
+                std::cout << "Received data: " << text << std::endl;
+            }
         }
 
+        // Runs when a client disconnects.
+        virtual void on_disconnect(tuxnet::peer* remote_peer)
+        {
+            std::cout << "Client disconnected (clients = ";
+            std::cout << std::to_string(num_clients()-1);
+            std::cout << ")." << std::endl;
+        }
 };
 
 int main(int argc, char* argv[])

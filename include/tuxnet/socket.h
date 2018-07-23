@@ -64,6 +64,8 @@ namespace tuxnet
     class socket
     {
 
+        friend class server;
+
         // Private member variables. ------------------------------------------
 
         /// epoll event buffer.
@@ -92,9 +94,6 @@ namespace tuxnet
 
         /// Stores the local address/port pair.
         const socket_address* m_local_saddr;
-
-        /// Storage for peer connections.
-        lockable<peers> m_peers;
 
         /// Stores the socket protocol.
         layer4_protocol m_proto;
@@ -148,6 +147,14 @@ namespace tuxnet
         /// Attempts to accept in incomming connection.
         /// @return Returns true on success, false otherwise.
         peer* m_try_accept();
+
+        // Protected member variables. ----------------------------------------
+
+        protected:
+
+            /// Storage for peer connections.
+            lockable<peers> m_peers;
+
 
         public:
 
@@ -343,6 +350,13 @@ namespace tuxnet
 
             /// Closes the socket.
             void close();
+
+            /**
+             * Disconnects a remote peer.
+             *
+             * @param client : Pointer to peer to disconnect.
+             */
+            void disconnect(peer* client);
 
             /**
              * @brief Listens on an address/port pair.

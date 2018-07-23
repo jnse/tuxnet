@@ -8,6 +8,18 @@
 namespace tuxnet
 {
 
+    // Forward declaration of socket.
+    class socket;
+
+    /// Enum for the different states a peer can be in.
+    enum peer_state
+    {
+        PEER_STATE_UNINITIALIZED=0,
+        PEER_STATE_CONNECTED,
+        PEER_STATE_CLOSING,
+        PEER_STATE_CLOSED
+    };
+
     /**
      * Peer.
      *
@@ -15,10 +27,14 @@ namespace tuxnet
      */
     class peer
     {
+        /// Peer state.
+        peer_state m_state;
         /// File descriptor.
         int m_fd;
         /// IP and port of peer.
         socket_address* m_saddr;
+        /// Pointer to parent socket.
+        socket* const m_socket;
 
         public:
 
@@ -29,16 +45,18 @@ namespace tuxnet
              *
              * @param fd : File descriptor associated with connection.
              * @param in_addr : sockaddr for peer connection.
+             * @param parent : pointer to socket owning this connection.
              */
-            peer(int fd, const sockaddr_in& in_addr);
+            peer(int fd, const sockaddr_in& in_addr, socket* const parent);
 
             /**
              * IPV6 constructor.
              *
              * @param fd : File descriptor associated with connection.
              * @param in_addr : sockaddr for peer connection.
+             * @param parent : pointer to socket owning this connection.
              */
-            peer(int fd, const sockaddr_in6& in_addr);
+            peer(int fd, const sockaddr_in6& in_addr, socket* const parent);
 
             /// Destructor.
             ~peer();
@@ -59,23 +77,42 @@ namespace tuxnet
              */
             socket_address* get_saddr();
 
+            /**
+             * Get the peer state.
+             * @ return Returns the state the peer connection is in.
+             */
+            peer_state const get_state() const;
+
             // Methods. -------------------------------------------------------
 
             /**
              * Reads up to a given number of characters from the 
              * peer socket.
+             *
+             * @param characters : Number of characters to read.
+             * @return Returns text received.
              */
             std::string read_string(int characters);
 
             /**
-             * Reads string until token is sent.
+             * Reads string until given token is received.
+             *
+             * @param token : substring to look for in received data.
+             * @return Returns data received up-to and including token.
              */
             std::string read_string_until(std::string token);
 
             /**
              * Reads a line of text.
+             *
+             * @return Returns received line of text.
              */
             std::string read_line();
+
+            /// @todo Add functions for reading raw bytes.
+
+            /// Close connection to this peer.
+            void disconnect();
 
     };
 

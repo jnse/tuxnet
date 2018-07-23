@@ -4,24 +4,29 @@
 #include "tuxnet/log.h"
 #include "tuxnet/peer.h"
 #include "tuxnet/socket_address.h"
+#include "tuxnet/socket.h"
 
 namespace tuxnet
 {
 
     // IPV4 constructor.
-    peer::peer(int fd, const sockaddr_in& in_addr) : m_fd(fd)
+    peer::peer(int fd, const sockaddr_in& in_addr, socket* const parent) : 
+        m_fd(fd), m_socket(parent), m_state(PEER_STATE_UNINITIALIZED)
     {
         m_saddr = dynamic_cast<socket_address*>(
             new ip4_socket_address(in_addr)
         );
+        m_state = PEER_STATE_CONNECTED;
     }
 
     // IPV6 constructor.
-    peer::peer(int fd, const sockaddr_in6& in_addr) : m_fd(fd)
+    peer::peer(int fd, const sockaddr_in6& in_addr, socket* const parent) : 
+        m_fd(fd), m_socket(parent), m_state(PEER_STATE_UNINITIALIZED)
     {
         m_saddr = dynamic_cast<socket_address*>(
             new ip6_socket_address(in_addr)
         );
+        m_state = PEER_STATE_CONNECTED;
     }
 
     // Destructor.
@@ -29,7 +34,7 @@ namespace tuxnet
     {
         if (m_fd != 0)
         {
-            close(m_fd);
+            ::close(m_fd);
             m_fd = 0;
         }
         if (m_saddr != nullptr)
@@ -53,11 +58,18 @@ namespace tuxnet
         return m_saddr;
     }
 
+    // Get peer state.
+    peer_state const peer::get_state() const
+    {
+        return m_state;
+    }
+
     // Methods. ---------------------------------------------------------------
 
     // Reads up to a given number of characters into string.
     std::string peer::read_string(int characters)
     {
+        if (m_state != PEER_STATE_CONNECTED) return "";
         char buffer[characters];
         std::string result;
         if (m_fd == 0)
@@ -68,6 +80,7 @@ namespace tuxnet
         int read_so_far = 0;
         while (read_so_far < characters)
         {
+            if (m_state != PEER_STATE_CONNECTED) return result;
             int count = read(m_fd, &buffer, sizeof(buffer) * sizeof(char));
             if (count > 0)
             {
@@ -83,12 +96,9 @@ namespace tuxnet
                 }
                 else
                 {
-                    std::string errstr = "Socket read error : ";
-                    errstr += strerror(errno);
-                    errstr += " (errno="  + std::to_string(errno);
-                    errstr += ")";
-                    log::get().error(errstr);
-                    break;
+                    // Client disconnected.
+                    disconnect();
+                    return result;
                 }
             }
         }
@@ -98,6 +108,7 @@ namespace tuxnet
     // Read string until token.
     std::string peer::read_string_until(std::string token)
     {
+        if (m_state != PEER_STATE_CONNECTED) return "";
         char buffer;
         std::string result;
         if (m_fd == 0)
@@ -107,6 +118,7 @@ namespace tuxnet
         }
         while (true)
         {
+            if (m_state != PEER_STATE_CONNECTED) return result;
             int count = read(m_fd, &buffer, 1 * sizeof(char));
             if (count > 0)
             {
@@ -125,21 +137,11 @@ namespace tuxnet
                 {
                     continue;
                 }
-                else if (errno == 0)
+                else 
                 {
                     // Client disconnected.
-                    /// @todo: call disconnect.
-                    break;
-                }
-                else
-                {
-                 
-                    std::string errstr = "Socket read error : ";
-                    errstr += strerror(errno);
-                    errstr += " (errno="  + std::to_string(errno);
-                    errstr += ")";
-                    log::get().error(errstr);
-                    break;
+                    disconnect();
+                    return result;
                 }
             }
         }
@@ -149,6 +151,7 @@ namespace tuxnet
     // Reads a line of text.
     std::string peer::read_line()
     {
+        if (m_state != PEER_STATE_CONNECTED) return "";
         char buffer;
         std::string result;
         if (m_fd == 0)
@@ -158,6 +161,7 @@ namespace tuxnet
         }
         while (true)
         {
+            if (m_state != PEER_STATE_CONNECTED) return result;
             int count = read(m_fd, &buffer, 1 * sizeof(char));
             if (count > 0)
             {
@@ -179,25 +183,22 @@ namespace tuxnet
                 {
                     continue;
                 }
-                else if (errno == 0)
-                {
-                    // Client disconnected.
-                    /// @todo: call disconnect.
-                    break;
-                }
                 else
                 {
-                 
-                    std::string errstr = "Socket read error : ";
-                    errstr += strerror(errno);
-                    errstr += " (errno="  + std::to_string(errno);
-                    errstr += ")";
-                    log::get().error(errstr);
-                    break;
+                    // Client disconnected.
+                    disconnect();
+                    return result;
                 }
             }
         }
         return result;
+    }
+
+    // Close connection to this peer.
+    void peer::disconnect()
+    {
+        m_state = PEER_STATE_CLOSING;
+        m_socket->disconnect(this);
     }
 
 }

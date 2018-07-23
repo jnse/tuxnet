@@ -198,6 +198,12 @@ namespace tuxnet
         m_state = SOCKET_STATE_CLOSED;
     }
 
+    // Disconnects a remote peer.
+    void socket::disconnect(peer* client)
+    {
+        m_remove_peer(client->get_fd());
+    }
+
     // Checks for any events on the socket.
     bool socket::poll()
     {
@@ -249,14 +255,13 @@ namespace tuxnet
                         }
                         else
                         {
-                            m_server->on_disconnect(client_peer_it->second);
                             m_remove_peer(client_peer_it->first);
                         }
                     }
                 }
                 continue;
             }
-            else if (m_epoll_events[n_event].data.fd == m_fd)
+            else if (event_fd == m_fd)
             {
                 /* An event came in on our socket.
                  * This is typically a connection attempt.
@@ -267,7 +272,9 @@ namespace tuxnet
                     peer* my_peer = m_try_accept();
                     if (my_peer != nullptr)
                     {
+                        m_peers.lock();
                         m_peers.get().insert({my_peer->get_fd(), my_peer});
+                        m_peers.unlock();
                         if (m_server != nullptr)
                         {
                             m_server->on_connect(my_peer);
@@ -279,22 +286,29 @@ namespace tuxnet
             {
                 /* An event came in on one of the peer sockets.
                  * This is typically peer data. */
-                auto client_peer_it =  m_peers.get().find(
-                    m_epoll_events[n_event].data.fd);
+                auto client_peer_it =  m_peers.get().find(event_fd);
                 if (client_peer_it == m_peers.get().end())
                 {
                     std::string errstr = "Received an event with a file";
                     errstr += "descriptor number not found in the server's list";
                     errstr += " of peers. (fd = ";
-                    errstr += std::to_string(m_epoll_events[n_event].data.fd);
+                    errstr += std::to_string(event_fd);
                     errstr += ")";
+                    log::get().error(errstr);
                     return false;
                 }
                 if (m_state == SOCKET_STATE_LISTENING)
                 {
                     if (m_server != nullptr)
                     {
-                        m_server->on_receive(client_peer_it->second);
+                        if (client_peer_it->second != nullptr)
+                        {
+                            if (client_peer_it->second->get_state() == 
+                                PEER_STATE_CONNECTED)
+                            {
+                                m_server->on_receive(client_peer_it->second);
+                            }
+                        }
                     }
                 }
             }
@@ -460,6 +474,7 @@ namespace tuxnet
         auto client_peer_it =  m_peers.get().find(fd);
         if (client_peer_it != m_peers.get().end())
         {
+            m_server->on_disconnect(client_peer_it->second);
             if (client_peer_it->first != 0)
             {
                 ::close(client_peer_it->first);
@@ -470,6 +485,9 @@ namespace tuxnet
                 delete client_peer_it->second;
                 client_peer_it->second = nullptr;
             }
+            m_peers.lock();
+            m_peers.get().erase(client_peer_it);
+            m_peers.unlock();
         }
         else
         {
@@ -520,7 +538,7 @@ namespace tuxnet
                 }           
                 if (m_monitor_fd(in_fd) == true)
                 {
-                    peer* my_peer = new peer(in_fd, in_addr);
+                    peer* my_peer = new peer(in_fd, in_addr, this);
                     return my_peer;
                 }
             }

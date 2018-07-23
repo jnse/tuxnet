@@ -92,6 +92,12 @@ namespace tuxnet
                 const layer4_protocol& proto);
 
             /**
+             * Returns number of connected clients.
+             * @return Number of connected clients.
+             */
+            int num_clients();
+
+            /**
              * @brief Poll the server to process events.
              *
              * Processes events for incomming connections and/or data.

@@ -93,6 +93,20 @@ namespace tuxnet
         return !err;
     }
 
+    // Return number of connected clients.
+    int server::num_clients()
+    {
+        int result = 0;
+        for (auto it = m_listen_sockets.begin(); 
+            it != m_listen_sockets.end(); ++it)
+        {
+            socket* cur_sock = (*it);
+            if (cur_sock == nullptr) continue;
+            result += cur_sock->m_peers.get().size();
+        }
+        return result; 
+    }
+
     bool server::poll()
     {
         bool result = true;
