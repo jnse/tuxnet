@@ -33,7 +33,18 @@ class my_server : public tuxnet::server
             std::string text = remote_peer->read_line();
             if (text != "")
             {
-                std::cout << "Received data: " << text << std::endl;
+                if (text == "GET / HTTP/1.1")
+                {
+                    std::string response = "hello!";
+                    remote_peer->write_string("HTTP/1.1 200 OK\n");
+                    remote_peer->write_string("Connection: Closed\n");
+                    remote_peer->write_string("Content-Encoding: text/plain\n");
+                    remote_peer->write_string("Content-Length: "
+                        + std::to_string(response.length()) + "\n");
+                    remote_peer->write_string("\r\n");
+                    remote_peer->write_string(response);
+                    remote_peer->disconnect();
+                }
             }
         }
 

@@ -194,6 +194,18 @@ namespace tuxnet
         return result;
     }
 
+    void peer::write_string(std::string text)
+    {
+        if (m_state != PEER_STATE_CONNECTED) return;
+        if (::write(m_fd, text.c_str(), text.length()) == -1)
+        {
+            std::string errstr = "Could not write to peer: ";
+            errstr += strerror(errno);
+            errstr += " (errno=" + std::to_string(errno) + ")";
+            log::get().error(errstr);
+        }
+    }
+
     // Close connection to this peer.
     void peer::disconnect()
     {

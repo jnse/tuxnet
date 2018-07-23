@@ -109,7 +109,14 @@ namespace tuxnet
              */
             std::string read_line();
 
-            /// @todo Add functions for reading raw bytes.
+            /// @todo Add functions for reading/writing raw bytes.
+
+            /**
+             * Send data to the remote peer.
+             *
+             * @param text : Text to send.
+             */
+            void write_string(std::string text);
 
             /// Close connection to this peer.
             void disconnect();
