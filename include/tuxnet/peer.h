@@ -3,6 +3,7 @@
 
 #include <netinet/in.h>
 #include <unordered_map>
+#include <atomic>
 #include "tuxnet/socket_address.h"
 
 namespace tuxnet
@@ -28,9 +29,9 @@ namespace tuxnet
     class peer
     {
         /// Peer state.
-        peer_state m_state;
+        std::atomic<peer_state> m_state;
         /// File descriptor.
-        int m_fd;
+        std::atomic<int> m_fd;
         /// IP and port of peer.
         socket_address* m_saddr;
         /// Pointer to parent socket.
@@ -108,6 +109,11 @@ namespace tuxnet
              * @return Returns received line of text.
              */
             std::string read_line();
+
+            /**
+             * Reads everything the client sent.
+             */
+            std::string read_all();
 
             /// @todo Add functions for reading/writing raw bytes.
 

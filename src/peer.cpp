@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <string.h>
+#include <thread>
 #include "tuxnet/log.h"
 #include "tuxnet/peer.h"
 #include "tuxnet/socket_address.h"
@@ -194,23 +195,70 @@ namespace tuxnet
         return result;
     }
 
+    // Reads everything the client sent.
+    std::string peer::read_all()
+    {
+        if (m_state != PEER_STATE_CONNECTED) return "";
+        char buffer;
+        std::string result;
+        if (m_fd == 0)
+        {
+            log::get().error("Read operation on a closed socket.");
+            return "";
+        }
+        while (true)
+        {
+            if (m_state != PEER_STATE_CONNECTED) return result;
+            int count = read(m_fd, &buffer, 1 * sizeof(char));
+            if (count > 0)
+            {
+                if (buffer == 0) 
+                {
+                    break;
+                }
+                else
+                {
+                    result += buffer;
+                }
+            }
+            else
+            {
+                if (errno == EAGAIN)
+                {
+                    break;
+                }
+                else
+                {
+                    // Client disconnected.
+                    disconnect();
+                    return result;
+                }
+            }
+        }
+        return result;
+    }
+
+
     void peer::write_string(std::string text)
     {
         if (m_state != PEER_STATE_CONNECTED) return;
-        if (::write(m_fd, text.c_str(), text.length()) == -1)
-        {
-            std::string errstr = "Could not write to peer: ";
-            errstr += strerror(errno);
-            errstr += " (errno=" + std::to_string(errno) + ")";
-            log::get().error(errstr);
-        }
+        if (m_fd == 0) return;
+        std::thread([=](){
+            if (::send(m_fd, text.c_str(), text.length(), MSG_NOSIGNAL) 
+                == -1)
+            {
+                std::string errstr = "Could not write to peer: ";
+                errstr += strerror(errno);
+                errstr += " (errno=" + std::to_string(errno) + ")";
+                log::get().error(errstr);
+            }
+        }).detach();
     }
 
     // Close connection to this peer.
     void peer::disconnect()
     {
         m_state = PEER_STATE_CLOSING;
-        m_socket->disconnect(this);
     }
 
 }

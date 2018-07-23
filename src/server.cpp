@@ -109,6 +109,7 @@ namespace tuxnet
 
     bool server::poll()
     {
+        log::get().debug("server::poll");
         bool result = true;
         std::vector<std::thread*> threads; 
         for (auto it = m_listen_sockets.begin(); 

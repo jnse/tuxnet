@@ -30,22 +30,22 @@ class my_server : public tuxnet::server
         // Runs when a client sends data.
         virtual void on_receive(tuxnet::peer* remote_peer)
         {
-            std::string text = remote_peer->read_line();
-            if (text != "")
-            {
-                if (text == "GET / HTTP/1.1")
-                {
-                    std::string response = "hello!";
-                    remote_peer->write_string("HTTP/1.1 200 OK\n");
-                    remote_peer->write_string("Connection: Closed\n");
-                    remote_peer->write_string("Content-Encoding: text/plain\n");
-                    remote_peer->write_string("Content-Length: "
-                        + std::to_string(response.length()) + "\n");
-                    remote_peer->write_string("\r\n");
-                    remote_peer->write_string(response);
-                    remote_peer->disconnect();
-                }
-            }
+            
+            std::cout << " --- Receive --- " << std::endl;
+            std::string client_request = remote_peer->read_all();
+            std::cout << client_request << std::endl;
+
+            std::string response = "hello!";
+            remote_peer->write_string("HTTP/1.1 200 OK\n");
+            remote_peer->write_string("Connection: Closed\n");
+            remote_peer->write_string("Content-Encoding: text/plain\n");
+            remote_peer->write_string("Content-Length: "
+                + std::to_string(response.length()) + "\n");
+            remote_peer->write_string("\r\n");
+            remote_peer->write_string(response);
+            std::cout << "Sent response. " << std::endl;
+            remote_peer->disconnect();
+            std::cout << "Disconnected client." << std::endl;
         }
 
         // Runs when a client disconnects.

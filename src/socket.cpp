@@ -179,14 +179,14 @@ namespace tuxnet
         m_state = SOCKET_STATE_CLOSING;
         if (m_fd != 0) 
         {
-            ::close(m_fd);
+            shutdown(m_fd, SHUT_RDWR);
             m_fd = 0;
         }
         for (auto it = m_peers.get().begin(); it != m_peers.get().end(); ++it)
         {
             if (it->first != 0)
             {
-                ::close(it->first);
+                shutdown(it->first, SHUT_RDWR);
             }
             if (it->second != nullptr)
             {
@@ -201,7 +201,7 @@ namespace tuxnet
     // Disconnects a remote peer.
     void socket::disconnect(peer* client)
     {
-        m_remove_peer(client->get_fd());
+        client->disconnect();
     }
 
     // Checks for any events on the socket.
@@ -219,6 +219,7 @@ namespace tuxnet
         }
         /* Call epoll_wait to fetch a bunch of events and
          * loop through them to handle them. */
+        /// @todo make last argument to epoll_wait configurable (timeout).
         int event_count = epoll_wait(
             m_epoll_fd, m_epoll_events, m_epoll_maxevents, -1);
         for (int n_event = 0 ; n_event < event_count ; ++n_event)
@@ -241,22 +242,19 @@ namespace tuxnet
                     // I'm a server, and I received an error on a client 
                     // socket. Consider connection dropped, so clean it up,
                     // and fire a disconnection event.
-                    m_remove_peer(event_fd);
-                    if (m_server != nullptr)
+                    assert(m_server != nullptr);
+                    auto client_peer_it =  m_peers.get().find(event_fd);
+                    if (client_peer_it == m_peers.get().end())
                     {
-                        auto client_peer_it =  m_peers.get().find(event_fd);
-                        if (client_peer_it == m_peers.get().end())
-                        {
-                            std::string errstr = "Received an error on a ";
-                            errstr += "file-descriptor for which there is no ";
-                            errstr += "corresponding client. (fd=";
-                            errstr += std::to_string(event_fd) + ")";
-                            log::get().error(errstr);
-                        }
-                        else
-                        {
-                            m_remove_peer(client_peer_it->first);
-                        }
+                        std::string errstr = "Received an error on a ";
+                        errstr += "file-descriptor for which there is no ";
+                        errstr += "corresponding client. (fd=";
+                        errstr += std::to_string(event_fd) + ")";
+                        log::get().error(errstr);
+                    }
+                    else
+                    {
+                        client_peer_it->second->disconnect();
                     }
                 }
                 continue;
@@ -312,6 +310,25 @@ namespace tuxnet
                     }
                 }
             }
+        }
+        // Reap connections.
+        std::vector<peer*> to_remove;
+        for (auto peer_it = m_peers.get().begin(); 
+            peer_it != m_peers.get().end(); ++peer_it)
+        {
+            peer* cur_peer = (*peer_it).second;
+            if (cur_peer != nullptr)
+            {
+                if (cur_peer->get_state() == PEER_STATE_CLOSING)
+                {
+                    to_remove.push_back(cur_peer);
+                }
+            }
+        }
+        for (auto peer_it = to_remove.begin(); peer_it != to_remove.end();
+            ++peer_it)
+        {
+            m_remove_peer((*peer_it)->get_fd());
         }
         return true;
     }
@@ -477,7 +494,7 @@ namespace tuxnet
             m_server->on_disconnect(client_peer_it->second);
             if (client_peer_it->first != 0)
             {
-                ::close(client_peer_it->first);
+                shutdown(client_peer_it->first, SHUT_RDWR);
                 fd = 0;
             }
             if (client_peer_it->second != nullptr)
@@ -493,7 +510,7 @@ namespace tuxnet
         {
             if (fd != 0)
             {
-                ::close(fd);
+                shutdown(fd, SHUT_RDWR);
             }
         }
     }
@@ -533,7 +550,10 @@ namespace tuxnet
                 {
                     log::get().error("Could not enable keepalive on peer"
                         "socket.");
-                    if (in_fd > 0) ::close(in_fd);
+                    if (in_fd > 0)
+                    {
+                        shutdown(in_fd, SHUT_RDWR);
+                    }
                     return nullptr;
                 }           
                 if (m_monitor_fd(in_fd) == true)

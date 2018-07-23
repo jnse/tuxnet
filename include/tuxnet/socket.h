@@ -5,6 +5,7 @@
 #ifndef SOCKET_H_INCLUDE
 #define SOCKET_H_INCLUDE
 
+#include <atomic>
 #include <sys/epoll.h>
 #include <vector>
 #include <unordered_map>
@@ -78,7 +79,7 @@ namespace tuxnet
         int m_epoll_maxevents;
 
         /// Stores file descriptor for the socket.
-        int m_fd;
+        std::atomic<int> m_fd;
 
         /// Use (or don't) keepalive for this socket.
         bool m_keepalive;
