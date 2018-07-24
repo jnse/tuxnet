@@ -2,8 +2,10 @@
 #define PEER_H_INCLUDE
 
 #include <netinet/in.h>
+#include <sys/epoll.h>
 #include <unordered_map>
 #include <atomic>
+#include <thread>
 #include "tuxnet/socket_address.h"
 
 namespace tuxnet
@@ -28,14 +30,21 @@ namespace tuxnet
      */
     class peer
     {
+
+        /// epoll event buffer.
+        epoll_event* m_epoll_events;
         /// Peer state.
         std::atomic<peer_state> m_state;
-        /// File descriptor.
+        /// Socket file descriptor.
         std::atomic<int> m_fd;
+        /// Event file descriptor.
+        int m_epoll_fd;
         /// IP and port of peer.
         socket_address* m_saddr;
         /// Pointer to parent socket.
         socket* const m_socket;
+        /// Thread to poll socket.
+        std::thread* m_poll_thread;
 
         public:
 
@@ -85,6 +94,17 @@ namespace tuxnet
             peer_state const get_state() const;
 
             // Methods. -------------------------------------------------------
+
+            /**
+             * Sets up peer for event monitoring.
+             * @return Returns true on success, false on failure.
+             */
+            bool initialize();
+
+            /**
+             * Polls the remote peer to see if it sent any date.
+             */
+            void poll();
 
             /**
              * Reads up to a given number of characters from the 

@@ -15,6 +15,8 @@ namespace tuxnet
     class log
     {
 
+        // Private member variables. ------------------------------------------
+        
         /// Holds singleton pointer to itself, instantiated on first use.
         static std::unique_ptr<log> m_instance;
         /// once_flag indicating if instance has already been allocated.
@@ -22,6 +24,8 @@ namespace tuxnet
 
         public:
 
+            // Getters / setters. ---------------------------------------------
+            
             /**
              * Get pointer to log instance.
              *
@@ -29,6 +33,8 @@ namespace tuxnet
              *         Class is instantiated on first use.
              **/
             static log& get();
+
+            // Methods. -------------------------------------------------------
 
             /**
              * Log an informational message.

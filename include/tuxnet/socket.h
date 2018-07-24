@@ -66,6 +66,7 @@ namespace tuxnet
     {
 
         friend class server;
+        friend class peer;
 
         // Private member variables. ------------------------------------------
 
@@ -74,9 +75,6 @@ namespace tuxnet
 
         /// Stores epoll file descriptor for polling the socket.
         int m_epoll_fd;
-
-        /// epoll max_events (epoll event buffer size)
-        int m_epoll_maxevents;
 
         /// Stores file descriptor for the socket.
         std::atomic<int> m_fd;
@@ -156,7 +154,6 @@ namespace tuxnet
             /// Storage for peer connections.
             lockable<peers> m_peers;
 
-
         public:
 
             // ctor(s) / dtor. ------------------------------------------------
@@ -164,9 +161,8 @@ namespace tuxnet
             /** 
              * @brief Constructor with local/remote saddrs.
              * @param proto : Protocol to be used for the socket.
-             * @param epoll_max_events : (optional) Size of epoll event buffer.
              */
-            socket(const layer4_protocol& proto, int epoll_max_events=64);
+            socket(const layer4_protocol& proto);
 
             /// Destructor.
             ~socket();
@@ -376,6 +372,14 @@ namespace tuxnet
              * @return Returns true on success, false on error.
              */
             bool poll();
+
+        // Events. ------------------------------------------------------------
+
+        protected:
+
+            virtual void on_receive(peer* client);
+            virtual void on_connect(peer* client);
+            virtual void on_disconnect(peer* client);
 
     };
 

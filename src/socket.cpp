@@ -11,6 +11,8 @@
 #include "tuxnet/socket.h"
 #include "tuxnet/peer.h"
 #include "tuxnet/server.h"
+#include "tuxnet/event.h"
+#include "tuxnet/config.h"
 
 namespace tuxnet
 {
@@ -18,10 +20,9 @@ namespace tuxnet
     // Constructors. ----------------------------------------------------------
 
     // Constructor with local/remote saddrs.
-    socket::socket(const layer4_protocol& proto, int epoll_max_events) :
+    socket::socket(const layer4_protocol& proto) :
         m_epoll_events(nullptr), 
         m_epoll_fd(0), 
-        m_epoll_maxevents(epoll_max_events), 
         m_fd(0),
         m_keepalive(true),
         m_keepalive_interval(5),
@@ -35,7 +36,8 @@ namespace tuxnet
         m_state(SOCKET_STATE_UNINITIALIZED)
     {
         m_fd = ::socket(AF_INET, SOCK_STREAM, layer4_to_proto(proto));
-        m_epoll_events = new epoll_event[m_epoll_maxevents]();
+        m_epoll_events = new epoll_event[
+            config::get().get_listen_socket_epoll_max_events()]();
     }
 
     // Destructor.
@@ -153,18 +155,15 @@ namespace tuxnet
             log::get().error(errstr);
             return false;
         }
-        // Set up epoll notifications.
-        m_epoll_fd = epoll_create1(EPOLL_CLOEXEC);
-        if (m_epoll_fd == -1)
+        // Make socket non-blocking.
+        if (m_make_fd_nonblocking(m_fd) != true)
         {
-            std::string errstr = "epoll_create1 failed. (error ";
-            errstr += std::to_string(errno) + " : ";
-            errstr += strerror(errno);
-            errstr += ").";
-            log::get().error(errstr);
-            return false; 
+            return false;
         }
-        if (m_monitor_fd(m_fd) == true)
+        // Set up epoll notifications.
+        m_epoll_fd = create_event_listener();
+        if (m_epoll_fd == -1) return false; 
+        if (event_monitor(m_fd, m_epoll_fd) == true)
         {
             m_state = SOCKET_STATE_LISTENING;
             m_server = server_object;
@@ -221,7 +220,10 @@ namespace tuxnet
          * loop through them to handle them. */
         /// @todo make last argument to epoll_wait configurable (timeout).
         int event_count = epoll_wait(
-            m_epoll_fd, m_epoll_events, m_epoll_maxevents, -1);
+            m_epoll_fd, 
+            m_epoll_events, 
+            config::get().get_listen_socket_epoll_max_events(), 
+            -1);
         for (int n_event = 0 ; n_event < event_count ; ++n_event)
         {
             int event_fd = m_epoll_events[n_event].data.fd;
@@ -231,33 +233,8 @@ namespace tuxnet
                 or (not (m_epoll_events[n_event].events & EPOLLIN))
             ) 
             {
-                if (event_fd == m_fd)
-                {
-                    // Error on our socket. :(
-                    log::get().error("epoll error on the listening socket.");
-                    close();
-                }
-                else if (m_state == SOCKET_STATE_LISTENING)
-                {
-                    // I'm a server, and I received an error on a client 
-                    // socket. Consider connection dropped, so clean it up,
-                    // and fire a disconnection event.
-                    assert(m_server != nullptr);
-                    auto client_peer_it =  m_peers.get().find(event_fd);
-                    if (client_peer_it == m_peers.get().end())
-                    {
-                        std::string errstr = "Received an error on a ";
-                        errstr += "file-descriptor for which there is no ";
-                        errstr += "corresponding client. (fd=";
-                        errstr += std::to_string(event_fd) + ")";
-                        log::get().error(errstr);
-                    }
-                    else
-                    {
-                        client_peer_it->second->disconnect();
-                    }
-                }
-                continue;
+                log::get().error("epoll error on the listening socket.");
+                close();
             }
             else if (event_fd == m_fd)
             {
@@ -275,40 +252,15 @@ namespace tuxnet
                         m_peers.unlock();
                         if (m_server != nullptr)
                         {
-                            m_server->on_connect(my_peer);
+                            on_connect(my_peer);
                         }
                     }
                 }
             }
             else
             {
-                /* An event came in on one of the peer sockets.
-                 * This is typically peer data. */
-                auto client_peer_it =  m_peers.get().find(event_fd);
-                if (client_peer_it == m_peers.get().end())
-                {
-                    std::string errstr = "Received an event with a file";
-                    errstr += "descriptor number not found in the server's list";
-                    errstr += " of peers. (fd = ";
-                    errstr += std::to_string(event_fd);
-                    errstr += ")";
-                    log::get().error(errstr);
-                    return false;
-                }
-                if (m_state == SOCKET_STATE_LISTENING)
-                {
-                    if (m_server != nullptr)
-                    {
-                        if (client_peer_it->second != nullptr)
-                        {
-                            if (client_peer_it->second->get_state() == 
-                                PEER_STATE_CONNECTED)
-                            {
-                                m_server->on_receive(client_peer_it->second);
-                            }
-                        }
-                    }
-                }
+                /// @todo fixme
+                log::get().error("Event received for unmonitored fd on server socket.");
             }
         }
         // Reap connections.
@@ -454,44 +406,13 @@ namespace tuxnet
         return true;
     }
 
-    // Adds a file-descriptor to epoll monitoring.
-    bool socket::m_monitor_fd(int fd)
-    {
-        epoll_event event = {};
-        event.data.fd = fd;
-        if (not m_make_fd_nonblocking(fd))
-        {
-            return false;
-        }
-        event.events = EPOLLIN | EPOLLET;
-        if (epoll_ctl(
-            m_epoll_fd, 
-            EPOLL_CTL_ADD, 
-            fd,
-            &event) == -1)
-        {
-            std::string errmsg = "Could not add epoll event: ";
-            errmsg += strerror(errno);
-            errmsg += " (errno=";
-            errmsg += std::to_string(errno);
-            errmsg += ", epoll_fd=";
-            errmsg += std::to_string(m_epoll_fd);
-            errmsg += ", peer_fd=";
-            errmsg += std::to_string(fd);
-            errmsg += ")";
-            log::get().error(errmsg);
-            return false;
-        }
-        return true;
-    }
-
     // Remove a peer, cleanup after a client disconnects.
     void socket::m_remove_peer(int fd)
     {
         auto client_peer_it =  m_peers.get().find(fd);
         if (client_peer_it != m_peers.get().end())
         {
-            m_server->on_disconnect(client_peer_it->second);
+            on_disconnect(client_peer_it->second);
             if (client_peer_it->first != 0)
             {
                 shutdown(client_peer_it->first, SHUT_RDWR);
@@ -508,6 +429,7 @@ namespace tuxnet
         }
         else
         {
+            log::get().error("Could not find peer to remove.");
             if (fd != 0)
             {
                 shutdown(fd, SHUT_RDWR);
@@ -556,11 +478,13 @@ namespace tuxnet
                     }
                     return nullptr;
                 }           
-                if (m_monitor_fd(in_fd) == true)
+                peer* my_peer = new peer(in_fd, in_addr, this);
+                if (my_peer->initialize() != true)
                 {
-                    peer* my_peer = new peer(in_fd, in_addr, this);
-                    return my_peer;
+                    delete my_peer;
+                    my_peer = nullptr;
                 }
+                return my_peer;
             }
         }
         else
@@ -568,6 +492,24 @@ namespace tuxnet
             /// @todo handle ipv6
         }
         return nullptr;
+    }
+
+    // Events. ----------------------------------------------------------------
+
+    void socket::on_receive(peer* client)
+    {
+        log::get().debug("socket::on_receive()");
+        m_server->on_receive(client);
+    }
+    
+    void socket::on_connect(peer* client)
+    {
+        m_server->on_connect(client);
+    }
+
+    void socket::on_disconnect(peer* client)
+    {
+        m_server->on_disconnect(client);
     }
 
 }

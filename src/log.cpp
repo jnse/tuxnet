@@ -1,5 +1,6 @@
 #include <mutex>
 #include <iostream>
+#include <stdlib.h>
 #include "tuxnet/log.h"
 
 namespace tuxnet
@@ -34,6 +35,7 @@ namespace tuxnet
     void log::error(const std::string& message)
     {
         std::cerr << message << std::endl;
+        exit(1);
     }
 
 
