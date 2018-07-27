@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>tuxnet: /home/johns/src/tuxnet/include/tuxnet/peer.h File Reference</title>
+<title>tuxnet: /home/johns/src/personal/tuxnet/include/tuxnet/peer.h File Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -70,24 +70,28 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">peer.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;netinet/in.h&gt;</code><br />
+<code>#include &lt;sys/epoll.h&gt;</code><br />
 <code>#include &lt;unordered_map&gt;</code><br />
+<code>#include &lt;atomic&gt;</code><br />
+<code>#include &lt;thread&gt;</code><br />
 <code>#include &quot;<a class="el" href="../../d2/d8e/socket__address_8h_source.html">tuxnet/socket_address.h</a>&quot;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="../../closed.png" alt="+"/> Include dependency graph for peer.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d8/d3d/peer_8h__incl.png" border="0" usemap="#_2home_2johns_2src_2tuxnet_2include_2tuxnet_2peer_8h" alt=""/></div>
-<map name="_2home_2johns_2src_2tuxnet_2include_2tuxnet_2peer_8h" id="_2home_2johns_2src_2tuxnet_2include_2tuxnet_2peer_8h">
-<area shape="rect" id="node4" href="../../d2/d8e/socket__address_8h.html" title="tuxnet/socket_address.h" alt="" coords="69,95,234,121"/>
-<area shape="rect" id="node6" href="../../d2/d5e/protocol_8h.html" title="tuxnet/protocol.h" alt="" coords="5,244,124,271"/>
-<area shape="rect" id="node8" href="../../df/d4f/ip__address_8h.html" title="tuxnet/ip_address.h" alt="" coords="183,169,319,196"/>
+<div class="center"><img src="../../d8/d3d/peer_8h__incl.png" border="0" usemap="#_2home_2johns_2src_2personal_2tuxnet_2include_2tuxnet_2peer_8h" alt=""/></div>
+<map name="_2home_2johns_2src_2personal_2tuxnet_2include_2tuxnet_2peer_8h" id="_2home_2johns_2src_2personal_2tuxnet_2include_2tuxnet_2peer_8h">
+<area shape="rect" id="node7" href="../../d2/d8e/socket__address_8h.html" title="tuxnet/socket_address.h" alt="" coords="47,95,213,121"/>
+<area shape="rect" id="node9" href="../../d2/d5e/protocol_8h.html" title="tuxnet/protocol.h" alt="" coords="5,244,124,271"/>
+<area shape="rect" id="node11" href="../../df/d4f/ip__address_8h.html" title="tuxnet/ip_address.h" alt="" coords="183,169,319,196"/>
 </map>
 </div>
 </div><div class="textblock"><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -95,14 +99,14 @@ $(function() {
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../da/d92/peer_8h__dep__incl.png" border="0" usemap="#_2home_2johns_2src_2tuxnet_2include_2tuxnet_2peer_8hdep" alt=""/></div>
-<map name="_2home_2johns_2src_2tuxnet_2include_2tuxnet_2peer_8hdep" id="_2home_2johns_2src_2tuxnet_2include_2tuxnet_2peer_8hdep">
-<area shape="rect" id="node2" href="../../dd/dd9/peer_8cpp.html" title="/home/johns/src/tuxnet\l/src/peer.cpp" alt="" coords="43,95,198,136"/>
-<area shape="rect" id="node3" href="../../d8/d81/socket_8cpp.html" title="/home/johns/src/tuxnet\l/src/socket.cpp" alt="" coords="367,273,522,315"/>
-<area shape="rect" id="node4" href="../../d8/dc3/server_8h.html" title="/home/johns/src/tuxnet\l/include/tuxnet/server.h" alt="" coords="157,184,316,225"/>
-<area shape="rect" id="node7" href="../../da/ddd/socket_8h.html" title="/home/johns/src/tuxnet\l/include/tuxnet/socket.h" alt="" coords="273,95,435,136"/>
-<area shape="rect" id="node5" href="../../df/dd7/server_8cpp.html" title="/home/johns/src/tuxnet\l/src/server.cpp" alt="" coords="189,273,343,315"/>
-<area shape="rect" id="node6" href="../../d1/d2c/tuxnet_8h.html" title="/home/johns/src/tuxnet\l/include/tuxnet/tuxnet.h" alt="" coords="5,273,164,315"/>
+<div class="center"><img src="../../da/d92/peer_8h__dep__incl.png" border="0" usemap="#_2home_2johns_2src_2personal_2tuxnet_2include_2tuxnet_2peer_8hdep" alt=""/></div>
+<map name="_2home_2johns_2src_2personal_2tuxnet_2include_2tuxnet_2peer_8hdep" id="_2home_2johns_2src_2personal_2tuxnet_2include_2tuxnet_2peer_8hdep">
+<area shape="rect" id="node2" href="../../dd/dd9/peer_8cpp.html" title="/home/johns/src/personal\l/tuxnet/src/peer.cpp" alt="" coords="26,206,194,247"/>
+<area shape="rect" id="node3" href="../../d8/d81/socket_8cpp.html" title="/home/johns/src/personal\l/tuxnet/src/socket.cpp" alt="" coords="66,310,234,351"/>
+<area shape="rect" id="node4" href="../../d8/dc3/server_8h.html" title="/home/johns/src/personal\l/tuxnet/include/tuxnet\l/server.h" alt="" coords="319,199,487,255"/>
+<area shape="rect" id="node7" href="../../da/ddd/socket_8h.html" title="/home/johns/src/personal\l/tuxnet/include/tuxnet\l/socket.h" alt="" coords="147,95,315,151"/>
+<area shape="rect" id="node5" href="../../df/dd7/server_8cpp.html" title="/home/johns/src/personal\l/tuxnet/src/server.cpp" alt="" coords="258,310,426,351"/>
+<area shape="rect" id="node6" href="../../d1/d2c/tuxnet_8h.html" title="/home/johns/src/personal\l/tuxnet/include/tuxnet\l/tuxnet.h" alt="" coords="450,303,618,359"/>
 </map>
 </div>
 </div>
@@ -120,9 +124,19 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a4593d9509fb51f55e3f1f173a199c955"><td class="memItemLeft" align="right" valign="top">typedef std::unordered_map&lt; int, peer * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d30/namespacetuxnet.html#a4593d9509fb51f55e3f1f173a199c955">tuxnet::peers</a></td></tr>
-<tr class="memdesc:a4593d9509fb51f55e3f1f173a199c955"><td class="mdescLeft">&#160;</td><td class="mdescRight">Collection of peers.  <a href="../../da/d30/namespacetuxnet.html#a4593d9509fb51f55e3f1f173a199c955">More...</a><br /></td></tr>
-<tr class="separator:a4593d9509fb51f55e3f1f173a199c955"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09200b194339e0703573c0c7eb8d3392"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt; peer * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d30/namespacetuxnet.html#a09200b194339e0703573c0c7eb8d3392">tuxnet::peers</a></td></tr>
+<tr class="memdesc:a09200b194339e0703573c0c7eb8d3392"><td class="mdescLeft">&#160;</td><td class="mdescRight">Collection of peers.  <a href="../../da/d30/namespacetuxnet.html#a09200b194339e0703573c0c7eb8d3392">More...</a><br /></td></tr>
+<tr class="separator:a09200b194339e0703573c0c7eb8d3392"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a93489a9469c43880c76def27beefdc77"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d30/namespacetuxnet.html#a93489a9469c43880c76def27beefdc77">tuxnet::peer_state</a> { <a class="el" href="../../da/d30/namespacetuxnet.html#a93489a9469c43880c76def27beefdc77a5a54e0eebc1194d01d8fdf32ce95f5e1">tuxnet::PEER_STATE_UNINITIALIZED</a> =0, 
+<a class="el" href="../../da/d30/namespacetuxnet.html#a93489a9469c43880c76def27beefdc77a0bcf46c94051f568764af404b57b17a5">tuxnet::PEER_STATE_CONNECTED</a>, 
+<a class="el" href="../../da/d30/namespacetuxnet.html#a93489a9469c43880c76def27beefdc77af0ec4c8daaa5e045ed0603aecabcd84f">tuxnet::PEER_STATE_CLOSING</a>, 
+<a class="el" href="../../da/d30/namespacetuxnet.html#a93489a9469c43880c76def27beefdc77a75127cd7283f87034a570be61fb8de66">tuxnet::PEER_STATE_CLOSED</a>
+ }</td></tr>
+<tr class="memdesc:a93489a9469c43880c76def27beefdc77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum for the different states a peer can be in.  <a href="../../da/d30/namespacetuxnet.html#a93489a9469c43880c76def27beefdc77">More...</a><br /></td></tr>
+<tr class="separator:a93489a9469c43880c76def27beefdc77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

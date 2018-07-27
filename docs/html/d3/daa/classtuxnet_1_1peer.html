@@ -79,10 +79,10 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa86c5dd4d9651f02f225e41291bbe8d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/daa/classtuxnet_1_1peer.html#aa86c5dd4d9651f02f225e41291bbe8d1">peer</a> (int fd, const sockaddr_in &amp;in_addr)</td></tr>
-<tr class="separator:aa86c5dd4d9651f02f225e41291bbe8d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d7bff037c5238ad5bb284831e045944"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/daa/classtuxnet_1_1peer.html#a5d7bff037c5238ad5bb284831e045944">peer</a> (int fd, const sockaddr_in6 &amp;in_addr)</td></tr>
-<tr class="separator:a5d7bff037c5238ad5bb284831e045944"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48f1109c38b49a19293e123b4681470a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/daa/classtuxnet_1_1peer.html#a48f1109c38b49a19293e123b4681470a">peer</a> (int fd, const sockaddr_in &amp;in_addr, <a class="el" href="../../da/d32/classtuxnet_1_1socket.html">socket</a> *const parent)</td></tr>
+<tr class="separator:a48f1109c38b49a19293e123b4681470a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ad80af583724db7bf5aae2a27626683"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/daa/classtuxnet_1_1peer.html#a7ad80af583724db7bf5aae2a27626683">peer</a> (int fd, const sockaddr_in6 &amp;in_addr, <a class="el" href="../../da/d32/classtuxnet_1_1socket.html">socket</a> *const parent)</td></tr>
+<tr class="separator:a7ad80af583724db7bf5aae2a27626683"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1efacc1cf2ef1b9b6d1cfb9e9a2862f9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/daa/classtuxnet_1_1peer.html#a1efacc1cf2ef1b9b6d1cfb9e9a2862f9">~peer</a> ()</td></tr>
 <tr class="memdesc:a1efacc1cf2ef1b9b6d1cfb9e9a2862f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a1efacc1cf2ef1b9b6d1cfb9e9a2862f9">More...</a><br /></td></tr>
 <tr class="separator:a1efacc1cf2ef1b9b6d1cfb9e9a2862f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -90,15 +90,34 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3232c179a9a0fe3e215463451edf8e51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac4f278602fb1c832612ad52f0b1dde1d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d0d/classtuxnet_1_1socket__address.html">socket_address</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/daa/classtuxnet_1_1peer.html#ac4f278602fb1c832612ad52f0b1dde1d">get_saddr</a> ()</td></tr>
 <tr class="separator:ac4f278602fb1c832612ad52f0b1dde1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46b7188bcfaf97062b35cbd0be5eb08d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/d30/namespacetuxnet.html#a93489a9469c43880c76def27beefdc77">peer_state</a> const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/daa/classtuxnet_1_1peer.html#a46b7188bcfaf97062b35cbd0be5eb08d">get_state</a> () const</td></tr>
+<tr class="separator:a46b7188bcfaf97062b35cbd0be5eb08d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb1b13b8e1c3df46782f861edd43413a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/daa/classtuxnet_1_1peer.html#aeb1b13b8e1c3df46782f861edd43413a">initialize</a> ()</td></tr>
+<tr class="separator:aeb1b13b8e1c3df46782f861edd43413a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa601f70f576f9a07035f4b5ba4bd8a8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/daa/classtuxnet_1_1peer.html#aa601f70f576f9a07035f4b5ba4bd8a8d">poll</a> ()</td></tr>
+<tr class="separator:aa601f70f576f9a07035f4b5ba4bd8a8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5f3f869608eb5716d5027d508d9d93b"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/daa/classtuxnet_1_1peer.html#ad5f3f869608eb5716d5027d508d9d93b">read_string</a> (int characters)</td></tr>
+<tr class="separator:ad5f3f869608eb5716d5027d508d9d93b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18a7e9009c5ed468453564504e6702ba"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/daa/classtuxnet_1_1peer.html#a18a7e9009c5ed468453564504e6702ba">read_string_until</a> (std::string token)</td></tr>
+<tr class="separator:a18a7e9009c5ed468453564504e6702ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56340ba5bcf087075b444bc75e008d93"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/daa/classtuxnet_1_1peer.html#a56340ba5bcf087075b444bc75e008d93">read_line</a> ()</td></tr>
+<tr class="separator:a56340ba5bcf087075b444bc75e008d93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e7cdac3c9ce085cd2cfa51b300fe1ef"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/daa/classtuxnet_1_1peer.html#a9e7cdac3c9ce085cd2cfa51b300fe1ef">read_all</a> ()</td></tr>
+<tr class="separator:a9e7cdac3c9ce085cd2cfa51b300fe1ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af467c2c4cfbe2d3ea56251ad27a70fdb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/daa/classtuxnet_1_1peer.html#af467c2c4cfbe2d3ea56251ad27a70fdb">write_string</a> (std::string text)</td></tr>
+<tr class="separator:af467c2c4cfbe2d3ea56251ad27a70fdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5783baad92f7a79f6a70cf3ccfa2756e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/daa/classtuxnet_1_1peer.html#a5783baad92f7a79f6a70cf3ccfa2756e">disconnect</a> ()</td></tr>
+<tr class="memdesc:a5783baad92f7a79f6a70cf3ccfa2756e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close connection to this peer.  <a href="#a5783baad92f7a79f6a70cf3ccfa2756e">More...</a><br /></td></tr>
+<tr class="separator:a5783baad92f7a79f6a70cf3ccfa2756e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Peer.</p>
 <p>This object represents a remote peer. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d12/peer_8h_source.html#l00016">16</a> of file <a class="el" href="../../de/d12/peer_8h_source.html">peer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d12/peer_8h_source.html#l00037">37</a> of file <a class="el" href="../../de/d12/peer_8h_source.html">peer.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aa86c5dd4d9651f02f225e41291bbe8d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa86c5dd4d9651f02f225e41291bbe8d1">&#9670;&nbsp;</a></span>peer() <span class="overload">[1/2]</span></h2>
+<a id="a48f1109c38b49a19293e123b4681470a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48f1109c38b49a19293e123b4681470a">&#9670;&nbsp;</a></span>peer() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -113,7 +132,13 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const sockaddr_in &amp;&#160;</td>
-          <td class="paramname"><em>in_addr</em>&#160;</td>
+          <td class="paramname"><em>in_addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../da/d32/classtuxnet_1_1socket.html">socket</a> *const&#160;</td>
+          <td class="paramname"><em>parent</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -127,16 +152,28 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">fd</td><td>: File descriptor associated with connection. </td></tr>
     <tr><td class="paramname">in_addr</td><td>: sockaddr for peer connection. </td></tr>
+    <tr><td class="paramname">parent</td><td>: pointer to socket owning this connection. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../dd/dd9/peer_8cpp_source.html#l00010">10</a> of file <a class="el" href="../../dd/dd9/peer_8cpp_source.html">peer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/dd9/peer_8cpp_source.html#l00016">16</a> of file <a class="el" href="../../dd/dd9/peer_8cpp_source.html">peer.cpp</a>.</p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d3/daa/classtuxnet_1_1peer_a48f1109c38b49a19293e123b4681470a_cgraph.png" border="0" usemap="#d3/daa/classtuxnet_1_1peer_a48f1109c38b49a19293e123b4681470a_cgraph" alt=""/></div>
+<map name="d3/daa/classtuxnet_1_1peer_a48f1109c38b49a19293e123b4681470a_cgraph" id="d3/daa/classtuxnet_1_1peer_a48f1109c38b49a19293e123b4681470a_cgraph">
+<area shape="rect" id="node2" href="../../d9/dbe/classtuxnet_1_1config.html#a3b1e1571bb8d657ff4b272b234ed36ad" title="tuxnet::config::get" alt="" coords="184,5,311,32"/>
+<area shape="rect" id="node3" href="../../d9/dbe/classtuxnet_1_1config.html#ac250093becbb15b71c085a53f327d5b1" title="Get epoll event buffer size for listen sockets. " alt="" coords="177,56,317,112"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="a5d7bff037c5238ad5bb284831e045944"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d7bff037c5238ad5bb284831e045944">&#9670;&nbsp;</a></span>peer() <span class="overload">[2/2]</span></h2>
+<a id="a7ad80af583724db7bf5aae2a27626683"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ad80af583724db7bf5aae2a27626683">&#9670;&nbsp;</a></span>peer() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -151,7 +188,13 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const sockaddr_in6 &amp;&#160;</td>
-          <td class="paramname"><em>in_addr</em>&#160;</td>
+          <td class="paramname"><em>in_addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../da/d32/classtuxnet_1_1socket.html">socket</a> *const&#160;</td>
+          <td class="paramname"><em>parent</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -165,11 +208,13 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">fd</td><td>: File descriptor associated with connection. </td></tr>
     <tr><td class="paramname">in_addr</td><td>: sockaddr for peer connection. </td></tr>
+    <tr><td class="paramname">parent</td><td>: pointer to socket owning this connection.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000001">Todo:</a></b></dt><dd>fixme </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../dd/dd9/peer_8cpp_source.html#l00018">18</a> of file <a class="el" href="../../dd/dd9/peer_8cpp_source.html">peer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/dd9/peer_8cpp_source.html#l00030">30</a> of file <a class="el" href="../../dd/dd9/peer_8cpp_source.html">peer.cpp</a>.</p>
 
 </div>
 </div>
@@ -190,11 +235,74 @@ Public Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../dd/dd9/peer_8cpp_source.html#l00026">26</a> of file <a class="el" href="../../dd/dd9/peer_8cpp_source.html">peer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/dd9/peer_8cpp_source.html#l00040">40</a> of file <a class="el" href="../../dd/dd9/peer_8cpp_source.html">peer.cpp</a>.</p>
+<div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d3/daa/classtuxnet_1_1peer_a1efacc1cf2ef1b9b6d1cfb9e9a2862f9_cgraph.png" border="0" usemap="#d3/daa/classtuxnet_1_1peer_a1efacc1cf2ef1b9b6d1cfb9e9a2862f9_cgraph" alt=""/></div>
+<map name="d3/daa/classtuxnet_1_1peer_a1efacc1cf2ef1b9b6d1cfb9e9a2862f9_cgraph" id="d3/daa/classtuxnet_1_1peer_a1efacc1cf2ef1b9b6d1cfb9e9a2862f9_cgraph">
+<area shape="rect" id="node2" href="../../da/d30/namespacetuxnet.html#a9829210167729668004484838ce766ef" title="tuxnet::free_monitor" alt="" coords="185,5,324,32"/>
+</map>
+</div>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a5783baad92f7a79f6a70cf3ccfa2756e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5783baad92f7a79f6a70cf3ccfa2756e">&#9670;&nbsp;</a></span>disconnect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tuxnet::peer::disconnect </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Close connection to this peer. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../dd/dd9/peer_8cpp_source.html#l00343">343</a> of file <a class="el" href="../../dd/dd9/peer_8cpp_source.html">peer.cpp</a>.</p>
+<div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d3/daa/classtuxnet_1_1peer_a5783baad92f7a79f6a70cf3ccfa2756e_cgraph.png" border="0" usemap="#d3/daa/classtuxnet_1_1peer_a5783baad92f7a79f6a70cf3ccfa2756e_cgraph" alt=""/></div>
+<map name="d3/daa/classtuxnet_1_1peer_a5783baad92f7a79f6a70cf3ccfa2756e_cgraph" id="d3/daa/classtuxnet_1_1peer_a5783baad92f7a79f6a70cf3ccfa2756e_cgraph">
+<area shape="rect" id="node2" href="../../da/d32/classtuxnet_1_1socket.html#aaf5d4b8001a95d83f03ea01eac6530d9" title="tuxnet::socket::remove_peer" alt="" coords="216,97,404,123"/>
+<area shape="rect" id="node3" href="../../da/d32/classtuxnet_1_1socket.html#a1f1921ae2c0afa6c8ae6a0bb9f8a66ff" title="tuxnet::socket::on\l_disconnect" alt="" coords="469,5,595,47"/>
+<area shape="rect" id="node5" href="../../d2/d99/classtuxnet_1_1lockable.html#a85a471d324f4583c668705b7bbdc8972" title="Locks the underlying mutex of the managed object. " alt="" coords="459,71,605,98"/>
+<area shape="rect" id="node6" href="../../d2/d99/classtuxnet_1_1lockable.html#a183be43656600d103da3657d0e3f426f" title="Get an instance of the managed object. " alt="" coords="462,122,602,149"/>
+<area shape="rect" id="node7" href="../../d2/d99/classtuxnet_1_1lockable.html#af4c0775a628c298545aa09715cc8ce27" title="Unlocks the underlying mutex of the managed object. " alt="" coords="452,173,612,199"/>
+<area shape="rect" id="node4" href="../../d1/d32/classtuxnet_1_1server.html#a800d48cec34e7f259b618367733b92dc" title="on_disconnect event. " alt="" coords="660,5,784,47"/>
+</map>
+</div>
+<div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d3/daa/classtuxnet_1_1peer_a5783baad92f7a79f6a70cf3ccfa2756e_icgraph.png" border="0" usemap="#d3/daa/classtuxnet_1_1peer_a5783baad92f7a79f6a70cf3ccfa2756e_icgraph" alt=""/></div>
+<map name="d3/daa/classtuxnet_1_1peer_a5783baad92f7a79f6a70cf3ccfa2756e_icgraph" id="d3/daa/classtuxnet_1_1peer_a5783baad92f7a79f6a70cf3ccfa2756e_icgraph">
+<area shape="rect" id="node2" href="../../d3/daa/classtuxnet_1_1peer.html#aa601f70f576f9a07035f4b5ba4bd8a8d" title="tuxnet::peer::poll" alt="" coords="245,5,363,32"/>
+<area shape="rect" id="node4" href="../../d3/daa/classtuxnet_1_1peer.html#ad5f3f869608eb5716d5027d508d9d93b" title="tuxnet::peer::read\l_string" alt="" coords="242,57,366,98"/>
+<area shape="rect" id="node5" href="../../d3/daa/classtuxnet_1_1peer.html#a18a7e9009c5ed468453564504e6702ba" title="tuxnet::peer::read\l_string_until" alt="" coords="242,122,366,163"/>
+<area shape="rect" id="node6" href="../../d3/daa/classtuxnet_1_1peer.html#a56340ba5bcf087075b444bc75e008d93" title="tuxnet::peer::read_line" alt="" coords="229,188,379,215"/>
+<area shape="rect" id="node7" href="../../d3/daa/classtuxnet_1_1peer.html#a9e7cdac3c9ce085cd2cfa51b300fe1ef" title="tuxnet::peer::read_all" alt="" coords="232,239,376,265"/>
+<area shape="rect" id="node8" href="../../d3/daa/classtuxnet_1_1peer.html#af467c2c4cfbe2d3ea56251ad27a70fdb" title="tuxnet::peer::write\l_string" alt="" coords="241,290,367,331"/>
+<area shape="rect" id="node9" href="../../da/d32/classtuxnet_1_1socket.html#a4877efcc5aa6efa7a91b4152cc4195ba" title="tuxnet::socket::disconnect" alt="" coords="216,356,392,383"/>
+<area shape="rect" id="node3" href="../../d3/daa/classtuxnet_1_1peer.html#aeb1b13b8e1c3df46782f861edd43413a" title="tuxnet::peer::initialize" alt="" coords="440,5,587,32"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a3232c179a9a0fe3e215463451edf8e51"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3232c179a9a0fe3e215463451edf8e51">&#9670;&nbsp;</a></span>get_fd()</h2>
 
@@ -211,17 +319,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Get file descriptor. </p><dl class="section return"><dt>Returns</dt><dd>Returns file descriptor associated with this peer connection. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../dd/dd9/peer_8cpp_source.html#l00043">43</a> of file <a class="el" href="../../dd/dd9/peer_8cpp_source.html">peer.cpp</a>.</p>
-<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d3/daa/classtuxnet_1_1peer_a3232c179a9a0fe3e215463451edf8e51_icgraph.png" border="0" usemap="#d3/daa/classtuxnet_1_1peer_a3232c179a9a0fe3e215463451edf8e51_icgraph" alt=""/></div>
-<map name="d3/daa/classtuxnet_1_1peer_a3232c179a9a0fe3e215463451edf8e51_icgraph" id="d3/daa/classtuxnet_1_1peer_a3232c179a9a0fe3e215463451edf8e51_icgraph">
-<area shape="rect" id="node2" href="../../da/d32/classtuxnet_1_1socket.html#a2c085c7179072996c7b91afdfa1bc0f6" title="Checks if any events happened on the socket. " alt="" coords="188,5,321,32"/>
-</map>
-</div>
+<p class="definition">Definition at line <a class="el" href="../../dd/dd9/peer_8cpp_source.html#l00068">68</a> of file <a class="el" href="../../dd/dd9/peer_8cpp_source.html">peer.cpp</a>.</p>
 
 </div>
 </div>
@@ -241,13 +339,344 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Get socket address. </p><dl class="section return"><dt>Returns</dt><dd>Returns a pointer the <a class="el" href="../../d4/d0d/classtuxnet_1_1socket__address.html">socket_address</a> object containing the address and port pair for the peer. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../dd/dd9/peer_8cpp_source.html#l00049">49</a> of file <a class="el" href="../../dd/dd9/peer_8cpp_source.html">peer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/dd9/peer_8cpp_source.html#l00074">74</a> of file <a class="el" href="../../dd/dd9/peer_8cpp_source.html">peer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a46b7188bcfaf97062b35cbd0be5eb08d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46b7188bcfaf97062b35cbd0be5eb08d">&#9670;&nbsp;</a></span>get_state()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../da/d30/namespacetuxnet.html#a93489a9469c43880c76def27beefdc77">peer_state</a> const tuxnet::peer::get_state </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the peer state. @ return Returns the state the peer connection is in. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../dd/dd9/peer_8cpp_source.html#l00080">80</a> of file <a class="el" href="../../dd/dd9/peer_8cpp_source.html">peer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aeb1b13b8e1c3df46782f861edd43413a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb1b13b8e1c3df46782f861edd43413a">&#9670;&nbsp;</a></span>initialize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tuxnet::peer::initialize </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets up peer for event monitoring. </p><dl class="section return"><dt>Returns</dt><dd>Returns true on success, false on failure. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../dd/dd9/peer_8cpp_source.html#l00088">88</a> of file <a class="el" href="../../dd/dd9/peer_8cpp_source.html">peer.cpp</a>.</p>
+<div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d3/daa/classtuxnet_1_1peer_aeb1b13b8e1c3df46782f861edd43413a_cgraph.png" border="0" usemap="#d3/daa/classtuxnet_1_1peer_aeb1b13b8e1c3df46782f861edd43413a_cgraph" alt=""/></div>
+<map name="d3/daa/classtuxnet_1_1peer_aeb1b13b8e1c3df46782f861edd43413a_cgraph" id="d3/daa/classtuxnet_1_1peer_aeb1b13b8e1c3df46782f861edd43413a_cgraph">
+<area shape="rect" id="node2" href="../../da/d30/namespacetuxnet.html#ae1351564f6dbd0ee801afed3a3fd6716" title="tuxnet::create_event\l_listener" alt="" coords="203,57,345,98"/>
+<area shape="rect" id="node5" href="../../da/d30/namespacetuxnet.html#a51fbeb177febc6e449c8ba1c8cd24dc5" title="tuxnet::event_monitor" alt="" coords="200,5,348,32"/>
+<area shape="rect" id="node6" href="../../d3/daa/classtuxnet_1_1peer.html#aa601f70f576f9a07035f4b5ba4bd8a8d" title="tuxnet::peer::poll" alt="" coords="215,123,333,149"/>
+<area shape="rect" id="node3" href="../../df/d0f/classtuxnet_1_1log.html#ab1741bef0f42314fa515a64154f44ab9" title="tuxnet::log::get" alt="" coords="423,64,532,91"/>
+<area shape="rect" id="node4" href="../../df/d0f/classtuxnet_1_1log.html#a34b5fef1b7d45c9837bcdf6be4838f19" title="tuxnet::log::error" alt="" coords="419,13,536,40"/>
+<area shape="rect" id="node7" href="../../d9/dbe/classtuxnet_1_1config.html#a3b1e1571bb8d657ff4b272b234ed36ad" title="tuxnet::config::get" alt="" coords="414,115,541,141"/>
+<area shape="rect" id="node8" href="../../d3/daa/classtuxnet_1_1peer.html#a5783baad92f7a79f6a70cf3ccfa2756e" title="Close connection to this peer. " alt="" coords="396,165,559,192"/>
+<area shape="rect" id="node15" href="../../da/d32/classtuxnet_1_1socket.html#ab6ba9cb1b6fca22d59619ca7c4759a78" title="tuxnet::socket::on\l_receive" alt="" coords="414,217,541,258"/>
+<area shape="rect" id="node9" href="../../da/d32/classtuxnet_1_1socket.html#aaf5d4b8001a95d83f03ea01eac6530d9" title="tuxnet::socket::remove_peer" alt="" coords="607,165,795,192"/>
+<area shape="rect" id="node10" href="../../da/d32/classtuxnet_1_1socket.html#a1f1921ae2c0afa6c8ae6a0bb9f8a66ff" title="tuxnet::socket::on\l_disconnect" alt="" coords="859,74,986,115"/>
+<area shape="rect" id="node12" href="../../d2/d99/classtuxnet_1_1lockable.html#a85a471d324f4583c668705b7bbdc8972" title="Locks the underlying mutex of the managed object. " alt="" coords="849,140,996,167"/>
+<area shape="rect" id="node13" href="../../d2/d99/classtuxnet_1_1lockable.html#a183be43656600d103da3657d0e3f426f" title="Get an instance of the managed object. " alt="" coords="853,191,993,217"/>
+<area shape="rect" id="node14" href="../../d2/d99/classtuxnet_1_1lockable.html#af4c0775a628c298545aa09715cc8ce27" title="Unlocks the underlying mutex of the managed object. " alt="" coords="843,241,1003,268"/>
+<area shape="rect" id="node11" href="../../d1/d32/classtuxnet_1_1server.html#a800d48cec34e7f259b618367733b92dc" title="on_disconnect event. " alt="" coords="1051,74,1175,115"/>
+<area shape="rect" id="node16" href="../../d1/d32/classtuxnet_1_1server.html#a2cb6aafc9e1955a2ab997de05f0cede8" title="on_receive event. " alt="" coords="639,217,763,258"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aa601f70f576f9a07035f4b5ba4bd8a8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa601f70f576f9a07035f4b5ba4bd8a8d">&#9670;&nbsp;</a></span>poll()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tuxnet::peer::poll </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Polls the remote peer to see if it sent any date. </p>
+<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000002">Todo:</a></b></dt><dd>make last argument to epoll_wait configurable (timeout). </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../dd/dd9/peer_8cpp_source.html#l00104">104</a> of file <a class="el" href="../../dd/dd9/peer_8cpp_source.html">peer.cpp</a>.</p>
+<div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d3/daa/classtuxnet_1_1peer_aa601f70f576f9a07035f4b5ba4bd8a8d_cgraph.png" border="0" usemap="#d3/daa/classtuxnet_1_1peer_aa601f70f576f9a07035f4b5ba4bd8a8d_cgraph" alt=""/></div>
+<map name="d3/daa/classtuxnet_1_1peer_aa601f70f576f9a07035f4b5ba4bd8a8d_cgraph" id="d3/daa/classtuxnet_1_1peer_aa601f70f576f9a07035f4b5ba4bd8a8d_cgraph">
+<area shape="rect" id="node2" href="../../d9/dbe/classtuxnet_1_1config.html#a3b1e1571bb8d657ff4b272b234ed36ad" title="tuxnet::config::get" alt="" coords="190,46,317,73"/>
+<area shape="rect" id="node3" href="../../d3/daa/classtuxnet_1_1peer.html#a5783baad92f7a79f6a70cf3ccfa2756e" title="Close connection to this peer. " alt="" coords="172,97,335,123"/>
+<area shape="rect" id="node10" href="../../da/d32/classtuxnet_1_1socket.html#ab6ba9cb1b6fca22d59619ca7c4759a78" title="tuxnet::socket::on\l_receive" alt="" coords="190,148,317,189"/>
+<area shape="rect" id="node12" href="../../df/d0f/classtuxnet_1_1log.html#ab1741bef0f42314fa515a64154f44ab9" title="tuxnet::log::get" alt="" coords="199,214,308,241"/>
+<area shape="rect" id="node13" href="../../df/d0f/classtuxnet_1_1log.html#a34b5fef1b7d45c9837bcdf6be4838f19" title="tuxnet::log::error" alt="" coords="195,265,312,291"/>
+<area shape="rect" id="node4" href="../../da/d32/classtuxnet_1_1socket.html#aaf5d4b8001a95d83f03ea01eac6530d9" title="tuxnet::socket::remove_peer" alt="" coords="383,97,571,123"/>
+<area shape="rect" id="node5" href="../../da/d32/classtuxnet_1_1socket.html#a1f1921ae2c0afa6c8ae6a0bb9f8a66ff" title="tuxnet::socket::on\l_disconnect" alt="" coords="635,5,762,47"/>
+<area shape="rect" id="node7" href="../../d2/d99/classtuxnet_1_1lockable.html#a85a471d324f4583c668705b7bbdc8972" title="Locks the underlying mutex of the managed object. " alt="" coords="625,71,772,98"/>
+<area shape="rect" id="node8" href="../../d2/d99/classtuxnet_1_1lockable.html#a183be43656600d103da3657d0e3f426f" title="Get an instance of the managed object. " alt="" coords="629,122,769,149"/>
+<area shape="rect" id="node9" href="../../d2/d99/classtuxnet_1_1lockable.html#af4c0775a628c298545aa09715cc8ce27" title="Unlocks the underlying mutex of the managed object. " alt="" coords="619,173,779,199"/>
+<area shape="rect" id="node6" href="../../d1/d32/classtuxnet_1_1server.html#a800d48cec34e7f259b618367733b92dc" title="on_disconnect event. " alt="" coords="827,5,951,47"/>
+<area shape="rect" id="node11" href="../../d1/d32/classtuxnet_1_1server.html#a2cb6aafc9e1955a2ab997de05f0cede8" title="on_receive event. " alt="" coords="415,148,539,189"/>
+</map>
+</div>
+<div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d3/daa/classtuxnet_1_1peer_aa601f70f576f9a07035f4b5ba4bd8a8d_icgraph.png" border="0" usemap="#d3/daa/classtuxnet_1_1peer_aa601f70f576f9a07035f4b5ba4bd8a8d_icgraph" alt=""/></div>
+<map name="d3/daa/classtuxnet_1_1peer_aa601f70f576f9a07035f4b5ba4bd8a8d_icgraph" id="d3/daa/classtuxnet_1_1peer_aa601f70f576f9a07035f4b5ba4bd8a8d_icgraph">
+<area shape="rect" id="node2" href="../../d3/daa/classtuxnet_1_1peer.html#aeb1b13b8e1c3df46782f861edd43413a" title="tuxnet::peer::initialize" alt="" coords="172,5,319,32"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a9e7cdac3c9ce085cd2cfa51b300fe1ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e7cdac3c9ce085cd2cfa51b300fe1ef">&#9670;&nbsp;</a></span>read_all()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string tuxnet::peer::read_all </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reads everything the client sent. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../dd/dd9/peer_8cpp_source.html#l00274">274</a> of file <a class="el" href="../../dd/dd9/peer_8cpp_source.html">peer.cpp</a>.</p>
+<div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d3/daa/classtuxnet_1_1peer_a9e7cdac3c9ce085cd2cfa51b300fe1ef_cgraph.png" border="0" usemap="#d3/daa/classtuxnet_1_1peer_a9e7cdac3c9ce085cd2cfa51b300fe1ef_cgraph" alt=""/></div>
+<map name="d3/daa/classtuxnet_1_1peer_a9e7cdac3c9ce085cd2cfa51b300fe1ef_cgraph" id="d3/daa/classtuxnet_1_1peer_a9e7cdac3c9ce085cd2cfa51b300fe1ef_cgraph">
+<area shape="rect" id="node2" href="../../df/d0f/classtuxnet_1_1log.html#ab1741bef0f42314fa515a64154f44ab9" title="tuxnet::log::get" alt="" coords="224,5,333,32"/>
+<area shape="rect" id="node3" href="../../df/d0f/classtuxnet_1_1log.html#a34b5fef1b7d45c9837bcdf6be4838f19" title="tuxnet::log::error" alt="" coords="220,56,337,83"/>
+<area shape="rect" id="node4" href="../../d3/daa/classtuxnet_1_1peer.html#a5783baad92f7a79f6a70cf3ccfa2756e" title="Close connection to this peer. " alt="" coords="197,107,360,133"/>
+<area shape="rect" id="node5" href="../../da/d32/classtuxnet_1_1socket.html#aaf5d4b8001a95d83f03ea01eac6530d9" title="tuxnet::socket::remove_peer" alt="" coords="408,107,596,133"/>
+<area shape="rect" id="node6" href="../../da/d32/classtuxnet_1_1socket.html#a1f1921ae2c0afa6c8ae6a0bb9f8a66ff" title="tuxnet::socket::on\l_disconnect" alt="" coords="661,15,787,57"/>
+<area shape="rect" id="node8" href="../../d2/d99/classtuxnet_1_1lockable.html#a85a471d324f4583c668705b7bbdc8972" title="Locks the underlying mutex of the managed object. " alt="" coords="651,81,797,108"/>
+<area shape="rect" id="node9" href="../../d2/d99/classtuxnet_1_1lockable.html#a183be43656600d103da3657d0e3f426f" title="Get an instance of the managed object. " alt="" coords="654,132,794,159"/>
+<area shape="rect" id="node10" href="../../d2/d99/classtuxnet_1_1lockable.html#af4c0775a628c298545aa09715cc8ce27" title="Unlocks the underlying mutex of the managed object. " alt="" coords="644,183,804,209"/>
+<area shape="rect" id="node7" href="../../d1/d32/classtuxnet_1_1server.html#a800d48cec34e7f259b618367733b92dc" title="on_disconnect event. " alt="" coords="852,15,976,57"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a56340ba5bcf087075b444bc75e008d93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56340ba5bcf087075b444bc75e008d93">&#9670;&nbsp;</a></span>read_line()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string tuxnet::peer::read_line </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reads a line of text.</p>
+<dl class="section return"><dt>Returns</dt><dd>Returns received line of text. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../dd/dd9/peer_8cpp_source.html#l00228">228</a> of file <a class="el" href="../../dd/dd9/peer_8cpp_source.html">peer.cpp</a>.</p>
+<div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-8-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d3/daa/classtuxnet_1_1peer_a56340ba5bcf087075b444bc75e008d93_cgraph.png" border="0" usemap="#d3/daa/classtuxnet_1_1peer_a56340ba5bcf087075b444bc75e008d93_cgraph" alt=""/></div>
+<map name="d3/daa/classtuxnet_1_1peer_a56340ba5bcf087075b444bc75e008d93_cgraph" id="d3/daa/classtuxnet_1_1peer_a56340ba5bcf087075b444bc75e008d93_cgraph">
+<area shape="rect" id="node2" href="../../df/d0f/classtuxnet_1_1log.html#ab1741bef0f42314fa515a64154f44ab9" title="tuxnet::log::get" alt="" coords="231,5,340,32"/>
+<area shape="rect" id="node3" href="../../df/d0f/classtuxnet_1_1log.html#a34b5fef1b7d45c9837bcdf6be4838f19" title="tuxnet::log::error" alt="" coords="227,56,344,83"/>
+<area shape="rect" id="node4" href="../../d3/daa/classtuxnet_1_1peer.html#a5783baad92f7a79f6a70cf3ccfa2756e" title="Close connection to this peer. " alt="" coords="204,107,367,133"/>
+<area shape="rect" id="node5" href="../../da/d32/classtuxnet_1_1socket.html#aaf5d4b8001a95d83f03ea01eac6530d9" title="tuxnet::socket::remove_peer" alt="" coords="415,107,603,133"/>
+<area shape="rect" id="node6" href="../../da/d32/classtuxnet_1_1socket.html#a1f1921ae2c0afa6c8ae6a0bb9f8a66ff" title="tuxnet::socket::on\l_disconnect" alt="" coords="667,15,794,57"/>
+<area shape="rect" id="node8" href="../../d2/d99/classtuxnet_1_1lockable.html#a85a471d324f4583c668705b7bbdc8972" title="Locks the underlying mutex of the managed object. " alt="" coords="657,81,804,108"/>
+<area shape="rect" id="node9" href="../../d2/d99/classtuxnet_1_1lockable.html#a183be43656600d103da3657d0e3f426f" title="Get an instance of the managed object. " alt="" coords="661,132,801,159"/>
+<area shape="rect" id="node10" href="../../d2/d99/classtuxnet_1_1lockable.html#af4c0775a628c298545aa09715cc8ce27" title="Unlocks the underlying mutex of the managed object. " alt="" coords="651,183,811,209"/>
+<area shape="rect" id="node7" href="../../d1/d32/classtuxnet_1_1server.html#a800d48cec34e7f259b618367733b92dc" title="on_disconnect event. " alt="" coords="859,15,983,57"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ad5f3f869608eb5716d5027d508d9d93b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5f3f869608eb5716d5027d508d9d93b">&#9670;&nbsp;</a></span>read_string()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string tuxnet::peer::read_string </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>characters</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reads up to a given number of characters from the peer socket.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">characters</td><td>: Number of characters to read. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns text received. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../dd/dd9/peer_8cpp_source.html#l00142">142</a> of file <a class="el" href="../../dd/dd9/peer_8cpp_source.html">peer.cpp</a>.</p>
+<div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-9-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d3/daa/classtuxnet_1_1peer_ad5f3f869608eb5716d5027d508d9d93b_cgraph.png" border="0" usemap="#d3/daa/classtuxnet_1_1peer_ad5f3f869608eb5716d5027d508d9d93b_cgraph" alt=""/></div>
+<map name="d3/daa/classtuxnet_1_1peer_ad5f3f869608eb5716d5027d508d9d93b_cgraph" id="d3/daa/classtuxnet_1_1peer_ad5f3f869608eb5716d5027d508d9d93b_cgraph">
+<area shape="rect" id="node2" href="../../df/d0f/classtuxnet_1_1log.html#ab1741bef0f42314fa515a64154f44ab9" title="tuxnet::log::get" alt="" coords="204,5,313,32"/>
+<area shape="rect" id="node3" href="../../df/d0f/classtuxnet_1_1log.html#a34b5fef1b7d45c9837bcdf6be4838f19" title="tuxnet::log::error" alt="" coords="200,56,317,83"/>
+<area shape="rect" id="node4" href="../../d3/daa/classtuxnet_1_1peer.html#a5783baad92f7a79f6a70cf3ccfa2756e" title="Close connection to this peer. " alt="" coords="177,107,340,133"/>
+<area shape="rect" id="node5" href="../../da/d32/classtuxnet_1_1socket.html#aaf5d4b8001a95d83f03ea01eac6530d9" title="tuxnet::socket::remove_peer" alt="" coords="388,107,576,133"/>
+<area shape="rect" id="node6" href="../../da/d32/classtuxnet_1_1socket.html#a1f1921ae2c0afa6c8ae6a0bb9f8a66ff" title="tuxnet::socket::on\l_disconnect" alt="" coords="641,15,767,57"/>
+<area shape="rect" id="node8" href="../../d2/d99/classtuxnet_1_1lockable.html#a85a471d324f4583c668705b7bbdc8972" title="Locks the underlying mutex of the managed object. " alt="" coords="631,81,777,108"/>
+<area shape="rect" id="node9" href="../../d2/d99/classtuxnet_1_1lockable.html#a183be43656600d103da3657d0e3f426f" title="Get an instance of the managed object. " alt="" coords="634,132,774,159"/>
+<area shape="rect" id="node10" href="../../d2/d99/classtuxnet_1_1lockable.html#af4c0775a628c298545aa09715cc8ce27" title="Unlocks the underlying mutex of the managed object. " alt="" coords="624,183,784,209"/>
+<area shape="rect" id="node7" href="../../d1/d32/classtuxnet_1_1server.html#a800d48cec34e7f259b618367733b92dc" title="on_disconnect event. " alt="" coords="832,15,956,57"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a18a7e9009c5ed468453564504e6702ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18a7e9009c5ed468453564504e6702ba">&#9670;&nbsp;</a></span>read_string_until()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string tuxnet::peer::read_string_until </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>token</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reads string until given token is received.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">token</td><td>: substring to look for in received data. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns data received up-to and including token. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../dd/dd9/peer_8cpp_source.html#l00185">185</a> of file <a class="el" href="../../dd/dd9/peer_8cpp_source.html">peer.cpp</a>.</p>
+<div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-10-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d3/daa/classtuxnet_1_1peer_a18a7e9009c5ed468453564504e6702ba_cgraph.png" border="0" usemap="#d3/daa/classtuxnet_1_1peer_a18a7e9009c5ed468453564504e6702ba_cgraph" alt=""/></div>
+<map name="d3/daa/classtuxnet_1_1peer_a18a7e9009c5ed468453564504e6702ba_cgraph" id="d3/daa/classtuxnet_1_1peer_a18a7e9009c5ed468453564504e6702ba_cgraph">
+<area shape="rect" id="node2" href="../../df/d0f/classtuxnet_1_1log.html#ab1741bef0f42314fa515a64154f44ab9" title="tuxnet::log::get" alt="" coords="204,5,313,32"/>
+<area shape="rect" id="node3" href="../../df/d0f/classtuxnet_1_1log.html#a34b5fef1b7d45c9837bcdf6be4838f19" title="tuxnet::log::error" alt="" coords="200,56,317,83"/>
+<area shape="rect" id="node4" href="../../d3/daa/classtuxnet_1_1peer.html#a5783baad92f7a79f6a70cf3ccfa2756e" title="Close connection to this peer. " alt="" coords="177,107,340,133"/>
+<area shape="rect" id="node5" href="../../da/d32/classtuxnet_1_1socket.html#aaf5d4b8001a95d83f03ea01eac6530d9" title="tuxnet::socket::remove_peer" alt="" coords="388,107,576,133"/>
+<area shape="rect" id="node6" href="../../da/d32/classtuxnet_1_1socket.html#a1f1921ae2c0afa6c8ae6a0bb9f8a66ff" title="tuxnet::socket::on\l_disconnect" alt="" coords="641,15,767,57"/>
+<area shape="rect" id="node8" href="../../d2/d99/classtuxnet_1_1lockable.html#a85a471d324f4583c668705b7bbdc8972" title="Locks the underlying mutex of the managed object. " alt="" coords="631,81,777,108"/>
+<area shape="rect" id="node9" href="../../d2/d99/classtuxnet_1_1lockable.html#a183be43656600d103da3657d0e3f426f" title="Get an instance of the managed object. " alt="" coords="634,132,774,159"/>
+<area shape="rect" id="node10" href="../../d2/d99/classtuxnet_1_1lockable.html#af4c0775a628c298545aa09715cc8ce27" title="Unlocks the underlying mutex of the managed object. " alt="" coords="624,183,784,209"/>
+<area shape="rect" id="node7" href="../../d1/d32/classtuxnet_1_1server.html#a800d48cec34e7f259b618367733b92dc" title="on_disconnect event. " alt="" coords="832,15,956,57"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="af467c2c4cfbe2d3ea56251ad27a70fdb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af467c2c4cfbe2d3ea56251ad27a70fdb">&#9670;&nbsp;</a></span>write_string()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tuxnet::peer::write_string </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>text</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000010">Todo:</a></b></dt><dd>Add functions for reading/writing raw bytes. </dd></dl>
+<p>Send data to the remote peer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">text</td><td>: Text to send. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="../../dd/dd9/peer_8cpp_source.html#l00321">321</a> of file <a class="el" href="../../dd/dd9/peer_8cpp_source.html">peer.cpp</a>.</p>
+<div id="dynsection-11" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-11-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d3/daa/classtuxnet_1_1peer_af467c2c4cfbe2d3ea56251ad27a70fdb_cgraph.png" border="0" usemap="#d3/daa/classtuxnet_1_1peer_af467c2c4cfbe2d3ea56251ad27a70fdb_cgraph" alt=""/></div>
+<map name="d3/daa/classtuxnet_1_1peer_af467c2c4cfbe2d3ea56251ad27a70fdb_cgraph" id="d3/daa/classtuxnet_1_1peer_af467c2c4cfbe2d3ea56251ad27a70fdb_cgraph">
+<area shape="rect" id="node2" href="../../d3/daa/classtuxnet_1_1peer.html#a5783baad92f7a79f6a70cf3ccfa2756e" title="Close connection to this peer. " alt="" coords="180,97,343,123"/>
+<area shape="rect" id="node9" href="../../df/d0f/classtuxnet_1_1log.html#ab1741bef0f42314fa515a64154f44ab9" title="tuxnet::log::get" alt="" coords="207,147,316,174"/>
+<area shape="rect" id="node10" href="../../df/d0f/classtuxnet_1_1log.html#a34b5fef1b7d45c9837bcdf6be4838f19" title="tuxnet::log::error" alt="" coords="203,198,320,225"/>
+<area shape="rect" id="node3" href="../../da/d32/classtuxnet_1_1socket.html#aaf5d4b8001a95d83f03ea01eac6530d9" title="tuxnet::socket::remove_peer" alt="" coords="391,97,579,123"/>
+<area shape="rect" id="node4" href="../../da/d32/classtuxnet_1_1socket.html#a1f1921ae2c0afa6c8ae6a0bb9f8a66ff" title="tuxnet::socket::on\l_disconnect" alt="" coords="643,5,770,47"/>
+<area shape="rect" id="node6" href="../../d2/d99/classtuxnet_1_1lockable.html#a85a471d324f4583c668705b7bbdc8972" title="Locks the underlying mutex of the managed object. " alt="" coords="633,71,780,98"/>
+<area shape="rect" id="node7" href="../../d2/d99/classtuxnet_1_1lockable.html#a183be43656600d103da3657d0e3f426f" title="Get an instance of the managed object. " alt="" coords="637,122,777,149"/>
+<area shape="rect" id="node8" href="../../d2/d99/classtuxnet_1_1lockable.html#af4c0775a628c298545aa09715cc8ce27" title="Unlocks the underlying mutex of the managed object. " alt="" coords="627,173,787,199"/>
+<area shape="rect" id="node5" href="../../d1/d32/classtuxnet_1_1server.html#a800d48cec34e7f259b618367733b92dc" title="on_disconnect event. " alt="" coords="835,5,959,47"/>
+</map>
+</div>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/johns/src/tuxnet/include/tuxnet/<a class="el" href="../../de/d12/peer_8h_source.html">peer.h</a></li>
-<li>/home/johns/src/tuxnet/src/<a class="el" href="../../dd/dd9/peer_8cpp_source.html">peer.cpp</a></li>
+<li>/home/johns/src/personal/tuxnet/include/tuxnet/<a class="el" href="../../de/d12/peer_8h_source.html">peer.h</a></li>
+<li>/home/johns/src/personal/tuxnet/src/<a class="el" href="../../dd/dd9/peer_8cpp_source.html">peer.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

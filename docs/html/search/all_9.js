@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['on_5fconnect',['on_connect',['../d1/d32/classtuxnet_1_1server.html#ae397031646f4b747f67899491928d014',1,'tuxnet::server']]],
-  ['on_5fdisconnect',['on_disconnect',['../d1/d32/classtuxnet_1_1server.html#a800d48cec34e7f259b618367733b92dc',1,'tuxnet::server']]],
-  ['on_5freceive',['on_receive',['../d1/d32/classtuxnet_1_1server.html#a2cb6aafc9e1955a2ab997de05f0cede8',1,'tuxnet::server']]]
+  ['m_5flock',['m_lock',['../da/d30/namespacetuxnet.html#a3f55313035ac19eb43c2de180a3b474e',1,'tuxnet']]],
+  ['m_5fpeers',['m_peers',['../da/d32/classtuxnet_1_1socket.html#a3a186c96b79c89f49aefd901530a9c2f',1,'tuxnet::socket']]],
+  ['m_5fproto',['m_proto',['../d4/d0d/classtuxnet_1_1socket__address.html#a05813fd24b2c0917bd01ebe0927d7caf',1,'tuxnet::socket_address']]],
+  ['mainpage_2edox',['mainpage.dox',['../d5/d4d/mainpage_8dox.html',1,'']]]
 ];

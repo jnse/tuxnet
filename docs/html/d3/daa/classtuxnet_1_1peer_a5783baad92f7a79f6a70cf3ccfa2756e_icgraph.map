@@ -1,0 +1,10 @@
+<map id="tuxnet::peer::disconnect" name="tuxnet::peer::disconnect">
+<area shape="rect" id="node2" href="$d3/daa/classtuxnet_1_1peer.html#aa601f70f576f9a07035f4b5ba4bd8a8d" title="tuxnet::peer::poll" alt="" coords="245,5,363,32"/>
+<area shape="rect" id="node4" href="$d3/daa/classtuxnet_1_1peer.html#ad5f3f869608eb5716d5027d508d9d93b" title="tuxnet::peer::read\l_string" alt="" coords="242,57,366,98"/>
+<area shape="rect" id="node5" href="$d3/daa/classtuxnet_1_1peer.html#a18a7e9009c5ed468453564504e6702ba" title="tuxnet::peer::read\l_string_until" alt="" coords="242,122,366,163"/>
+<area shape="rect" id="node6" href="$d3/daa/classtuxnet_1_1peer.html#a56340ba5bcf087075b444bc75e008d93" title="tuxnet::peer::read_line" alt="" coords="229,188,379,215"/>
+<area shape="rect" id="node7" href="$d3/daa/classtuxnet_1_1peer.html#a9e7cdac3c9ce085cd2cfa51b300fe1ef" title="tuxnet::peer::read_all" alt="" coords="232,239,376,265"/>
+<area shape="rect" id="node8" href="$d3/daa/classtuxnet_1_1peer.html#af467c2c4cfbe2d3ea56251ad27a70fdb" title="tuxnet::peer::write\l_string" alt="" coords="241,290,367,331"/>
+<area shape="rect" id="node9" href="$da/d32/classtuxnet_1_1socket.html#a4877efcc5aa6efa7a91b4152cc4195ba" title="tuxnet::socket::disconnect" alt="" coords="216,356,392,383"/>
+<area shape="rect" id="node3" href="$d3/daa/classtuxnet_1_1peer.html#aeb1b13b8e1c3df46782f861edd43413a" title="tuxnet::peer::initialize" alt="" coords="440,5,587,32"/>
+</map>

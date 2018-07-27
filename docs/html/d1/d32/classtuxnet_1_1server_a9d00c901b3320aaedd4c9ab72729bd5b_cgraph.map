@@ -1,0 +1,5 @@
+<map id="tuxnet::server::num_clients" name="tuxnet::server::num_clients">
+<area shape="rect" id="node2" href="$d2/d99/classtuxnet_1_1lockable.html#a85a471d324f4583c668705b7bbdc8972" title="Locks the underlying mutex of the managed object. " alt="" coords="195,5,341,32"/>
+<area shape="rect" id="node3" href="$d2/d99/classtuxnet_1_1lockable.html#a183be43656600d103da3657d0e3f426f" title="Get an instance of the managed object. " alt="" coords="198,56,338,83"/>
+<area shape="rect" id="node4" href="$d2/d99/classtuxnet_1_1lockable.html#af4c0775a628c298545aa09715cc8ce27" title="Unlocks the underlying mutex of the managed object. " alt="" coords="188,107,348,133"/>
+</map>

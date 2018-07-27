@@ -1,6 +1,8 @@
 <map id="tuxnet::socket::listen" name="tuxnet::socket::listen">
-<area shape="rect" id="node2" href="$da/d32/classtuxnet_1_1socket.html#a01c3b22ec6965e29236ac6ab114eacaa" title="Binds the socket to an address/port pair. " alt="" coords="197,64,335,91"/>
-<area shape="rect" id="node4" href="$df/d0f/classtuxnet_1_1log.html#ab1741bef0f42314fa515a64154f44ab9" title="tuxnet::log::get" alt="" coords="407,5,517,32"/>
-<area shape="rect" id="node5" href="$df/d0f/classtuxnet_1_1log.html#a34b5fef1b7d45c9837bcdf6be4838f19" title="tuxnet::log::error" alt="" coords="403,123,521,149"/>
-<area shape="rect" id="node3" href="$d4/d0d/classtuxnet_1_1socket__address.html#a0c64517b72026f2693b5e106ea5c769e" title="tuxnet::socket_address\l::get_protocol" alt="" coords="383,57,541,98"/>
+<area shape="rect" id="node2" href="$da/d32/classtuxnet_1_1socket.html#a01c3b22ec6965e29236ac6ab114eacaa" title="Binds the socket to an address/port pair. " alt="" coords="203,34,340,61"/>
+<area shape="rect" id="node4" href="$df/d0f/classtuxnet_1_1log.html#ab1741bef0f42314fa515a64154f44ab9" title="tuxnet::log::get" alt="" coords="418,85,527,112"/>
+<area shape="rect" id="node5" href="$df/d0f/classtuxnet_1_1log.html#a34b5fef1b7d45c9837bcdf6be4838f19" title="tuxnet::log::error" alt="" coords="414,140,531,166"/>
+<area shape="rect" id="node6" href="$da/d30/namespacetuxnet.html#ae1351564f6dbd0ee801afed3a3fd6716" title="tuxnet::create_event\l_listener" alt="" coords="201,136,342,178"/>
+<area shape="rect" id="node7" href="$da/d30/namespacetuxnet.html#a51fbeb177febc6e449c8ba1c8cd24dc5" title="tuxnet::event_monitor" alt="" coords="197,85,345,112"/>
+<area shape="rect" id="node3" href="$d4/d0d/classtuxnet_1_1socket__address.html#a0c64517b72026f2693b5e106ea5c769e" title="tuxnet::socket_address\l::get_protocol" alt="" coords="393,19,552,60"/>
 </map>

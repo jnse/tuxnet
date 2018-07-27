@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['_7eip_5faddress',['~ip_address',['../de/db3/classtuxnet_1_1ip__address.html#a5a33466384b5461cc15bde5c8ad0be44',1,'tuxnet::ip_address']]],
-  ['_7epeer',['~peer',['../d3/daa/classtuxnet_1_1peer.html#a1efacc1cf2ef1b9b6d1cfb9e9a2862f9',1,'tuxnet::peer']]],
-  ['_7eserver',['~server',['../d1/d32/classtuxnet_1_1server.html#af034225c14990217604121a0fc9d1d7c',1,'tuxnet::server']]],
-  ['_7esocket',['~socket',['../da/d32/classtuxnet_1_1socket.html#a76f04d3715b9b877c451f549b7982f9b',1,'tuxnet::socket']]],
-  ['_7esocket_5faddress',['~socket_address',['../d4/d0d/classtuxnet_1_1socket__address.html#ab416b78c78ce482edfa4f4de5071fb74',1,'tuxnet::socket_address']]]
+  ['read_5fall',['read_all',['../d3/daa/classtuxnet_1_1peer.html#a9e7cdac3c9ce085cd2cfa51b300fe1ef',1,'tuxnet::peer']]],
+  ['read_5fline',['read_line',['../d3/daa/classtuxnet_1_1peer.html#a56340ba5bcf087075b444bc75e008d93',1,'tuxnet::peer']]],
+  ['read_5fstring',['read_string',['../d3/daa/classtuxnet_1_1peer.html#ad5f3f869608eb5716d5027d508d9d93b',1,'tuxnet::peer']]],
+  ['read_5fstring_5funtil',['read_string_until',['../d3/daa/classtuxnet_1_1peer.html#a18a7e9009c5ed468453564504e6702ba',1,'tuxnet::peer']]],
+  ['remove_5fpeer',['remove_peer',['../da/d32/classtuxnet_1_1socket.html#aaf5d4b8001a95d83f03ea01eac6530d9',1,'tuxnet::socket']]]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>tuxnet: /home/johns/src/tuxnet/include/tuxnet/socket.h File Reference</title>
+<title>tuxnet: /home/johns/src/personal/tuxnet/include/tuxnet/socket.h File Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -76,7 +76,8 @@ $(function() {
 <div class="title">socket.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;sys/epoll.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;atomic&gt;</code><br />
+<code>#include &lt;sys/epoll.h&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;unordered_map&gt;</code><br />
 <code>#include &quot;<a class="el" href="../../d2/d8e/socket__address_8h_source.html">tuxnet/socket_address.h</a>&quot;</code><br />
@@ -88,13 +89,13 @@ $(function() {
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d5/d18/socket_8h__incl.png" border="0" usemap="#_2home_2johns_2src_2tuxnet_2include_2tuxnet_2socket_8h" alt=""/></div>
-<map name="_2home_2johns_2src_2tuxnet_2include_2tuxnet_2socket_8h" id="_2home_2johns_2src_2tuxnet_2include_2tuxnet_2socket_8h">
-<area shape="rect" id="node5" href="../../d2/d8e/socket__address_8h.html" title="tuxnet/socket_address.h" alt="" coords="241,169,406,196"/>
-<area shape="rect" id="node7" href="../../d2/d5e/protocol_8h.html" title="tuxnet/protocol.h" alt="" coords="412,319,531,345"/>
-<area shape="rect" id="node12" href="../../d5/d1b/lockable_8h.html" title="tuxnet/lockable.h" alt="" coords="587,95,708,121"/>
-<area shape="rect" id="node15" href="../../de/d12/peer_8h.html" title="tuxnet/peer.h" alt="" coords="230,95,329,121"/>
-<area shape="rect" id="node9" href="../../df/d4f/ip__address_8h.html" title="tuxnet/ip_address.h" alt="" coords="242,244,378,271"/>
+<div class="center"><img src="../../d5/d18/socket_8h__incl.png" border="0" usemap="#_2home_2johns_2src_2personal_2tuxnet_2include_2tuxnet_2socket_8h" alt=""/></div>
+<map name="_2home_2johns_2src_2personal_2tuxnet_2include_2tuxnet_2socket_8h" id="_2home_2johns_2src_2personal_2tuxnet_2include_2tuxnet_2socket_8h">
+<area shape="rect" id="node6" href="../../d2/d8e/socket__address_8h.html" title="tuxnet/socket_address.h" alt="" coords="469,184,635,211"/>
+<area shape="rect" id="node8" href="../../d2/d5e/protocol_8h.html" title="tuxnet/protocol.h" alt="" coords="557,333,675,360"/>
+<area shape="rect" id="node13" href="../../d5/d1b/lockable_8h.html" title="tuxnet/lockable.h" alt="" coords="761,109,882,136"/>
+<area shape="rect" id="node16" href="../../de/d12/peer_8h.html" title="tuxnet/peer.h" alt="" coords="231,109,329,136"/>
+<area shape="rect" id="node10" href="../../df/d4f/ip__address_8h.html" title="tuxnet/ip_address.h" alt="" coords="416,259,552,285"/>
 </map>
 </div>
 </div><div class="textblock"><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -102,12 +103,13 @@ $(function() {
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d9/daf/socket_8h__dep__incl.png" border="0" usemap="#_2home_2johns_2src_2tuxnet_2include_2tuxnet_2socket_8hdep" alt=""/></div>
-<map name="_2home_2johns_2src_2tuxnet_2include_2tuxnet_2socket_8hdep" id="_2home_2johns_2src_2tuxnet_2include_2tuxnet_2socket_8hdep">
-<area shape="rect" id="node2" href="../../df/dd7/server_8cpp.html" title="/home/johns/src/tuxnet\l/src/server.cpp" alt="" coords="5,184,160,225"/>
-<area shape="rect" id="node3" href="../../d8/d81/socket_8cpp.html" title="/home/johns/src/tuxnet\l/src/socket.cpp" alt="" coords="368,184,523,225"/>
-<area shape="rect" id="node4" href="../../d8/dc3/server_8h.html" title="/home/johns/src/tuxnet\l/include/tuxnet/server.h" alt="" coords="185,95,343,136"/>
-<area shape="rect" id="node5" href="../../d1/d2c/tuxnet_8h.html" title="/home/johns/src/tuxnet\l/include/tuxnet/tuxnet.h" alt="" coords="185,184,343,225"/>
+<div class="center"><img src="../../d9/daf/socket_8h__dep__incl.png" border="0" usemap="#_2home_2johns_2src_2personal_2tuxnet_2include_2tuxnet_2socket_8hdep" alt=""/></div>
+<map name="_2home_2johns_2src_2personal_2tuxnet_2include_2tuxnet_2socket_8hdep" id="_2home_2johns_2src_2personal_2tuxnet_2include_2tuxnet_2socket_8hdep">
+<area shape="rect" id="node2" href="../../dd/dd9/peer_8cpp.html" title="/home/johns/src/personal\l/tuxnet/src/peer.cpp" alt="" coords="5,117,173,158"/>
+<area shape="rect" id="node3" href="../../df/dd7/server_8cpp.html" title="/home/johns/src/personal\l/tuxnet/src/server.cpp" alt="" coords="56,221,224,262"/>
+<area shape="rect" id="node4" href="../../d8/d81/socket_8cpp.html" title="/home/johns/src/personal\l/tuxnet/src/socket.cpp" alt="" coords="440,221,608,262"/>
+<area shape="rect" id="node5" href="../../d8/dc3/server_8h.html" title="/home/johns/src/personal\l/tuxnet/include/tuxnet\l/server.h" alt="" coords="248,109,416,165"/>
+<area shape="rect" id="node6" href="../../d1/d2c/tuxnet_8h.html" title="/home/johns/src/personal\l/tuxnet/include/tuxnet\l/tuxnet.h" alt="" coords="248,213,416,269"/>
 </map>
 </div>
 </div>

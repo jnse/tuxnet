@@ -1,0 +1,7 @@
+<map id="tuxnet::socket::remove_peer" name="tuxnet::socket::remove_peer">
+<area shape="rect" id="node2" href="$da/d32/classtuxnet_1_1socket.html#a1f1921ae2c0afa6c8ae6a0bb9f8a66ff" title="tuxnet::socket::on\l_disconnect" alt="" coords="258,5,385,47"/>
+<area shape="rect" id="node4" href="$d2/d99/classtuxnet_1_1lockable.html#a85a471d324f4583c668705b7bbdc8972" title="Locks the underlying mutex of the managed object. " alt="" coords="248,71,395,98"/>
+<area shape="rect" id="node5" href="$d2/d99/classtuxnet_1_1lockable.html#a183be43656600d103da3657d0e3f426f" title="Get an instance of the managed object. " alt="" coords="251,122,391,149"/>
+<area shape="rect" id="node6" href="$d2/d99/classtuxnet_1_1lockable.html#af4c0775a628c298545aa09715cc8ce27" title="Unlocks the underlying mutex of the managed object. " alt="" coords="241,173,401,199"/>
+<area shape="rect" id="node3" href="$d1/d32/classtuxnet_1_1server.html#a800d48cec34e7f259b618367733b92dc" title="on_disconnect event. " alt="" coords="449,5,573,47"/>
+</map>

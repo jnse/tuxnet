@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['socket',['socket',['../d1/d32/classtuxnet_1_1server.html#a711df69252d45d87bad637c690a18632',1,'tuxnet::server']]]
+  ['peer',['peer',['../da/d32/classtuxnet_1_1socket.html#a6a6500a9eb3e00bc9e859237dd80fb35',1,'tuxnet::socket']]]
 ];

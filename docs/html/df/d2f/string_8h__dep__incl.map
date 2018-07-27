@@ -1,9 +1,11 @@
-<map id="/home/johns/src/tuxnet/include/tuxnet/string.h" name="/home/johns/src/tuxnet/include/tuxnet/string.h">
-<area shape="rect" id="node2" href="$d0/db2/ip__address_8cpp.html" title="/home/johns/src/tuxnet\l/src/ip_address.cpp" alt="" coords="5,95,160,136"/>
-<area shape="rect" id="node3" href="$df/dd7/server_8cpp.html" title="/home/johns/src/tuxnet\l/src/server.cpp" alt="" coords="77,184,232,225"/>
-<area shape="rect" id="node4" href="$d8/d81/socket_8cpp.html" title="/home/johns/src/tuxnet\l/src/socket.cpp" alt="" coords="256,184,411,225"/>
-<area shape="rect" id="node5" href="$de/d84/socket__address_8cpp.html" title="/home/johns/src/tuxnet\l/src/socket_address.cpp" alt="" coords="520,95,685,136"/>
-<area shape="rect" id="node6" href="$d5/d24/string_8cpp.html" title="/home/johns/src/tuxnet\l/src/string.cpp" alt="" coords="709,95,864,136"/>
-<area shape="rect" id="node7" href="$d8/dc3/server_8h.html" title="/home/johns/src/tuxnet\l/include/tuxnet/server.h" alt="" coords="286,95,445,136"/>
-<area shape="rect" id="node8" href="$d1/d2c/tuxnet_8h.html" title="/home/johns/src/tuxnet\l/include/tuxnet/tuxnet.h" alt="" coords="435,184,594,225"/>
+<map id="/home/johns/src/personal/tuxnet/include/tuxnet/string.h" name="/home/johns/src/personal/tuxnet/include/tuxnet/string.h">
+<area shape="rect" id="node2" href="$df/d1b/event_8cpp.html" title="/home/johns/src/personal\l/tuxnet/src/event.cpp" alt="" coords="5,117,173,158"/>
+<area shape="rect" id="node3" href="$d0/db2/ip__address_8cpp.html" title="/home/johns/src/personal\l/tuxnet/src/ip_address.cpp" alt="" coords="197,117,373,158"/>
+<area shape="rect" id="node4" href="$dd/dd9/peer_8cpp.html" title="/home/johns/src/personal\l/tuxnet/src/peer.cpp" alt="" coords="397,117,565,158"/>
+<area shape="rect" id="node5" href="$df/dd7/server_8cpp.html" title="/home/johns/src/personal\l/tuxnet/src/server.cpp" alt="" coords="463,221,631,262"/>
+<area shape="rect" id="node6" href="$d8/d81/socket_8cpp.html" title="/home/johns/src/personal\l/tuxnet/src/socket.cpp" alt="" coords="655,221,823,262"/>
+<area shape="rect" id="node7" href="$de/d84/socket__address_8cpp.html" title="/home/johns/src/personal\l/tuxnet/src/socket_address.cpp" alt="" coords="933,117,1139,158"/>
+<area shape="rect" id="node8" href="$d5/d24/string_8cpp.html" title="/home/johns/src/personal\l/tuxnet/src/string.cpp" alt="" coords="1163,117,1331,158"/>
+<area shape="rect" id="node9" href="$d8/dc3/server_8h.html" title="/home/johns/src/personal\l/tuxnet/include/tuxnet\l/server.h" alt="" coords="691,109,859,165"/>
+<area shape="rect" id="node10" href="$d1/d2c/tuxnet_8h.html" title="/home/johns/src/personal\l/tuxnet/include/tuxnet\l/tuxnet.h" alt="" coords="847,213,1015,269"/>
 </map>

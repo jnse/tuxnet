@@ -90,6 +90,9 @@ $(function() {
 <li>close()
 : <a class="el" href="da/d32/classtuxnet_1_1socket.html#accb64eb3f3faac8e79a0e690deb55bdb">tuxnet::socket</a>
 </li>
+<li>config()
+: <a class="el" href="d9/dbe/classtuxnet_1_1config.html#a69377c2d9422a26d799d7a1a3a3564fc">tuxnet::config</a>
+</li>
 <li>configure_keepalive()
 : <a class="el" href="d1/d32/classtuxnet_1_1server.html#afc9c0f8d4915331537ab326db3284eea">tuxnet::server</a>
 </li>
@@ -99,6 +102,10 @@ $(function() {
 <h3><a id="index_d"></a>- d -</h3><ul>
 <li>debug()
 : <a class="el" href="df/d0f/classtuxnet_1_1log.html#acd937b31ebb857fa513e1d388a39ec83">tuxnet::log</a>
+</li>
+<li>disconnect()
+: <a class="el" href="d3/daa/classtuxnet_1_1peer.html#a5783baad92f7a79f6a70cf3ccfa2756e">tuxnet::peer</a>
+, <a class="el" href="da/d32/classtuxnet_1_1socket.html#a4877efcc5aa6efa7a91b4152cc4195ba">tuxnet::socket</a>
 </li>
 </ul>
 
@@ -112,7 +119,8 @@ $(function() {
 
 <h3><a id="index_g"></a>- g -</h3><ul>
 <li>get()
-: <a class="el" href="d2/d99/classtuxnet_1_1lockable.html#a183be43656600d103da3657d0e3f426f">tuxnet::lockable&lt; T &gt;</a>
+: <a class="el" href="d9/dbe/classtuxnet_1_1config.html#a3b1e1571bb8d657ff4b272b234ed36ad">tuxnet::config</a>
+, <a class="el" href="d2/d99/classtuxnet_1_1lockable.html#a183be43656600d103da3657d0e3f426f">tuxnet::lockable&lt; T &gt;</a>
 , <a class="el" href="df/d0f/classtuxnet_1_1log.html#ab1741bef0f42314fa515a64154f44ab9">tuxnet::log</a>
 </li>
 <li>get_a()
@@ -145,8 +153,14 @@ $(function() {
 <li>get_keepalive_timeout()
 : <a class="el" href="da/d32/classtuxnet_1_1socket.html#a0f58dc68f31b88d833cb5e06e10fc3f0">tuxnet::socket</a>
 </li>
+<li>get_listen_socket_epoll_max_events()
+: <a class="el" href="d9/dbe/classtuxnet_1_1config.html#ac250093becbb15b71c085a53f327d5b1">tuxnet::config</a>
+</li>
 <li>get_local()
 : <a class="el" href="da/d32/classtuxnet_1_1socket.html#a3a6d6bcb4f5211a3c5268dfa05ffb7b7">tuxnet::socket</a>
+</li>
+<li>get_peer_socket_epoll_max_events()
+: <a class="el" href="d9/dbe/classtuxnet_1_1config.html#ad8ea4c63fc6926656866ef82dfe749c4">tuxnet::config</a>
 </li>
 <li>get_port()
 : <a class="el" href="d4/de5/classtuxnet_1_1ip4__socket__address.html#a466f18ab1f4a206ee96c2f79a3f40427">tuxnet::ip4_socket_address</a>
@@ -167,6 +181,9 @@ $(function() {
 <li>get_sockaddr_in()
 : <a class="el" href="d4/de5/classtuxnet_1_1ip4__socket__address.html#ac9fc1e567e27abdc3cc24fe694d1c883">tuxnet::ip4_socket_address</a>
 </li>
+<li>get_state()
+: <a class="el" href="d3/daa/classtuxnet_1_1peer.html#a46b7188bcfaf97062b35cbd0be5eb08d">tuxnet::peer</a>
+</li>
 </ul>
 
 
@@ -174,11 +191,14 @@ $(function() {
 <li>info()
 : <a class="el" href="df/d0f/classtuxnet_1_1log.html#a5b4df472982ec8cca38b3c9d3d8c467a">tuxnet::log</a>
 </li>
+<li>initialize()
+: <a class="el" href="d3/daa/classtuxnet_1_1peer.html#aeb1b13b8e1c3df46782f861edd43413a">tuxnet::peer</a>
+</li>
 <li>ip4_address()
-: <a class="el" href="d4/d3f/classtuxnet_1_1ip4__address.html#afb607e3061499924584fdae19aca2bd1">tuxnet::ip4_address</a>
+: <a class="el" href="d4/d3f/classtuxnet_1_1ip4__address.html#a8d89230a2b0bbe434034268a3010dbda">tuxnet::ip4_address</a>
 </li>
 <li>ip4_socket_address()
-: <a class="el" href="d4/de5/classtuxnet_1_1ip4__socket__address.html#aadf05c84e23f8ef39b4c9f6b23ed9b80">tuxnet::ip4_socket_address</a>
+: <a class="el" href="d4/de5/classtuxnet_1_1ip4__socket__address.html#a51b0d9e9175a301cfa1bdaf1a02decf1">tuxnet::ip4_socket_address</a>
 </li>
 <li>ip6_socket_address()
 : <a class="el" href="d4/dc0/classtuxnet_1_1ip6__socket__address.html#a3296e277700e105fde5e5da0ad28cf5f">tuxnet::ip6_socket_address</a>
@@ -203,26 +223,56 @@ $(function() {
 </ul>
 
 
+<h3><a id="index_n"></a>- n -</h3><ul>
+<li>num_clients()
+: <a class="el" href="d1/d32/classtuxnet_1_1server.html#a9d00c901b3320aaedd4c9ab72729bd5b">tuxnet::server</a>
+</li>
+</ul>
+
+
 <h3><a id="index_o"></a>- o -</h3><ul>
 <li>on_connect()
 : <a class="el" href="d1/d32/classtuxnet_1_1server.html#ae397031646f4b747f67899491928d014">tuxnet::server</a>
+, <a class="el" href="da/d32/classtuxnet_1_1socket.html#a341f58144ab0bb12a8f19e743d845048">tuxnet::socket</a>
 </li>
 <li>on_disconnect()
 : <a class="el" href="d1/d32/classtuxnet_1_1server.html#a800d48cec34e7f259b618367733b92dc">tuxnet::server</a>
+, <a class="el" href="da/d32/classtuxnet_1_1socket.html#a1f1921ae2c0afa6c8ae6a0bb9f8a66ff">tuxnet::socket</a>
 </li>
 <li>on_receive()
 : <a class="el" href="d1/d32/classtuxnet_1_1server.html#a2cb6aafc9e1955a2ab997de05f0cede8">tuxnet::server</a>
+, <a class="el" href="da/d32/classtuxnet_1_1socket.html#ab6ba9cb1b6fca22d59619ca7c4759a78">tuxnet::socket</a>
 </li>
 </ul>
 
 
 <h3><a id="index_p"></a>- p -</h3><ul>
 <li>peer()
-: <a class="el" href="d3/daa/classtuxnet_1_1peer.html#aa86c5dd4d9651f02f225e41291bbe8d1">tuxnet::peer</a>
+: <a class="el" href="d3/daa/classtuxnet_1_1peer.html#a48f1109c38b49a19293e123b4681470a">tuxnet::peer</a>
 </li>
 <li>poll()
-: <a class="el" href="d1/d32/classtuxnet_1_1server.html#a58bde94043200e4adbbeffafcb8f2ef8">tuxnet::server</a>
+: <a class="el" href="d3/daa/classtuxnet_1_1peer.html#aa601f70f576f9a07035f4b5ba4bd8a8d">tuxnet::peer</a>
+, <a class="el" href="d1/d32/classtuxnet_1_1server.html#a58bde94043200e4adbbeffafcb8f2ef8">tuxnet::server</a>
 , <a class="el" href="da/d32/classtuxnet_1_1socket.html#a2c085c7179072996c7b91afdfa1bc0f6">tuxnet::socket</a>
+</li>
+</ul>
+
+
+<h3><a id="index_r"></a>- r -</h3><ul>
+<li>read_all()
+: <a class="el" href="d3/daa/classtuxnet_1_1peer.html#a9e7cdac3c9ce085cd2cfa51b300fe1ef">tuxnet::peer</a>
+</li>
+<li>read_line()
+: <a class="el" href="d3/daa/classtuxnet_1_1peer.html#a56340ba5bcf087075b444bc75e008d93">tuxnet::peer</a>
+</li>
+<li>read_string()
+: <a class="el" href="d3/daa/classtuxnet_1_1peer.html#ad5f3f869608eb5716d5027d508d9d93b">tuxnet::peer</a>
+</li>
+<li>read_string_until()
+: <a class="el" href="d3/daa/classtuxnet_1_1peer.html#a18a7e9009c5ed468453564504e6702ba">tuxnet::peer</a>
+</li>
+<li>remove_peer()
+: <a class="el" href="da/d32/classtuxnet_1_1socket.html#aaf5d4b8001a95d83f03ea01eac6530d9">tuxnet::socket</a>
 </li>
 </ul>
 
@@ -259,7 +309,7 @@ $(function() {
 , <a class="el" href="d4/d0d/classtuxnet_1_1socket__address.html#a8731f286a0d7357b7e98a7f8cd823d9a">tuxnet::socket_address</a>
 </li>
 <li>socket()
-: <a class="el" href="da/d32/classtuxnet_1_1socket.html#a598f4da43441b738edadcc695f40a22b">tuxnet::socket</a>
+: <a class="el" href="da/d32/classtuxnet_1_1socket.html#a357f665902a660d672a31374f5877418">tuxnet::socket</a>
 </li>
 <li>socket_address()
 : <a class="el" href="d4/d0d/classtuxnet_1_1socket__address.html#a2e541d4ebadff2701c1470bca1e66786">tuxnet::socket_address</a>
@@ -270,6 +320,13 @@ $(function() {
 <h3><a id="index_u"></a>- u -</h3><ul>
 <li>unlock()
 : <a class="el" href="d2/d99/classtuxnet_1_1lockable.html#af4c0775a628c298545aa09715cc8ce27">tuxnet::lockable&lt; T &gt;</a>
+</li>
+</ul>
+
+
+<h3><a id="index_w"></a>- w -</h3><ul>
+<li>write_string()
+: <a class="el" href="d3/daa/classtuxnet_1_1peer.html#af467c2c4cfbe2d3ea56251ad27a70fdb">tuxnet::peer</a>
 </li>
 </ul>
 

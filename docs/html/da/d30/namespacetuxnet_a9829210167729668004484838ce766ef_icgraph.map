@@ -1,0 +1,6 @@
+<map id="tuxnet::free_monitor" name="tuxnet::free_monitor">
+<area shape="rect" id="node2" href="$d3/daa/classtuxnet_1_1peer.html#a1efacc1cf2ef1b9b6d1cfb9e9a2862f9" title="Destructor. " alt="" coords="198,5,330,32"/>
+<area shape="rect" id="node3" href="$da/d32/classtuxnet_1_1socket.html#accb64eb3f3faac8e79a0e690deb55bdb" title="Closes the socket. " alt="" coords="192,56,336,83"/>
+<area shape="rect" id="node4" href="$da/d32/classtuxnet_1_1socket.html#a76f04d3715b9b877c451f549b7982f9b" title="Destructor. " alt="" coords="384,31,544,57"/>
+<area shape="rect" id="node5" href="$da/d32/classtuxnet_1_1socket.html#a2c085c7179072996c7b91afdfa1bc0f6" title="Checks if any events happened on the socket. " alt="" coords="397,81,531,108"/>
+</map>

@@ -67,7 +67,8 @@ $(function() {
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">tuxnet Namespace Reference</div>  </div>
 </div><!--header-->
@@ -75,6 +76,8 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/dbe/classtuxnet_1_1config.html">config</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d3f/classtuxnet_1_1ip4__address.html">ip4_address</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/de5/classtuxnet_1_1ip4__socket__address.html">ip4_socket_address</a></td></tr>
@@ -99,9 +102,9 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a4593d9509fb51f55e3f1f173a199c955"><td class="memItemLeft" align="right" valign="top">typedef std::unordered_map&lt; int, <a class="el" href="../../d3/daa/classtuxnet_1_1peer.html">peer</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d30/namespacetuxnet.html#a4593d9509fb51f55e3f1f173a199c955">peers</a></td></tr>
-<tr class="memdesc:a4593d9509fb51f55e3f1f173a199c955"><td class="mdescLeft">&#160;</td><td class="mdescRight">Collection of peers.  <a href="#a4593d9509fb51f55e3f1f173a199c955">More...</a><br /></td></tr>
-<tr class="separator:a4593d9509fb51f55e3f1f173a199c955"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09200b194339e0703573c0c7eb8d3392"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt; <a class="el" href="../../d3/daa/classtuxnet_1_1peer.html">peer</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d30/namespacetuxnet.html#a09200b194339e0703573c0c7eb8d3392">peers</a></td></tr>
+<tr class="memdesc:a09200b194339e0703573c0c7eb8d3392"><td class="mdescLeft">&#160;</td><td class="mdescRight">Collection of peers.  <a href="#a09200b194339e0703573c0c7eb8d3392">More...</a><br /></td></tr>
+<tr class="separator:a09200b194339e0703573c0c7eb8d3392"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a97e90dd0f9f1a62ee16987237d06cce5"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt; <a class="el" href="../../da/d32/classtuxnet_1_1socket.html">tuxnet::socket</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d30/namespacetuxnet.html#a97e90dd0f9f1a62ee16987237d06cce5">sockets</a></td></tr>
 <tr class="memdesc:a97e90dd0f9f1a62ee16987237d06cce5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Collection of sockets.  <a href="#a97e90dd0f9f1a62ee16987237d06cce5">More...</a><br /></td></tr>
 <tr class="separator:a97e90dd0f9f1a62ee16987237d06cce5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -114,6 +117,13 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
+<tr class="memitem:a93489a9469c43880c76def27beefdc77"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d30/namespacetuxnet.html#a93489a9469c43880c76def27beefdc77">peer_state</a> { <a class="el" href="../../da/d30/namespacetuxnet.html#a93489a9469c43880c76def27beefdc77a5a54e0eebc1194d01d8fdf32ce95f5e1">PEER_STATE_UNINITIALIZED</a> =0, 
+<a class="el" href="../../da/d30/namespacetuxnet.html#a93489a9469c43880c76def27beefdc77a0bcf46c94051f568764af404b57b17a5">PEER_STATE_CONNECTED</a>, 
+<a class="el" href="../../da/d30/namespacetuxnet.html#a93489a9469c43880c76def27beefdc77af0ec4c8daaa5e045ed0603aecabcd84f">PEER_STATE_CLOSING</a>, 
+<a class="el" href="../../da/d30/namespacetuxnet.html#a93489a9469c43880c76def27beefdc77a75127cd7283f87034a570be61fb8de66">PEER_STATE_CLOSED</a>
+ }</td></tr>
+<tr class="memdesc:a93489a9469c43880c76def27beefdc77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum for the different states a peer can be in.  <a href="../../da/d30/namespacetuxnet.html#a93489a9469c43880c76def27beefdc77">More...</a><br /></td></tr>
+<tr class="separator:a93489a9469c43880c76def27beefdc77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa14c7ae1d888028e63466917385e6e5f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d30/namespacetuxnet.html#aa14c7ae1d888028e63466917385e6e5f">layer3_protocol</a> { <a class="el" href="../../da/d30/namespacetuxnet.html#aa14c7ae1d888028e63466917385e6e5fa168980d25c60b2d00bdd365ee978d1b0">L3_PROTO_NONE</a> = 0, 
 <a class="el" href="../../da/d30/namespacetuxnet.html#aa14c7ae1d888028e63466917385e6e5fa5cecfd6d7e13d78570bcbe3f1099d49b">L3_PROTO_IP4</a> = 1, 
 <a class="el" href="../../da/d30/namespacetuxnet.html#aa14c7ae1d888028e63466917385e6e5fa28874e860e230fefb57b38b6d1117491">L3_PROTO_IP6</a> = 2
@@ -142,31 +152,42 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ae1351564f6dbd0ee801afed3a3fd6716"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d30/namespacetuxnet.html#ae1351564f6dbd0ee801afed3a3fd6716">create_event_listener</a> ()</td></tr>
+<tr class="separator:ae1351564f6dbd0ee801afed3a3fd6716"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51fbeb177febc6e449c8ba1c8cd24dc5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d30/namespacetuxnet.html#a51fbeb177febc6e449c8ba1c8cd24dc5">event_monitor</a> (int socket_fd, int epoll_fd)</td></tr>
+<tr class="separator:a51fbeb177febc6e449c8ba1c8cd24dc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9829210167729668004484838ce766ef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d30/namespacetuxnet.html#a9829210167729668004484838ce766ef">free_monitor</a> (int socket_fd, int epoll_fd)</td></tr>
+<tr class="separator:a9829210167729668004484838ce766ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad6343fd5e50b2c582f73962d57bb235"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d30/namespacetuxnet.html#aad6343fd5e50b2c582f73962d57bb235">layer4_to_proto</a> (const <a class="el" href="../../da/d30/namespacetuxnet.html#a8122bafeb5a1048c17483c41a40cdae8">layer4_protocol</a> &amp;proto)</td></tr>
 <tr class="separator:aad6343fd5e50b2c582f73962d57bb235"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d73efde5aa3806f7fffbf9185c5ec13"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/d30/namespacetuxnet.html#a960379f77e142d79d27b8d223bcfbd28">str_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d30/namespacetuxnet.html#a2d73efde5aa3806f7fffbf9185c5ec13">str_split</a> (const std::string &amp;str, const std::string &amp;delim, int max_elem)</td></tr>
 <tr class="separator:a2d73efde5aa3806f7fffbf9185c5ec13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a3f55313035ac19eb43c2de180a3b474e"><td class="memItemLeft" align="right" valign="top">std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d30/namespacetuxnet.html#a3f55313035ac19eb43c2de180a3b474e">m_lock</a></td></tr>
+<tr class="separator:a3f55313035ac19eb43c2de180a3b474e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implementation of IP address storage classes and functions for IP address conversion.</p>
 <p>Class headers for IP address storage classes, and function definitions for IP address conversion.</p>
 <p>Network socket definition. </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="a4593d9509fb51f55e3f1f173a199c955"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4593d9509fb51f55e3f1f173a199c955">&#9670;&nbsp;</a></span>peers</h2>
+<a id="a09200b194339e0703573c0c7eb8d3392"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09200b194339e0703573c0c7eb8d3392">&#9670;&nbsp;</a></span>peers</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef std::unordered_map&lt;int, <a class="el" href="../../d3/daa/classtuxnet_1_1peer.html">peer</a>*&gt; <a class="el" href="../../da/d30/namespacetuxnet.html#a4593d9509fb51f55e3f1f173a199c955">tuxnet::peers</a></td>
+          <td class="memname">typedef std::vector&lt;<a class="el" href="../../d3/daa/classtuxnet_1_1peer.html">peer</a>*&gt; <a class="el" href="../../da/d30/namespacetuxnet.html#a09200b194339e0703573c0c7eb8d3392">tuxnet::peers</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Collection of peers. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../de/d12/peer_8h_source.html#l00065">65</a> of file <a class="el" href="../../de/d12/peer_8h_source.html">peer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d12/peer_8h_source.html#l00027">27</a> of file <a class="el" href="../../de/d12/peer_8h_source.html">peer.h</a>.</p>
 
 </div>
 </div>
@@ -202,7 +223,7 @@ Functions</h2></td></tr>
 
 <p>Collection of sockets. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../da/ddd/socket_8h_source.html#l00368">368</a> of file <a class="el" href="../../da/ddd/socket_8h_source.html">socket.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../da/ddd/socket_8h_source.html#l00389">389</a> of file <a class="el" href="../../da/ddd/socket_8h_source.html">socket.h</a>.</p>
 
 </div>
 </div>
@@ -271,6 +292,30 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a93489a9469c43880c76def27beefdc77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93489a9469c43880c76def27beefdc77">&#9670;&nbsp;</a></span>peer_state</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="../../da/d30/namespacetuxnet.html#a93489a9469c43880c76def27beefdc77">tuxnet::peer_state</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enum for the different states a peer can be in. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a93489a9469c43880c76def27beefdc77a5a54e0eebc1194d01d8fdf32ce95f5e1"></a>PEER_STATE_UNINITIALIZED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a93489a9469c43880c76def27beefdc77a0bcf46c94051f568764af404b57b17a5"></a>PEER_STATE_CONNECTED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a93489a9469c43880c76def27beefdc77af0ec4c8daaa5e045ed0603aecabcd84f"></a>PEER_STATE_CLOSING&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a93489a9469c43880c76def27beefdc77a75127cd7283f87034a570be61fb8de66"></a>PEER_STATE_CLOSED&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="../../de/d12/peer_8h_source.html#l00018">18</a> of file <a class="el" href="../../de/d12/peer_8h_source.html">peer.h</a>.</p>
+
+</div>
+</div>
 <a id="a56bd5bf3f9f801821047aacef709662d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a56bd5bf3f9f801821047aacef709662d">&#9670;&nbsp;</a></span>socket_state</h2>
 
@@ -301,11 +346,171 @@ Functions</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="../../da/ddd/socket_8h_source.html#l00023">23</a> of file <a class="el" href="../../da/ddd/socket_8h_source.html">socket.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../da/ddd/socket_8h_source.html#l00024">24</a> of file <a class="el" href="../../da/ddd/socket_8h_source.html">socket.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ae1351564f6dbd0ee801afed3a3fd6716"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1351564f6dbd0ee801afed3a3fd6716">&#9670;&nbsp;</a></span>create_event_listener()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tuxnet::create_event_listener </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Creates an event listener.</p>
+<dl class="section return"><dt>Returns</dt><dd>Returns the listener file descriptor on success. </dd>
+<dd>
+Returns -1 on failure. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../df/d1b/event_8cpp_source.html#l00013">13</a> of file <a class="el" href="../../df/d1b/event_8cpp_source.html">event.cpp</a>.</p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../da/d30/namespacetuxnet_ae1351564f6dbd0ee801afed3a3fd6716_cgraph.png" border="0" usemap="#da/d30/namespacetuxnet_ae1351564f6dbd0ee801afed3a3fd6716_cgraph" alt=""/></div>
+<map name="da/d30/namespacetuxnet_ae1351564f6dbd0ee801afed3a3fd6716_cgraph" id="da/d30/namespacetuxnet_ae1351564f6dbd0ee801afed3a3fd6716_cgraph">
+<area shape="rect" id="node2" href="../../df/d0f/classtuxnet_1_1log.html#ab1741bef0f42314fa515a64154f44ab9" title="tuxnet::log::get" alt="" coords="199,5,308,32"/>
+<area shape="rect" id="node3" href="../../df/d0f/classtuxnet_1_1log.html#a34b5fef1b7d45c9837bcdf6be4838f19" title="tuxnet::log::error" alt="" coords="195,56,312,83"/>
+</map>
+</div>
+<div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../da/d30/namespacetuxnet_ae1351564f6dbd0ee801afed3a3fd6716_icgraph.png" border="0" usemap="#da/d30/namespacetuxnet_ae1351564f6dbd0ee801afed3a3fd6716_icgraph" alt=""/></div>
+<map name="da/d30/namespacetuxnet_ae1351564f6dbd0ee801afed3a3fd6716_icgraph" id="da/d30/namespacetuxnet_ae1351564f6dbd0ee801afed3a3fd6716_icgraph">
+<area shape="rect" id="node2" href="../../d3/daa/classtuxnet_1_1peer.html#aeb1b13b8e1c3df46782f861edd43413a" title="tuxnet::peer::initialize" alt="" coords="195,5,341,32"/>
+<area shape="rect" id="node3" href="../../da/d32/classtuxnet_1_1socket.html#a147391244176f557c52c9f32c2efc1ef" title="Listens on an address/port pair. " alt="" coords="196,56,340,83"/>
+<area shape="rect" id="node4" href="../../d1/d32/classtuxnet_1_1server.html#a0621db9ac039f00c1f20a35a004e91d5" title="Start listening for connections. " alt="" coords="389,56,531,83"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a51fbeb177febc6e449c8ba1c8cd24dc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51fbeb177febc6e449c8ba1c8cd24dc5">&#9670;&nbsp;</a></span>event_monitor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tuxnet::event_monitor </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>socket_fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>epoll_fd</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Monitor a socket file-descriptor for events.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">socket_fd</td><td>: Socket file-descriptor. </td></tr>
+    <tr><td class="paramname">epoll_fd</td><td>: Pointer to epoll file descriptor. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns true on success. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../df/d1b/event_8cpp_source.html#l00044">44</a> of file <a class="el" href="../../df/d1b/event_8cpp_source.html">event.cpp</a>.</p>
+<div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../da/d30/namespacetuxnet_a51fbeb177febc6e449c8ba1c8cd24dc5_cgraph.png" border="0" usemap="#da/d30/namespacetuxnet_a51fbeb177febc6e449c8ba1c8cd24dc5_cgraph" alt=""/></div>
+<map name="da/d30/namespacetuxnet_a51fbeb177febc6e449c8ba1c8cd24dc5_cgraph" id="da/d30/namespacetuxnet_a51fbeb177febc6e449c8ba1c8cd24dc5_cgraph">
+<area shape="rect" id="node2" href="../../df/d0f/classtuxnet_1_1log.html#ab1741bef0f42314fa515a64154f44ab9" title="tuxnet::log::get" alt="" coords="205,5,315,32"/>
+<area shape="rect" id="node3" href="../../df/d0f/classtuxnet_1_1log.html#a34b5fef1b7d45c9837bcdf6be4838f19" title="tuxnet::log::error" alt="" coords="201,56,319,83"/>
+</map>
+</div>
+<div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../da/d30/namespacetuxnet_a51fbeb177febc6e449c8ba1c8cd24dc5_icgraph.png" border="0" usemap="#da/d30/namespacetuxnet_a51fbeb177febc6e449c8ba1c8cd24dc5_icgraph" alt=""/></div>
+<map name="da/d30/namespacetuxnet_a51fbeb177febc6e449c8ba1c8cd24dc5_icgraph" id="da/d30/namespacetuxnet_a51fbeb177febc6e449c8ba1c8cd24dc5_icgraph">
+<area shape="rect" id="node2" href="../../d3/daa/classtuxnet_1_1peer.html#aeb1b13b8e1c3df46782f861edd43413a" title="tuxnet::peer::initialize" alt="" coords="201,5,348,32"/>
+<area shape="rect" id="node3" href="../../da/d32/classtuxnet_1_1socket.html#a147391244176f557c52c9f32c2efc1ef" title="Listens on an address/port pair. " alt="" coords="203,56,347,83"/>
+<area shape="rect" id="node4" href="../../d1/d32/classtuxnet_1_1server.html#a0621db9ac039f00c1f20a35a004e91d5" title="Start listening for connections. " alt="" coords="396,56,537,83"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a9829210167729668004484838ce766ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9829210167729668004484838ce766ef">&#9670;&nbsp;</a></span>free_monitor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tuxnet::free_monitor </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>socket_fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>epoll_fd</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Free an event monitor.</p>
+<p>Closes the epoll fd.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">socket_fd</td><td>: Socket file-descriptor. </td></tr>
+    <tr><td class="paramname">epoll_fd</td><td>: Pointer to epoll file descriptor. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="../../df/d1b/event_8cpp_source.html#l00073">73</a> of file <a class="el" href="../../df/d1b/event_8cpp_source.html">event.cpp</a>.</p>
+<div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../da/d30/namespacetuxnet_a9829210167729668004484838ce766ef_icgraph.png" border="0" usemap="#da/d30/namespacetuxnet_a9829210167729668004484838ce766ef_icgraph" alt=""/></div>
+<map name="da/d30/namespacetuxnet_a9829210167729668004484838ce766ef_icgraph" id="da/d30/namespacetuxnet_a9829210167729668004484838ce766ef_icgraph">
+<area shape="rect" id="node2" href="../../d3/daa/classtuxnet_1_1peer.html#a1efacc1cf2ef1b9b6d1cfb9e9a2862f9" title="Destructor. " alt="" coords="198,5,330,32"/>
+<area shape="rect" id="node3" href="../../da/d32/classtuxnet_1_1socket.html#accb64eb3f3faac8e79a0e690deb55bdb" title="Closes the socket. " alt="" coords="192,56,336,83"/>
+<area shape="rect" id="node4" href="../../da/d32/classtuxnet_1_1socket.html#a76f04d3715b9b877c451f549b7982f9b" title="Destructor. " alt="" coords="384,31,544,57"/>
+<area shape="rect" id="node5" href="../../da/d32/classtuxnet_1_1socket.html#a2c085c7179072996c7b91afdfa1bc0f6" title="Checks if any events happened on the socket. " alt="" coords="397,81,531,108"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="aad6343fd5e50b2c582f73962d57bb235"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aad6343fd5e50b2c582f73962d57bb235">&#9670;&nbsp;</a></span>layer4_to_proto()</h2>
 
@@ -331,11 +536,11 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Returns pointer to result of a getprotobyname() call. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d4/d25/protocol_8cpp_source.html#l00009">9</a> of file <a class="el" href="../../d4/d25/protocol_8cpp_source.html">protocol.cpp</a>.</p>
-<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../da/d30/namespacetuxnet_aad6343fd5e50b2c582f73962d57bb235_cgraph.png" border="0" usemap="#da/d30/namespacetuxnet_aad6343fd5e50b2c582f73962d57bb235_cgraph" alt=""/></div>
 <map name="da/d30/namespacetuxnet_aad6343fd5e50b2c582f73962d57bb235_cgraph" id="da/d30/namespacetuxnet_aad6343fd5e50b2c582f73962d57bb235_cgraph">
 <area shape="rect" id="node2" href="../../df/d0f/classtuxnet_1_1log.html#ab1741bef0f42314fa515a64154f44ab9" title="tuxnet::log::get" alt="" coords="212,5,321,32"/>
@@ -388,6 +593,23 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>str_vector : Returns a vector of strings containing string str substrings split up by delim. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d5/d24/string_8cpp_source.html#l00007">7</a> of file <a class="el" href="../../d5/d24/string_8cpp_source.html">string.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a3f55313035ac19eb43c2de180a3b474e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f55313035ac19eb43c2de180a3b474e">&#9670;&nbsp;</a></span>m_lock</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::mutex tuxnet::m_lock</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d9/db8/log_8cpp_source.html#l00012">12</a> of file <a class="el" href="../../d9/db8/log_8cpp_source.html">log.cpp</a>.</p>
 
 </div>
 </div>

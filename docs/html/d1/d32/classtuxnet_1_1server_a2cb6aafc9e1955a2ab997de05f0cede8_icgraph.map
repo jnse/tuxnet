@@ -1,3 +1,5 @@
 <map id="tuxnet::server::on_receive" name="tuxnet::server::on_receive">
-<area shape="rect" id="node2" href="$da/d32/classtuxnet_1_1socket.html#a2c085c7179072996c7b91afdfa1bc0f6" title="Checks if any events happened on the socket. " alt="" coords="177,13,311,39"/>
+<area shape="rect" id="node2" href="$da/d32/classtuxnet_1_1socket.html#ab6ba9cb1b6fca22d59619ca7c4759a78" title="tuxnet::socket::on\l_receive" alt="" coords="177,5,304,47"/>
+<area shape="rect" id="node3" href="$d3/daa/classtuxnet_1_1peer.html#aa601f70f576f9a07035f4b5ba4bd8a8d" title="tuxnet::peer::poll" alt="" coords="352,13,471,39"/>
+<area shape="rect" id="node4" href="$d3/daa/classtuxnet_1_1peer.html#aeb1b13b8e1c3df46782f861edd43413a" title="tuxnet::peer::initialize" alt="" coords="519,13,665,39"/>
 </map>

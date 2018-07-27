@@ -109,8 +109,8 @@ class tuxnet::lockable&lt; T &gt;</h3>
 <p><a class="el" href="../../d2/d99/classtuxnet_1_1lockable.html#a34be1edd3d5c38d553796a0c6e0f93f2" title="Perform an atomic operation on the object. ">atomic()</a> can be used to perform atomic operations on the wrapped object, for instance using a lambda:</p>
 <div class="fragment"><div class="line">my_variable.atomic([some_type the_var]{ the_var.do_stuff() });</div></div><!-- fragment --><p>Simple locking and unlocking of the variable's underlying mutex can also still be done using the <a class="el" href="../../d2/d99/classtuxnet_1_1lockable.html#a85a471d324f4583c668705b7bbdc8972" title="Locks the underlying mutex of the managed object. ">lock()</a> and <a class="el" href="../../d2/d99/classtuxnet_1_1lockable.html#af4c0775a628c298545aa09715cc8ce27" title="Unlocks the underlying mutex of the managed object. ">unlock()</a> functions.</p>
 <p>Longer example, say you had a container you only want to lock when writing:</p>
-<div class="fragment"><div class="line"><span class="keyword">typedef</span> std::vector&lt;std::string&gt; strvector;</div><div class="line"></div><div class="line"><span class="keyword">class </span>string_factory</div><div class="line">{</div><div class="line"></div><div class="line">    lockable&lt;strvector&gt; my_strings;</div><div class="line"></div><div class="line">    <span class="keyword">public</span>:</div><div class="line"></div><div class="line">        <span class="comment">// constructor</span></div><div class="line">        string_factory() </div><div class="line">        {</div><div class="line">            my_strings.get().push_back(<span class="stringliteral">&quot;foo&quot;</span>);</div><div class="line">            my_strings.get().push_back(<span class="stringliteral">&quot;bar&quot;</span>);</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">// Imagine the function below is called from a thread.</span></div><div class="line">        <span class="keywordtype">void</span> erase_all()</div><div class="line">        {</div><div class="line">            my_strings.atomic([](strvector&amp; s){ strvector().swap(s) });</div><div class="line">        }</div><div class="line">}</div></div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="../../d5/d1b/lockable_8h_source.html#l00062">62</a> of file <a class="el" href="../../d5/d1b/lockable_8h_source.html">lockable.h</a>.</p>
+<div class="fragment"><div class="line"><span class="keyword">typedef</span> std::vector&lt;std::string&gt; strvector;</div><div class="line">lockable&lt;strvector&gt; my_strings;</div><div class="line">my_strings.get().push_back(<span class="stringliteral">&quot;foo&quot;</span>);</div><div class="line">my_strings.get().push_back(<span class="stringliteral">&quot;bar&quot;</span>);</div><div class="line"></div><div class="line"><span class="comment">// Say that this is a function called from a thread that gets passed</span></div><div class="line"><span class="comment">// the above my_strings object.</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> do_work(<span class="keyword">const</span> lockable&lt;strvector&gt;&amp; the_strings)</div><div class="line">{</div><div class="line">    <span class="comment">// Add another string in a way that is thread-safe.</span></div><div class="line">    the_strings.atomic([](strvector&amp; s){ s.push_back(<span class="stringliteral">&quot;baz&quot;</span>) });</div><div class="line">}</div></div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="../../d5/d1b/lockable_8h_source.html#l00052">52</a> of file <a class="el" href="../../d5/d1b/lockable_8h_source.html">lockable.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a85d87894700024576e726fe1f77f3455"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a85d87894700024576e726fe1f77f3455">&#9670;&nbsp;</a></span>lockable()</h2>
@@ -140,7 +140,7 @@ template&lt;class T&gt; </div>
 
 <p>Constructor. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/d1b/lockable_8h_source.html#l00073">73</a> of file <a class="el" href="../../d5/d1b/lockable_8h_source.html">lockable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d1b/lockable_8h_source.html#l00063">63</a> of file <a class="el" href="../../d5/d1b/lockable_8h_source.html">lockable.h</a>.</p>
 
 </div>
 </div>
@@ -193,7 +193,7 @@ template&lt;typename Function , typename... Arguments&gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/d1b/lockable_8h_source.html#l00102">102</a> of file <a class="el" href="../../d5/d1b/lockable_8h_source.html">lockable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d1b/lockable_8h_source.html#l00092">92</a> of file <a class="el" href="../../d5/d1b/lockable_8h_source.html">lockable.h</a>.</p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -236,7 +236,7 @@ template&lt;class T&gt; </div>
 
 <p>Get an instance of the managed object. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/d1b/lockable_8h_source.html#l00079">79</a> of file <a class="el" href="../../d5/d1b/lockable_8h_source.html">lockable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d1b/lockable_8h_source.html#l00069">69</a> of file <a class="el" href="../../d5/d1b/lockable_8h_source.html">lockable.h</a>.</p>
 <div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
@@ -244,9 +244,23 @@ template&lt;class T&gt; </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d2/d99/classtuxnet_1_1lockable_a183be43656600d103da3657d0e3f426f_icgraph.png" border="0" usemap="#d2/d99/classtuxnet_1_1lockable_a183be43656600d103da3657d0e3f426f_icgraph" alt=""/></div>
 <map name="d2/d99/classtuxnet_1_1lockable_a183be43656600d103da3657d0e3f426f_icgraph" id="d2/d99/classtuxnet_1_1lockable_a183be43656600d103da3657d0e3f426f_icgraph">
-<area shape="rect" id="node2" href="../../da/d32/classtuxnet_1_1socket.html#accb64eb3f3faac8e79a0e690deb55bdb" title="Closes the socket. " alt="" coords="193,5,337,32"/>
-<area shape="rect" id="node4" href="../../da/d32/classtuxnet_1_1socket.html#a2c085c7179072996c7b91afdfa1bc0f6" title="Checks if any events happened on the socket. " alt="" coords="399,56,532,83"/>
-<area shape="rect" id="node3" href="../../da/d32/classtuxnet_1_1socket.html#a76f04d3715b9b877c451f549b7982f9b" title="Destructor. " alt="" coords="385,5,545,32"/>
+<area shape="rect" id="node2" href="../../d1/d32/classtuxnet_1_1server.html#af034225c14990217604121a0fc9d1d7c" title="Destructor. " alt="" coords="210,5,365,32"/>
+<area shape="rect" id="node3" href="../../d1/d32/classtuxnet_1_1server.html#a0621db9ac039f00c1f20a35a004e91d5" title="Start listening for connections. " alt="" coords="217,56,358,83"/>
+<area shape="rect" id="node4" href="../../d1/d32/classtuxnet_1_1server.html#a9d00c901b3320aaedd4c9ab72729bd5b" title="tuxnet::server::num\l_clients" alt="" coords="220,107,355,149"/>
+<area shape="rect" id="node5" href="../../d1/d32/classtuxnet_1_1server.html#a58bde94043200e4adbbeffafcb8f2ef8" title="Poll the server to process events. " alt="" coords="222,173,353,200"/>
+<area shape="rect" id="node6" href="../../da/d32/classtuxnet_1_1socket.html#accb64eb3f3faac8e79a0e690deb55bdb" title="Closes the socket. " alt="" coords="215,224,359,251"/>
+<area shape="rect" id="node8" href="../../da/d32/classtuxnet_1_1socket.html#a2c085c7179072996c7b91afdfa1bc0f6" title="Checks if any events happened on the socket. " alt="" coords="444,275,577,301"/>
+<area shape="rect" id="node9" href="../../da/d32/classtuxnet_1_1socket.html#aaf5d4b8001a95d83f03ea01eac6530d9" title="tuxnet::socket::remove_peer" alt="" coords="193,325,381,352"/>
+<area shape="rect" id="node7" href="../../da/d32/classtuxnet_1_1socket.html#a76f04d3715b9b877c451f549b7982f9b" title="Destructor. " alt="" coords="431,224,591,251"/>
+<area shape="rect" id="node10" href="../../d3/daa/classtuxnet_1_1peer.html#a5783baad92f7a79f6a70cf3ccfa2756e" title="Close connection to this peer. " alt="" coords="429,325,592,352"/>
+<area shape="rect" id="node11" href="../../d3/daa/classtuxnet_1_1peer.html#aa601f70f576f9a07035f4b5ba4bd8a8d" title="tuxnet::peer::poll" alt="" coords="669,143,787,169"/>
+<area shape="rect" id="node13" href="../../d3/daa/classtuxnet_1_1peer.html#ad5f3f869608eb5716d5027d508d9d93b" title="tuxnet::peer::read\l_string" alt="" coords="666,194,790,235"/>
+<area shape="rect" id="node14" href="../../d3/daa/classtuxnet_1_1peer.html#a18a7e9009c5ed468453564504e6702ba" title="tuxnet::peer::read\l_string_until" alt="" coords="666,259,790,301"/>
+<area shape="rect" id="node15" href="../../d3/daa/classtuxnet_1_1peer.html#a56340ba5bcf087075b444bc75e008d93" title="tuxnet::peer::read_line" alt="" coords="653,325,803,352"/>
+<area shape="rect" id="node16" href="../../d3/daa/classtuxnet_1_1peer.html#a9e7cdac3c9ce085cd2cfa51b300fe1ef" title="tuxnet::peer::read_all" alt="" coords="656,376,800,403"/>
+<area shape="rect" id="node17" href="../../d3/daa/classtuxnet_1_1peer.html#af467c2c4cfbe2d3ea56251ad27a70fdb" title="tuxnet::peer::write\l_string" alt="" coords="665,427,791,469"/>
+<area shape="rect" id="node18" href="../../da/d32/classtuxnet_1_1socket.html#a4877efcc5aa6efa7a91b4152cc4195ba" title="tuxnet::socket::disconnect" alt="" coords="640,493,816,520"/>
+<area shape="rect" id="node12" href="../../d3/daa/classtuxnet_1_1peer.html#aeb1b13b8e1c3df46782f861edd43413a" title="tuxnet::peer::initialize" alt="" coords="864,143,1011,169"/>
 </map>
 </div>
 
@@ -279,7 +293,7 @@ template&lt;class T&gt; </div>
 
 <p>Locks the underlying mutex of the managed object. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/d1b/lockable_8h_source.html#l00110">110</a> of file <a class="el" href="../../d5/d1b/lockable_8h_source.html">lockable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d1b/lockable_8h_source.html#l00100">100</a> of file <a class="el" href="../../d5/d1b/lockable_8h_source.html">lockable.h</a>.</p>
 <div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
 <div id="dynsection-2-summary" class="dynsummary" style="display:block;">
@@ -287,7 +301,22 @@ template&lt;class T&gt; </div>
 <div id="dynsection-2-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d2/d99/classtuxnet_1_1lockable_a85a471d324f4583c668705b7bbdc8972_icgraph.png" border="0" usemap="#d2/d99/classtuxnet_1_1lockable_a85a471d324f4583c668705b7bbdc8972_icgraph" alt=""/></div>
 <map name="d2/d99/classtuxnet_1_1lockable_a85a471d324f4583c668705b7bbdc8972_icgraph" id="d2/d99/classtuxnet_1_1lockable_a85a471d324f4583c668705b7bbdc8972_icgraph">
-<area shape="rect" id="node2" href="../../d2/d99/classtuxnet_1_1lockable.html#a34be1edd3d5c38d553796a0c6e0f93f2" title="Perform an atomic operation on the object. " alt="" coords="200,5,359,47"/>
+<area shape="rect" id="node2" href="../../d2/d99/classtuxnet_1_1lockable.html#a34be1edd3d5c38d553796a0c6e0f93f2" title="Perform an atomic operation on the object. " alt="" coords="208,5,380,47"/>
+<area shape="rect" id="node3" href="../../d1/d32/classtuxnet_1_1server.html#af034225c14990217604121a0fc9d1d7c" title="Destructor. " alt="" coords="217,71,371,98"/>
+<area shape="rect" id="node4" href="../../d1/d32/classtuxnet_1_1server.html#a0621db9ac039f00c1f20a35a004e91d5" title="Start listening for connections. " alt="" coords="223,122,365,149"/>
+<area shape="rect" id="node5" href="../../d1/d32/classtuxnet_1_1server.html#a9d00c901b3320aaedd4c9ab72729bd5b" title="tuxnet::server::num\l_clients" alt="" coords="227,173,361,215"/>
+<area shape="rect" id="node6" href="../../d1/d32/classtuxnet_1_1server.html#a58bde94043200e4adbbeffafcb8f2ef8" title="Poll the server to process events. " alt="" coords="229,239,359,266"/>
+<area shape="rect" id="node7" href="../../da/d32/classtuxnet_1_1socket.html#a2c085c7179072996c7b91afdfa1bc0f6" title="Checks if any events happened on the socket. " alt="" coords="227,290,361,317"/>
+<area shape="rect" id="node8" href="../../da/d32/classtuxnet_1_1socket.html#aaf5d4b8001a95d83f03ea01eac6530d9" title="tuxnet::socket::remove_peer" alt="" coords="200,341,388,367"/>
+<area shape="rect" id="node9" href="../../d3/daa/classtuxnet_1_1peer.html#a5783baad92f7a79f6a70cf3ccfa2756e" title="Close connection to this peer. " alt="" coords="436,341,599,367"/>
+<area shape="rect" id="node10" href="../../d3/daa/classtuxnet_1_1peer.html#aa601f70f576f9a07035f4b5ba4bd8a8d" title="tuxnet::peer::poll" alt="" coords="675,158,794,185"/>
+<area shape="rect" id="node12" href="../../d3/daa/classtuxnet_1_1peer.html#ad5f3f869608eb5716d5027d508d9d93b" title="tuxnet::peer::read\l_string" alt="" coords="673,209,797,251"/>
+<area shape="rect" id="node13" href="../../d3/daa/classtuxnet_1_1peer.html#a18a7e9009c5ed468453564504e6702ba" title="tuxnet::peer::read\l_string_until" alt="" coords="673,275,797,316"/>
+<area shape="rect" id="node14" href="../../d3/daa/classtuxnet_1_1peer.html#a56340ba5bcf087075b444bc75e008d93" title="tuxnet::peer::read_line" alt="" coords="659,341,810,367"/>
+<area shape="rect" id="node15" href="../../d3/daa/classtuxnet_1_1peer.html#a9e7cdac3c9ce085cd2cfa51b300fe1ef" title="tuxnet::peer::read_all" alt="" coords="663,391,807,418"/>
+<area shape="rect" id="node16" href="../../d3/daa/classtuxnet_1_1peer.html#af467c2c4cfbe2d3ea56251ad27a70fdb" title="tuxnet::peer::write\l_string" alt="" coords="671,443,798,484"/>
+<area shape="rect" id="node17" href="../../da/d32/classtuxnet_1_1socket.html#a4877efcc5aa6efa7a91b4152cc4195ba" title="tuxnet::socket::disconnect" alt="" coords="647,509,823,535"/>
+<area shape="rect" id="node11" href="../../d3/daa/classtuxnet_1_1peer.html#aeb1b13b8e1c3df46782f861edd43413a" title="tuxnet::peer::initialize" alt="" coords="871,158,1017,185"/>
 </map>
 </div>
 
@@ -320,7 +349,7 @@ template&lt;class T&gt; </div>
 
 <p>Unlocks the underlying mutex of the managed object. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/d1b/lockable_8h_source.html#l00116">116</a> of file <a class="el" href="../../d5/d1b/lockable_8h_source.html">lockable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d1b/lockable_8h_source.html#l00106">106</a> of file <a class="el" href="../../d5/d1b/lockable_8h_source.html">lockable.h</a>.</p>
 <div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
 <div id="dynsection-3-summary" class="dynsummary" style="display:block;">
@@ -328,14 +357,29 @@ template&lt;class T&gt; </div>
 <div id="dynsection-3-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d2/d99/classtuxnet_1_1lockable_af4c0775a628c298545aa09715cc8ce27_icgraph.png" border="0" usemap="#d2/d99/classtuxnet_1_1lockable_af4c0775a628c298545aa09715cc8ce27_icgraph" alt=""/></div>
 <map name="d2/d99/classtuxnet_1_1lockable_af4c0775a628c298545aa09715cc8ce27_icgraph" id="d2/d99/classtuxnet_1_1lockable_af4c0775a628c298545aa09715cc8ce27_icgraph">
-<area shape="rect" id="node2" href="../../d2/d99/classtuxnet_1_1lockable.html#a34be1edd3d5c38d553796a0c6e0f93f2" title="Perform an atomic operation on the object. " alt="" coords="213,5,372,47"/>
+<area shape="rect" id="node2" href="../../d2/d99/classtuxnet_1_1lockable.html#a34be1edd3d5c38d553796a0c6e0f93f2" title="Perform an atomic operation on the object. " alt="" coords="221,5,393,47"/>
+<area shape="rect" id="node3" href="../../d1/d32/classtuxnet_1_1server.html#af034225c14990217604121a0fc9d1d7c" title="Destructor. " alt="" coords="230,71,385,98"/>
+<area shape="rect" id="node4" href="../../d1/d32/classtuxnet_1_1server.html#a0621db9ac039f00c1f20a35a004e91d5" title="Start listening for connections. " alt="" coords="237,122,378,149"/>
+<area shape="rect" id="node5" href="../../d1/d32/classtuxnet_1_1server.html#a9d00c901b3320aaedd4c9ab72729bd5b" title="tuxnet::server::num\l_clients" alt="" coords="240,173,375,215"/>
+<area shape="rect" id="node6" href="../../d1/d32/classtuxnet_1_1server.html#a58bde94043200e4adbbeffafcb8f2ef8" title="Poll the server to process events. " alt="" coords="242,239,373,266"/>
+<area shape="rect" id="node7" href="../../da/d32/classtuxnet_1_1socket.html#a2c085c7179072996c7b91afdfa1bc0f6" title="Checks if any events happened on the socket. " alt="" coords="241,290,374,317"/>
+<area shape="rect" id="node8" href="../../da/d32/classtuxnet_1_1socket.html#aaf5d4b8001a95d83f03ea01eac6530d9" title="tuxnet::socket::remove_peer" alt="" coords="213,341,401,367"/>
+<area shape="rect" id="node9" href="../../d3/daa/classtuxnet_1_1peer.html#a5783baad92f7a79f6a70cf3ccfa2756e" title="Close connection to this peer. " alt="" coords="449,341,612,367"/>
+<area shape="rect" id="node10" href="../../d3/daa/classtuxnet_1_1peer.html#aa601f70f576f9a07035f4b5ba4bd8a8d" title="tuxnet::peer::poll" alt="" coords="689,158,807,185"/>
+<area shape="rect" id="node12" href="../../d3/daa/classtuxnet_1_1peer.html#ad5f3f869608eb5716d5027d508d9d93b" title="tuxnet::peer::read\l_string" alt="" coords="686,209,810,251"/>
+<area shape="rect" id="node13" href="../../d3/daa/classtuxnet_1_1peer.html#a18a7e9009c5ed468453564504e6702ba" title="tuxnet::peer::read\l_string_until" alt="" coords="686,275,810,316"/>
+<area shape="rect" id="node14" href="../../d3/daa/classtuxnet_1_1peer.html#a56340ba5bcf087075b444bc75e008d93" title="tuxnet::peer::read_line" alt="" coords="673,341,823,367"/>
+<area shape="rect" id="node15" href="../../d3/daa/classtuxnet_1_1peer.html#a9e7cdac3c9ce085cd2cfa51b300fe1ef" title="tuxnet::peer::read_all" alt="" coords="676,391,820,418"/>
+<area shape="rect" id="node16" href="../../d3/daa/classtuxnet_1_1peer.html#af467c2c4cfbe2d3ea56251ad27a70fdb" title="tuxnet::peer::write\l_string" alt="" coords="685,443,811,484"/>
+<area shape="rect" id="node17" href="../../da/d32/classtuxnet_1_1socket.html#a4877efcc5aa6efa7a91b4152cc4195ba" title="tuxnet::socket::disconnect" alt="" coords="660,509,836,535"/>
+<area shape="rect" id="node11" href="../../d3/daa/classtuxnet_1_1peer.html#aeb1b13b8e1c3df46782f861edd43413a" title="tuxnet::peer::initialize" alt="" coords="884,158,1031,185"/>
 </map>
 </div>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/johns/src/tuxnet/include/tuxnet/<a class="el" href="../../d5/d1b/lockable_8h_source.html">lockable.h</a></li>
+<li>/home/johns/src/personal/tuxnet/include/tuxnet/<a class="el" href="../../d5/d1b/lockable_8h_source.html">lockable.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

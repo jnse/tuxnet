@@ -93,6 +93,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0621db9ac039f00c1f20a35a004e91d5"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d32/classtuxnet_1_1server.html#a0621db9ac039f00c1f20a35a004e91d5">listen</a> (const <a class="el" href="../../da/d30/namespacetuxnet.html#ac124fae9ddb1618fa3313e48000914d2">socket_addresses</a> &amp;saddrs, const <a class="el" href="../../da/d30/namespacetuxnet.html#a8122bafeb5a1048c17483c41a40cdae8">layer4_protocol</a> &amp;proto)</td></tr>
 <tr class="memdesc:a0621db9ac039f00c1f20a35a004e91d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start listening for connections.  <a href="#a0621db9ac039f00c1f20a35a004e91d5">More...</a><br /></td></tr>
 <tr class="separator:a0621db9ac039f00c1f20a35a004e91d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d00c901b3320aaedd4c9ab72729bd5b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d32/classtuxnet_1_1server.html#a9d00c901b3320aaedd4c9ab72729bd5b">num_clients</a> ()</td></tr>
+<tr class="separator:a9d00c901b3320aaedd4c9ab72729bd5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58bde94043200e4adbbeffafcb8f2ef8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d32/classtuxnet_1_1server.html#a58bde94043200e4adbbeffafcb8f2ef8">poll</a> ()</td></tr>
 <tr class="memdesc:a58bde94043200e4adbbeffafcb8f2ef8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Poll the server to process events.  <a href="#a58bde94043200e4adbbeffafcb8f2ef8">More...</a><br /></td></tr>
 <tr class="separator:a58bde94043200e4adbbeffafcb8f2ef8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -116,7 +118,7 @@ Friends</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="../../d8/dc3/server_8h_source.html#l00012">12</a> of file <a class="el" href="../../d8/dc3/server_8h_source.html">server.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/dc3/server_8h_source.html#l00013">13</a> of file <a class="el" href="../../d8/dc3/server_8h_source.html">server.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a7bf6a325e5b7c5fc1e725ea36a237b45"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7bf6a325e5b7c5fc1e725ea36a237b45">&#9670;&nbsp;</a></span>server()</h2>
@@ -165,6 +167,18 @@ Friends</h2></td></tr>
 <p>Destructor. </p>
 
 <p class="definition">Definition at line <a class="el" href="../../df/dd7/server_8cpp_source.html#l00035">35</a> of file <a class="el" href="../../df/dd7/server_8cpp_source.html">server.cpp</a>.</p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d1/d32/classtuxnet_1_1server_af034225c14990217604121a0fc9d1d7c_cgraph.png" border="0" usemap="#d1/d32/classtuxnet_1_1server_af034225c14990217604121a0fc9d1d7c_cgraph" alt=""/></div>
+<map name="d1/d32/classtuxnet_1_1server_af034225c14990217604121a0fc9d1d7c_cgraph" id="d1/d32/classtuxnet_1_1server_af034225c14990217604121a0fc9d1d7c_cgraph">
+<area shape="rect" id="node2" href="../../d2/d99/classtuxnet_1_1lockable.html#a85a471d324f4583c668705b7bbdc8972" title="Locks the underlying mutex of the managed object. " alt="" coords="215,5,361,32"/>
+<area shape="rect" id="node3" href="../../d2/d99/classtuxnet_1_1lockable.html#a183be43656600d103da3657d0e3f426f" title="Get an instance of the managed object. " alt="" coords="218,56,358,83"/>
+<area shape="rect" id="node4" href="../../d2/d99/classtuxnet_1_1lockable.html#af4c0775a628c298545aa09715cc8ce27" title="Unlocks the underlying mutex of the managed object. " alt="" coords="208,107,368,133"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -222,7 +236,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../df/dd7/server_8cpp_source.html#l00058">58</a> of file <a class="el" href="../../df/dd7/server_8cpp_source.html">server.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/dd7/server_8cpp_source.html#l00060">60</a> of file <a class="el" href="../../df/dd7/server_8cpp_source.html">server.cpp</a>.</p>
 
 </div>
 </div>
@@ -269,23 +283,60 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../df/dd7/server_8cpp_source.html#l00068">68</a> of file <a class="el" href="../../df/dd7/server_8cpp_source.html">server.cpp</a>.</p>
-<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+<p class="definition">Definition at line <a class="el" href="../../df/dd7/server_8cpp_source.html#l00070">70</a> of file <a class="el" href="../../df/dd7/server_8cpp_source.html">server.cpp</a>.</p>
+<div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d1/d32/classtuxnet_1_1server_a0621db9ac039f00c1f20a35a004e91d5_cgraph.png" border="0" usemap="#d1/d32/classtuxnet_1_1server_a0621db9ac039f00c1f20a35a004e91d5_cgraph" alt=""/></div>
 <map name="d1/d32/classtuxnet_1_1server_a0621db9ac039f00c1f20a35a004e91d5_cgraph" id="d1/d32/classtuxnet_1_1server_a0621db9ac039f00c1f20a35a004e91d5_cgraph">
-<area shape="rect" id="node2" href="../../da/d32/classtuxnet_1_1socket.html#acc4929c68f5538cf3e21d301697c06d1" title="Sets whether or not keepalive should be enabled for this socket. " alt="" coords="201,5,332,47"/>
-<area shape="rect" id="node3" href="../../da/d32/classtuxnet_1_1socket.html#a28e45882cd2e7678ef240f94864a4b51" title="Sets the keepalive interval. " alt="" coords="200,71,333,112"/>
-<area shape="rect" id="node4" href="../../da/d32/classtuxnet_1_1socket.html#a1a93a1b6745cac442b44f3cefc81d431" title="Sets the keepalive retries. " alt="" coords="201,136,332,177"/>
-<area shape="rect" id="node5" href="../../da/d32/classtuxnet_1_1socket.html#aa643d1834337de470f9b8c2f74ce551f" title="Sets the keepalive timeout. " alt="" coords="199,201,334,243"/>
-<area shape="rect" id="node6" href="../../da/d32/classtuxnet_1_1socket.html#a147391244176f557c52c9f32c2efc1ef" title="Listens on an address/port pair. " alt="" coords="195,267,339,294"/>
-<area shape="rect" id="node7" href="../../da/d32/classtuxnet_1_1socket.html#a01c3b22ec6965e29236ac6ab114eacaa" title="Binds the socket to an address/port pair. " alt="" coords="387,267,524,294"/>
-<area shape="rect" id="node9" href="../../df/d0f/classtuxnet_1_1log.html#ab1741bef0f42314fa515a64154f44ab9" title="tuxnet::log::get" alt="" coords="597,209,706,235"/>
-<area shape="rect" id="node10" href="../../df/d0f/classtuxnet_1_1log.html#a34b5fef1b7d45c9837bcdf6be4838f19" title="tuxnet::log::error" alt="" coords="593,326,710,353"/>
-<area shape="rect" id="node8" href="../../d4/d0d/classtuxnet_1_1socket__address.html#a0c64517b72026f2693b5e106ea5c769e" title="tuxnet::socket_address\l::get_protocol" alt="" coords="572,260,731,301"/>
+<area shape="rect" id="node2" href="../../da/d32/classtuxnet_1_1socket.html#acc4929c68f5538cf3e21d301697c06d1" title="Sets whether or not keepalive should be enabled for this socket. " alt="" coords="209,5,340,47"/>
+<area shape="rect" id="node3" href="../../da/d32/classtuxnet_1_1socket.html#a28e45882cd2e7678ef240f94864a4b51" title="Sets the keepalive interval. " alt="" coords="208,71,341,112"/>
+<area shape="rect" id="node4" href="../../da/d32/classtuxnet_1_1socket.html#a1a93a1b6745cac442b44f3cefc81d431" title="Sets the keepalive retries. " alt="" coords="209,136,340,177"/>
+<area shape="rect" id="node5" href="../../da/d32/classtuxnet_1_1socket.html#aa643d1834337de470f9b8c2f74ce551f" title="Sets the keepalive timeout. " alt="" coords="207,201,342,243"/>
+<area shape="rect" id="node6" href="../../da/d32/classtuxnet_1_1socket.html#a147391244176f557c52c9f32c2efc1ef" title="Listens on an address/port pair. " alt="" coords="203,267,347,294"/>
+<area shape="rect" id="node13" href="../../d2/d99/classtuxnet_1_1lockable.html#a85a471d324f4583c668705b7bbdc8972" title="Locks the underlying mutex of the managed object. " alt="" coords="201,318,348,345"/>
+<area shape="rect" id="node14" href="../../d2/d99/classtuxnet_1_1lockable.html#a183be43656600d103da3657d0e3f426f" title="Get an instance of the managed object. " alt="" coords="205,369,345,395"/>
+<area shape="rect" id="node15" href="../../d2/d99/classtuxnet_1_1lockable.html#af4c0775a628c298545aa09715cc8ce27" title="Unlocks the underlying mutex of the managed object. " alt="" coords="195,419,355,446"/>
+<area shape="rect" id="node7" href="../../da/d32/classtuxnet_1_1socket.html#a01c3b22ec6965e29236ac6ab114eacaa" title="Binds the socket to an address/port pair. " alt="" coords="408,217,545,243"/>
+<area shape="rect" id="node9" href="../../df/d0f/classtuxnet_1_1log.html#ab1741bef0f42314fa515a64154f44ab9" title="tuxnet::log::get" alt="" coords="623,267,733,294"/>
+<area shape="rect" id="node10" href="../../df/d0f/classtuxnet_1_1log.html#a34b5fef1b7d45c9837bcdf6be4838f19" title="tuxnet::log::error" alt="" coords="619,322,737,349"/>
+<area shape="rect" id="node11" href="../../da/d30/namespacetuxnet.html#ae1351564f6dbd0ee801afed3a3fd6716" title="tuxnet::create_event\l_listener" alt="" coords="406,319,547,360"/>
+<area shape="rect" id="node12" href="../../da/d30/namespacetuxnet.html#a51fbeb177febc6e449c8ba1c8cd24dc5" title="tuxnet::event_monitor" alt="" coords="403,267,551,294"/>
+<area shape="rect" id="node8" href="../../d4/d0d/classtuxnet_1_1socket__address.html#a0c64517b72026f2693b5e106ea5c769e" title="tuxnet::socket_address\l::get_protocol" alt="" coords="599,201,757,243"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a9d00c901b3320aaedd4c9ab72729bd5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d00c901b3320aaedd4c9ab72729bd5b">&#9670;&nbsp;</a></span>num_clients()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tuxnet::server::num_clients </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns number of connected clients. </p><dl class="section return"><dt>Returns</dt><dd>Number of connected clients. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../df/dd7/server_8cpp_source.html#l00101">101</a> of file <a class="el" href="../../df/dd7/server_8cpp_source.html">server.cpp</a>.</p>
+<div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d1/d32/classtuxnet_1_1server_a9d00c901b3320aaedd4c9ab72729bd5b_cgraph.png" border="0" usemap="#d1/d32/classtuxnet_1_1server_a9d00c901b3320aaedd4c9ab72729bd5b_cgraph" alt=""/></div>
+<map name="d1/d32/classtuxnet_1_1server_a9d00c901b3320aaedd4c9ab72729bd5b_cgraph" id="d1/d32/classtuxnet_1_1server_a9d00c901b3320aaedd4c9ab72729bd5b_cgraph">
+<area shape="rect" id="node2" href="../../d2/d99/classtuxnet_1_1lockable.html#a85a471d324f4583c668705b7bbdc8972" title="Locks the underlying mutex of the managed object. " alt="" coords="195,5,341,32"/>
+<area shape="rect" id="node3" href="../../d2/d99/classtuxnet_1_1lockable.html#a183be43656600d103da3657d0e3f426f" title="Get an instance of the managed object. " alt="" coords="198,56,338,83"/>
+<area shape="rect" id="node4" href="../../d2/d99/classtuxnet_1_1lockable.html#af4c0775a628c298545aa09715cc8ce27" title="Unlocks the underlying mutex of the managed object. " alt="" coords="188,107,348,133"/>
 </map>
 </div>
 
@@ -327,26 +378,16 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../df/dd7/server_8cpp_source.html#l00120">120</a> of file <a class="el" href="../../df/dd7/server_8cpp_source.html">server.cpp</a>.</p>
-<div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+<p class="definition">Definition at line <a class="el" href="../../df/dd7/server_8cpp_source.html#l00141">141</a> of file <a class="el" href="../../df/dd7/server_8cpp_source.html">server.cpp</a>.</p>
+<div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d1/d32/classtuxnet_1_1server_ae397031646f4b747f67899491928d014_cgraph.png" border="0" usemap="#d1/d32/classtuxnet_1_1server_ae397031646f4b747f67899491928d014_cgraph" alt=""/></div>
-<map name="d1/d32/classtuxnet_1_1server_ae397031646f4b747f67899491928d014_cgraph" id="d1/d32/classtuxnet_1_1server_ae397031646f4b747f67899491928d014_cgraph">
-<area shape="rect" id="node2" href="../../df/d0f/classtuxnet_1_1log.html#ab1741bef0f42314fa515a64154f44ab9" title="tuxnet::log::get" alt="" coords="186,5,295,32"/>
-<area shape="rect" id="node3" href="../../df/d0f/classtuxnet_1_1log.html#acd937b31ebb857fa513e1d388a39ec83" title="tuxnet::log::debug" alt="" coords="177,56,304,83"/>
-</map>
-</div>
-<div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d1/d32/classtuxnet_1_1server_ae397031646f4b747f67899491928d014_icgraph.png" border="0" usemap="#d1/d32/classtuxnet_1_1server_ae397031646f4b747f67899491928d014_icgraph" alt=""/></div>
 <map name="d1/d32/classtuxnet_1_1server_ae397031646f4b747f67899491928d014_icgraph" id="d1/d32/classtuxnet_1_1server_ae397031646f4b747f67899491928d014_icgraph">
-<area shape="rect" id="node2" href="../../da/d32/classtuxnet_1_1socket.html#a2c085c7179072996c7b91afdfa1bc0f6" title="Checks if any events happened on the socket. " alt="" coords="177,13,311,39"/>
+<area shape="rect" id="node2" href="../../da/d32/classtuxnet_1_1socket.html#a341f58144ab0bb12a8f19e743d845048" title="tuxnet::socket::on\l_connect" alt="" coords="177,5,304,47"/>
+<area shape="rect" id="node3" href="../../da/d32/classtuxnet_1_1socket.html#a2c085c7179072996c7b91afdfa1bc0f6" title="Checks if any events happened on the socket. " alt="" coords="352,13,485,39"/>
 </map>
 </div>
 
@@ -387,18 +428,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../df/dd7/server_8cpp_source.html#l00132">132</a> of file <a class="el" href="../../df/dd7/server_8cpp_source.html">server.cpp</a>.</p>
-<div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d1/d32/classtuxnet_1_1server_a800d48cec34e7f259b618367733b92dc_cgraph.png" border="0" usemap="#d1/d32/classtuxnet_1_1server_a800d48cec34e7f259b618367733b92dc_cgraph" alt=""/></div>
-<map name="d1/d32/classtuxnet_1_1server_a800d48cec34e7f259b618367733b92dc_cgraph" id="d1/d32/classtuxnet_1_1server_a800d48cec34e7f259b618367733b92dc_cgraph">
-<area shape="rect" id="node2" href="../../df/d0f/classtuxnet_1_1log.html#ab1741bef0f42314fa515a64154f44ab9" title="tuxnet::log::get" alt="" coords="186,5,295,32"/>
-<area shape="rect" id="node3" href="../../df/d0f/classtuxnet_1_1log.html#acd937b31ebb857fa513e1d388a39ec83" title="tuxnet::log::debug" alt="" coords="177,56,304,83"/>
-</map>
-</div>
+<p class="definition">Definition at line <a class="el" href="../../df/dd7/server_8cpp_source.html#l00151">151</a> of file <a class="el" href="../../df/dd7/server_8cpp_source.html">server.cpp</a>.</p>
 <div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-4-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
 <div id="dynsection-4-summary" class="dynsummary" style="display:block;">
@@ -406,7 +436,17 @@ Friends</h2></td></tr>
 <div id="dynsection-4-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d1/d32/classtuxnet_1_1server_a800d48cec34e7f259b618367733b92dc_icgraph.png" border="0" usemap="#d1/d32/classtuxnet_1_1server_a800d48cec34e7f259b618367733b92dc_icgraph" alt=""/></div>
 <map name="d1/d32/classtuxnet_1_1server_a800d48cec34e7f259b618367733b92dc_icgraph" id="d1/d32/classtuxnet_1_1server_a800d48cec34e7f259b618367733b92dc_icgraph">
-<area shape="rect" id="node2" href="../../da/d32/classtuxnet_1_1socket.html#a2c085c7179072996c7b91afdfa1bc0f6" title="Checks if any events happened on the socket. " alt="" coords="177,13,311,39"/>
+<area shape="rect" id="node2" href="../../da/d32/classtuxnet_1_1socket.html#a1f1921ae2c0afa6c8ae6a0bb9f8a66ff" title="tuxnet::socket::on\l_disconnect" alt="" coords="177,181,304,222"/>
+<area shape="rect" id="node3" href="../../da/d32/classtuxnet_1_1socket.html#aaf5d4b8001a95d83f03ea01eac6530d9" title="tuxnet::socket::remove_peer" alt="" coords="352,188,540,215"/>
+<area shape="rect" id="node4" href="../../d3/daa/classtuxnet_1_1peer.html#a5783baad92f7a79f6a70cf3ccfa2756e" title="Close connection to this peer. " alt="" coords="588,188,751,215"/>
+<area shape="rect" id="node5" href="../../d3/daa/classtuxnet_1_1peer.html#aa601f70f576f9a07035f4b5ba4bd8a8d" title="tuxnet::peer::poll" alt="" coords="827,5,946,32"/>
+<area shape="rect" id="node7" href="../../d3/daa/classtuxnet_1_1peer.html#ad5f3f869608eb5716d5027d508d9d93b" title="tuxnet::peer::read\l_string" alt="" coords="825,57,949,98"/>
+<area shape="rect" id="node8" href="../../d3/daa/classtuxnet_1_1peer.html#a18a7e9009c5ed468453564504e6702ba" title="tuxnet::peer::read\l_string_until" alt="" coords="825,122,949,163"/>
+<area shape="rect" id="node9" href="../../d3/daa/classtuxnet_1_1peer.html#a56340ba5bcf087075b444bc75e008d93" title="tuxnet::peer::read_line" alt="" coords="811,188,962,215"/>
+<area shape="rect" id="node10" href="../../d3/daa/classtuxnet_1_1peer.html#a9e7cdac3c9ce085cd2cfa51b300fe1ef" title="tuxnet::peer::read_all" alt="" coords="815,239,959,265"/>
+<area shape="rect" id="node11" href="../../d3/daa/classtuxnet_1_1peer.html#af467c2c4cfbe2d3ea56251ad27a70fdb" title="tuxnet::peer::write\l_string" alt="" coords="823,290,950,331"/>
+<area shape="rect" id="node12" href="../../da/d32/classtuxnet_1_1socket.html#a4877efcc5aa6efa7a91b4152cc4195ba" title="tuxnet::socket::disconnect" alt="" coords="799,356,975,383"/>
+<area shape="rect" id="node6" href="../../d3/daa/classtuxnet_1_1peer.html#aeb1b13b8e1c3df46782f861edd43413a" title="tuxnet::peer::initialize" alt="" coords="1023,5,1169,32"/>
 </map>
 </div>
 
@@ -448,26 +488,17 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../df/dd7/server_8cpp_source.html#l00126">126</a> of file <a class="el" href="../../df/dd7/server_8cpp_source.html">server.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/dd7/server_8cpp_source.html#l00146">146</a> of file <a class="el" href="../../df/dd7/server_8cpp_source.html">server.cpp</a>.</p>
 <div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-5-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
+  <img id="dynsection-5-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
 <div id="dynsection-5-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-5-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d1/d32/classtuxnet_1_1server_a2cb6aafc9e1955a2ab997de05f0cede8_cgraph.png" border="0" usemap="#d1/d32/classtuxnet_1_1server_a2cb6aafc9e1955a2ab997de05f0cede8_cgraph" alt=""/></div>
-<map name="d1/d32/classtuxnet_1_1server_a2cb6aafc9e1955a2ab997de05f0cede8_cgraph" id="d1/d32/classtuxnet_1_1server_a2cb6aafc9e1955a2ab997de05f0cede8_cgraph">
-<area shape="rect" id="node2" href="../../df/d0f/classtuxnet_1_1log.html#ab1741bef0f42314fa515a64154f44ab9" title="tuxnet::log::get" alt="" coords="186,5,295,32"/>
-<area shape="rect" id="node3" href="../../df/d0f/classtuxnet_1_1log.html#acd937b31ebb857fa513e1d388a39ec83" title="tuxnet::log::debug" alt="" coords="177,56,304,83"/>
-</map>
-</div>
-<div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-6-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-6-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d1/d32/classtuxnet_1_1server_a2cb6aafc9e1955a2ab997de05f0cede8_icgraph.png" border="0" usemap="#d1/d32/classtuxnet_1_1server_a2cb6aafc9e1955a2ab997de05f0cede8_icgraph" alt=""/></div>
 <map name="d1/d32/classtuxnet_1_1server_a2cb6aafc9e1955a2ab997de05f0cede8_icgraph" id="d1/d32/classtuxnet_1_1server_a2cb6aafc9e1955a2ab997de05f0cede8_icgraph">
-<area shape="rect" id="node2" href="../../da/d32/classtuxnet_1_1socket.html#a2c085c7179072996c7b91afdfa1bc0f6" title="Checks if any events happened on the socket. " alt="" coords="177,13,311,39"/>
+<area shape="rect" id="node2" href="../../da/d32/classtuxnet_1_1socket.html#ab6ba9cb1b6fca22d59619ca7c4759a78" title="tuxnet::socket::on\l_receive" alt="" coords="177,5,304,47"/>
+<area shape="rect" id="node3" href="../../d3/daa/classtuxnet_1_1peer.html#aa601f70f576f9a07035f4b5ba4bd8a8d" title="tuxnet::peer::poll" alt="" coords="352,13,471,39"/>
+<area shape="rect" id="node4" href="../../d3/daa/classtuxnet_1_1peer.html#aeb1b13b8e1c3df46782f861edd43413a" title="tuxnet::peer::initialize" alt="" coords="519,13,665,39"/>
 </map>
 </div>
 
@@ -492,7 +523,19 @@ Friends</h2></td></tr>
 <p>Processes events for incomming connections and/or data.</p>
 <dl class="section return"><dt>Returns</dt><dd>Returns true on success, false on error. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../df/dd7/server_8cpp_source.html#l00096">96</a> of file <a class="el" href="../../df/dd7/server_8cpp_source.html">server.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/dd7/server_8cpp_source.html#l00116">116</a> of file <a class="el" href="../../df/dd7/server_8cpp_source.html">server.cpp</a>.</p>
+<div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d1/d32/classtuxnet_1_1server_a58bde94043200e4adbbeffafcb8f2ef8_cgraph.png" border="0" usemap="#d1/d32/classtuxnet_1_1server_a58bde94043200e4adbbeffafcb8f2ef8_cgraph" alt=""/></div>
+<map name="d1/d32/classtuxnet_1_1server_a58bde94043200e4adbbeffafcb8f2ef8_cgraph" id="d1/d32/classtuxnet_1_1server_a58bde94043200e4adbbeffafcb8f2ef8_cgraph">
+<area shape="rect" id="node2" href="../../d2/d99/classtuxnet_1_1lockable.html#a85a471d324f4583c668705b7bbdc8972" title="Locks the underlying mutex of the managed object. " alt="" coords="191,5,337,32"/>
+<area shape="rect" id="node3" href="../../d2/d99/classtuxnet_1_1lockable.html#a183be43656600d103da3657d0e3f426f" title="Get an instance of the managed object. " alt="" coords="194,56,334,83"/>
+<area shape="rect" id="node4" href="../../d2/d99/classtuxnet_1_1lockable.html#af4c0775a628c298545aa09715cc8ce27" title="Unlocks the underlying mutex of the managed object. " alt="" coords="184,107,344,133"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -517,13 +560,13 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/dc3/server_8h_source.html#l00015">15</a> of file <a class="el" href="../../d8/dc3/server_8h_source.html">server.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/dc3/server_8h_source.html#l00016">16</a> of file <a class="el" href="../../d8/dc3/server_8h_source.html">server.h</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/johns/src/tuxnet/include/tuxnet/<a class="el" href="../../d8/dc3/server_8h_source.html">server.h</a></li>
-<li>/home/johns/src/tuxnet/src/<a class="el" href="../../df/dd7/server_8cpp_source.html">server.cpp</a></li>
+<li>/home/johns/src/personal/tuxnet/include/tuxnet/<a class="el" href="../../d8/dc3/server_8h_source.html">server.h</a></li>
+<li>/home/johns/src/personal/tuxnet/src/<a class="el" href="../../df/dd7/server_8cpp_source.html">server.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
