@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <string.h>
+#include <assert.h>
 #include <thread>
 #include "tuxnet/log.h"
 #include "tuxnet/event.h"
@@ -14,7 +15,7 @@ namespace tuxnet
 
     // IPV4 constructor.
     peer::peer(int fd, const sockaddr_in& in_addr, socket* const parent) : 
-        m_fd(fd), m_epoll_fd(0), m_poll_thread(nullptr),
+        m_fd(fd), m_epoll_fd(0), 
         m_socket(parent), 
         m_state(PEER_STATE_UNINITIALIZED)
     {
@@ -39,11 +40,6 @@ namespace tuxnet
     // Destructor.
     peer::~peer()
     {
-        if (m_poll_thread != nullptr)
-        {
-            delete m_poll_thread;
-            m_poll_thread = nullptr;
-        }
         if ((m_fd != 0) and (m_epoll_fd != 0))
         {
             free_monitor(m_fd, m_epoll_fd);
@@ -59,6 +55,11 @@ namespace tuxnet
         {
             delete m_saddr;
             m_saddr = nullptr;
+        }
+        if (m_epoll_events != nullptr)
+        {
+            delete[] m_epoll_events;
+            m_epoll_events = nullptr;
         }
     }
 
@@ -82,6 +83,10 @@ namespace tuxnet
         return m_state;
     }
 
+    void peer::m_poll_thread(peer* self)
+    {
+   }
+
     // Methods. ---------------------------------------------------------------
 
     // Sets up peer for event monitoring.
@@ -91,13 +96,13 @@ namespace tuxnet
         if (m_epoll_fd == -1) return false;
         if (event_monitor(m_fd, m_epoll_fd) != true) return false;
         m_state = PEER_STATE_CONNECTED;
-        m_poll_thread = new std::thread([=](){
-            while(m_state == PEER_STATE_CONNECTED)
+        std::thread thread([this](){
+            while (this->m_state == PEER_STATE_CONNECTED)
             {
-                poll();
+                this->poll();
             }
         });
-        m_poll_thread->detach();
+        thread.detach();
         return true;
     }
 
@@ -344,13 +349,6 @@ namespace tuxnet
     {
         if (m_state == PEER_STATE_CLOSING) return;
         m_state = PEER_STATE_CLOSING;
-        if (m_poll_thread != nullptr)
-        {
-            if (m_poll_thread->joinable() == true)
-            {
-                m_poll_thread->join();
-            }
-        }
         m_socket->remove_peer(this);
     }
 

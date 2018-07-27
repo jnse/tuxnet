@@ -5,7 +5,6 @@
 #include <sys/epoll.h>
 #include <unordered_map>
 #include <atomic>
-#include <thread>
 #include "tuxnet/socket_address.h"
 
 namespace tuxnet
@@ -49,8 +48,6 @@ namespace tuxnet
         socket_address* m_saddr;
         /// Pointer to parent socket.
         socket* const m_socket;
-        /// Thread to poll socket.
-        std::thread* m_poll_thread;
 
         public:
 
