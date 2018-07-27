@@ -34,12 +34,14 @@ namespace tuxnet
     // Destructor
     server::~server()
     {
-        for (auto it = m_listen_sockets.begin(); 
-            it != m_listen_sockets.end(); ++it)
+        m_listen_sockets.lock();
+        for (auto it = m_listen_sockets.get().begin(); 
+            it != m_listen_sockets.get().end(); ++it)
         {
             delete (*it);
         }
-        sockets().swap(m_listen_sockets);
+        sockets().swap(m_listen_sockets.get());
+        m_listen_sockets.unlock();
     }
 
     // Private member functions. ----------------------------------------------
@@ -83,7 +85,9 @@ namespace tuxnet
             // Listen on socket.
             if (sock->listen(*it, this) == true)
             {
-                m_listen_sockets.push_back(sock);
+                m_listen_sockets.lock();
+                m_listen_sockets.get().push_back(sock);
+                m_listen_sockets.unlock();
             }
             else
             {
@@ -97,28 +101,31 @@ namespace tuxnet
     int server::num_clients()
     {
         int result = 0;
-        for (auto it = m_listen_sockets.begin(); 
-            it != m_listen_sockets.end(); ++it)
+        m_listen_sockets.lock();
+        for (auto it = m_listen_sockets.get().begin(); 
+            it != m_listen_sockets.get().end(); ++it)
         {
             socket* cur_sock = (*it);
             if (cur_sock == nullptr) continue;
             result += cur_sock->m_peers.get().size();
         }
+        m_listen_sockets.unlock();
         return result; 
     }
 
     bool server::poll()
     {
-        log::get().debug("server::poll");
         bool result = true;
         std::vector<std::thread*> threads; 
-        for (auto it = m_listen_sockets.begin(); 
-            it != m_listen_sockets.end(); ++it)
+        m_listen_sockets.lock();
+        for (auto it = m_listen_sockets.get().begin(); 
+            it != m_listen_sockets.get().end(); ++it)
         {
             socket* cur_sock = (*it);
             if (cur_sock == nullptr) continue;
             threads.push_back(new std::thread(m_poll_single, cur_sock));
         }
+        m_listen_sockets.unlock();
         for (auto it = threads.begin(); it != threads.end(); ++it)
         {
             if ((*it) == nullptr) continue;
@@ -133,19 +140,16 @@ namespace tuxnet
 
     void server::on_connect(peer* remote_peer)
     {
-        log::get().debug("Received connection.");
     }
 
     // Received data.
     void server::on_receive(peer* remote_peer)
     {
-        log::get().debug("Received data.");
     }
 
     // Client disconnected.
     void server::on_disconnect(peer* remote_peer)
     {
-        log::get().debug("Lost connection.");
     }
 
 }

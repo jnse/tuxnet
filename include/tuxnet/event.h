@@ -21,6 +21,16 @@ namespace tuxnet
      */
     bool event_monitor(int socket_fd, int epoll_fd);
 
+    /**
+     * Free an event monitor.
+     *
+     * Closes the epoll fd.
+     *
+     * @param socket_fd : Socket file-descriptor.
+     * @param epoll_fd : Pointer to epoll file descriptor.
+     */
+    void free_monitor(int socket_fd, int epoll_fd);
+
 }
 
 #endif

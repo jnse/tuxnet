@@ -12,54 +12,27 @@ class my_server : public tuxnet::server
         {
         }
 
-        // Destructor.
-        ~my_server()
-        {
-        }
-
     protected:
-
-        // Runs when a client connects.
-        virtual void on_connect(tuxnet::peer* remote_peer)
-        {
-            std::cout << "Received connection (clients = ";
-            std::cout << std::to_string(num_clients());
-            std::cout << ")." << std::endl;
-        }
 
         // Runs when a client sends data.
         virtual void on_receive(tuxnet::peer* remote_peer)
         {
-            
-            std::cout << " --- Receive --- " << std::endl;
             std::string client_request = remote_peer->read_all();
-            std::cout << client_request << std::endl;
-
-            std::string response = "hello!";
+            std::string response = "<h1>Hello world!</h1>";
             remote_peer->write_string("HTTP/1.1 200 OK\n");
-            remote_peer->write_string("Connection: Closed\n");
+            remote_peer->write_string("Connection: Close\n");
             remote_peer->write_string("Content-Encoding: text/plain\n");
             remote_peer->write_string("Content-Length: "
                 + std::to_string(response.length()) + "\n");
             remote_peer->write_string("\r\n");
             remote_peer->write_string(response);
-            std::cout << "Sent response. " << std::endl;
             remote_peer->disconnect();
-            std::cout << "Disconnected client." << std::endl;
         }
 
-        // Runs when a client disconnects.
-        virtual void on_disconnect(tuxnet::peer* remote_peer)
-        {
-            std::cout << "Client disconnected (clients = ";
-            std::cout << std::to_string(num_clients()-1);
-            std::cout << ")." << std::endl;
-        }
 };
 
 int main(int argc, char* argv[])
 {
-    std::cout.setf(std::ios::unitbuf);
     // Instantiate server object.
     my_server server;
     // Define ip and port pairs to listen on.

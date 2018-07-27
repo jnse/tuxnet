@@ -111,6 +111,8 @@ namespace tuxnet
 
         // Private member functions. ------------------------------------------
 
+        void m_debug_peers();
+
         /**
          * @brief Enables keepalive on the socket if m_keepalive is true.
          * @param fd : File descriptor to enable keepalive for.
@@ -137,12 +139,6 @@ namespace tuxnet
          */
         bool m_monitor_fd(int fd);
 
-        /**
-         * Clean up after peer(s) with given file descriptor.
-         * @param fd File-descriptor of peer to reap.
-         */
-        void m_remove_peer(int fd);
-
         /// Attempts to accept in incomming connection.
         /// @return Returns true on success, false otherwise.
         peer* m_try_accept();
@@ -153,6 +149,12 @@ namespace tuxnet
 
             /// Storage for peer connections.
             lockable<peers> m_peers;
+
+            /**
+             * Clean up after peer(s) with given file descriptor.
+             * @param client: disconnected peer.
+             */
+            void remove_peer(peer* client);
 
         public:
 

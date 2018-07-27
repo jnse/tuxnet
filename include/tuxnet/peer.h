@@ -23,6 +23,12 @@ namespace tuxnet
         PEER_STATE_CLOSED
     };
 
+    /// Peer forward declaration.
+    class peer;
+
+    /// Collection of peers.
+    typedef std::vector<peer*> peers;
+
     /**
      * Peer.
      *
@@ -36,7 +42,7 @@ namespace tuxnet
         /// Peer state.
         std::atomic<peer_state> m_state;
         /// Socket file descriptor.
-        std::atomic<int> m_fd;
+        int m_fd;
         /// Event file descriptor.
         int m_epoll_fd;
         /// IP and port of peer.
@@ -148,9 +154,6 @@ namespace tuxnet
             void disconnect();
 
     };
-
-    /// Collection of peers.
-    typedef std::unordered_map<int, peer*> peers;
 
 }
 

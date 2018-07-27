@@ -5,6 +5,7 @@
 #include "tuxnet/string.h"
 #include "tuxnet/socket_address.h"
 #include "tuxnet/peer.h"
+#include "tuxnet/lockable.h"
 #include "tuxnet/socket.h"
 
 namespace tuxnet
@@ -25,7 +26,7 @@ namespace tuxnet
         /// Keepalive timeout.
         int m_keepalive_timeout;
         /// Listening sockets.
-        sockets m_listen_sockets;
+        lockable<sockets> m_listen_sockets;
 
         // Private member functions. ------------------------------------------
 

@@ -176,6 +176,10 @@ namespace tuxnet
     void socket::close()
     {
         m_state = SOCKET_STATE_CLOSING;
+        if ((m_epoll_fd != 0) and (m_fd != 0))
+        {
+            free_monitor(m_fd, m_epoll_fd);
+        }
         if (m_fd != 0) 
         {
             shutdown(m_fd, SHUT_RDWR);
@@ -183,15 +187,12 @@ namespace tuxnet
         }
         for (auto it = m_peers.get().begin(); it != m_peers.get().end(); ++it)
         {
-            if (it->first != 0)
+            if ((*it) != nullptr)
             {
-                shutdown(it->first, SHUT_RDWR);
+                shutdown((*it)->get_fd(), SHUT_RDWR);
             }
-            if (it->second != nullptr)
-            {
-                delete it->second;
-                it->second = nullptr;
-            }
+            delete (*it);
+            (*it) = nullptr;
         }
         m_peers.atomic([](peers& p){ peers().swap(p); });
         m_state = SOCKET_STATE_CLOSED;
@@ -233,7 +234,6 @@ namespace tuxnet
                 or (not (m_epoll_events[n_event].events & EPOLLIN))
             ) 
             {
-                log::get().error("epoll error on the listening socket.");
                 close();
             }
             else if (event_fd == m_fd)
@@ -248,7 +248,7 @@ namespace tuxnet
                     if (my_peer != nullptr)
                     {
                         m_peers.lock();
-                        m_peers.get().insert({my_peer->get_fd(), my_peer});
+                        m_peers.get().push_back(my_peer);
                         m_peers.unlock();
                         if (m_server != nullptr)
                         {
@@ -263,26 +263,7 @@ namespace tuxnet
                 log::get().error("Event received for unmonitored fd on server socket.");
             }
         }
-        // Reap connections.
-        std::vector<peer*> to_remove;
-        for (auto peer_it = m_peers.get().begin(); 
-            peer_it != m_peers.get().end(); ++peer_it)
-        {
-            peer* cur_peer = (*peer_it).second;
-            if (cur_peer != nullptr)
-            {
-                if (cur_peer->get_state() == PEER_STATE_CLOSING)
-                {
-                    to_remove.push_back(cur_peer);
-                }
-            }
-        }
-        for (auto peer_it = to_remove.begin(); peer_it != to_remove.end();
-            ++peer_it)
-        {
-            m_remove_peer((*peer_it)->get_fd());
-        }
-        return true;
+       return true;
     }
 
     // Private methods. -------------------------------------------------------
@@ -407,34 +388,27 @@ namespace tuxnet
     }
 
     // Remove a peer, cleanup after a client disconnects.
-    void socket::m_remove_peer(int fd)
+    void socket::remove_peer(peer* client)
     {
-        auto client_peer_it =  m_peers.get().find(fd);
-        if (client_peer_it != m_peers.get().end())
+        if (client == nullptr) return;
+        // Fire event.
+        on_disconnect(client);
+        // Find peer.
+        m_peers.lock();
+        auto it = m_peers.get().begin();
+        for (;it != m_peers.get().end();++it)
         {
-            on_disconnect(client_peer_it->second);
-            if (client_peer_it->first != 0)
-            {
-                shutdown(client_peer_it->first, SHUT_RDWR);
-                fd = 0;
-            }
-            if (client_peer_it->second != nullptr)
-            {
-                delete client_peer_it->second;
-                client_peer_it->second = nullptr;
-            }
-            m_peers.lock();
-            m_peers.get().erase(client_peer_it);
-            m_peers.unlock();
+            if ((*it) == client) break;
         }
-        else
+        // Delete peer if found.
+        if (it != m_peers.get().end())
         {
-            log::get().error("Could not find peer to remove.");
-            if (fd != 0)
-            {
-                shutdown(fd, SHUT_RDWR);
-            }
+            m_peers.get().erase(it);
         }
+        m_peers.unlock();
+        // Free peer.
+        delete client;
+        client = nullptr;
     }
 
     // Try to accept an incomming connection.
@@ -498,7 +472,6 @@ namespace tuxnet
 
     void socket::on_receive(peer* client)
     {
-        log::get().debug("socket::on_receive()");
         m_server->on_receive(client);
     }
     

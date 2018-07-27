@@ -39,13 +39,19 @@ namespace tuxnet
     // Destructor.
     peer::~peer()
     {
-        disconnect();
         if (m_poll_thread != nullptr)
         {
-            m_poll_thread->join();
+            delete m_poll_thread;
+            m_poll_thread = nullptr;
         }
+        if ((m_fd != 0) and (m_epoll_fd != 0))
+        {
+            free_monitor(m_fd, m_epoll_fd);
+            m_epoll_fd = 0;
+        } 
         if (m_fd != 0)
         {
+            shutdown(m_fd, SHUT_RDWR);
             ::close(m_fd);
             m_fd = 0;
         }
@@ -81,7 +87,6 @@ namespace tuxnet
     // Sets up peer for event monitoring.
     bool peer::initialize()
     {
-        log::get().debug("peer::initialize()");
         m_epoll_fd = create_event_listener();
         if (m_epoll_fd == -1) return false;
         if (event_monitor(m_fd, m_epoll_fd) != true) return false;
@@ -98,7 +103,6 @@ namespace tuxnet
 
     void peer::poll()
     {
-        log::get().debug("peer::poll()");
         if (m_state != PEER_STATE_CONNECTED) return;
         /// @todo make last argument to epoll_wait configurable (timeout).
         int event_count = epoll_wait(
@@ -108,10 +112,6 @@ namespace tuxnet
             -1);
         if (event_count == -1)
         {
-            std::string errstr = "Epoll error on peer socket : ";
-            errstr += strerror(errno);
-            errstr += "(errno=" + std::to_string(errno) + ")";
-            log::get().error(errstr);
             disconnect();
             return;
         }
@@ -124,7 +124,6 @@ namespace tuxnet
                 or (not (m_epoll_events[n_event].events & EPOLLIN))
             )
             {
-                log::get().error("epoll error on peer socket.");
                 disconnect();
                 return;
             }
@@ -274,7 +273,6 @@ namespace tuxnet
     // Reads everything the client sent.
     std::string peer::read_all()
     {
-        log::get().debug("peer::read_all()");
         if (m_state != PEER_STATE_CONNECTED) return "";
         char buffer;
         std::string result;
@@ -286,7 +284,11 @@ namespace tuxnet
         while (true)
         {
             if (m_state != PEER_STATE_CONNECTED) return result;
-            int count = read(m_fd, &buffer, 1 * sizeof(char));
+            int count = recv(
+                m_fd, 
+                &buffer, 
+                sizeof(buffer) * sizeof(char),
+                MSG_DONTWAIT);
             if (count > 0)
             {
                 if (buffer == 0) 
@@ -340,7 +342,16 @@ namespace tuxnet
     // Close connection to this peer.
     void peer::disconnect()
     {
+        if (m_state == PEER_STATE_CLOSING) return;
         m_state = PEER_STATE_CLOSING;
+        if (m_poll_thread != nullptr)
+        {
+            if (m_poll_thread->joinable() == true)
+            {
+                m_poll_thread->join();
+            }
+        }
+        m_socket->remove_peer(this);
     }
 
 }
