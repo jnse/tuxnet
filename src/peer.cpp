@@ -3,24 +3,30 @@
 #include <string.h>
 #include <thread>
 #include "tuxnet/log.h"
-#include "tuxnet/peer.h"
+#include "tuxnet/event.h"
 #include "tuxnet/socket_address.h"
 #include "tuxnet/socket.h"
+#include "tuxnet/peer.h"
+#include "tuxnet/config.h"
 
 namespace tuxnet
 {
 
     // IPV4 constructor.
     peer::peer(int fd, const sockaddr_in& in_addr, socket* const parent) : 
-        m_fd(fd), m_socket(parent), m_state(PEER_STATE_UNINITIALIZED)
+        m_fd(fd), m_epoll_fd(0), m_poll_thread(nullptr),
+        m_socket(parent), 
+        m_state(PEER_STATE_UNINITIALIZED)
     {
         m_saddr = dynamic_cast<socket_address*>(
             new ip4_socket_address(in_addr)
         );
-        m_state = PEER_STATE_CONNECTED;
+        m_epoll_events = new epoll_event[
+            config::get().get_listen_socket_epoll_max_events()]();
     }
 
     // IPV6 constructor.
+    /// @todo fixme
     peer::peer(int fd, const sockaddr_in6& in_addr, socket* const parent) : 
         m_fd(fd), m_socket(parent), m_state(PEER_STATE_UNINITIALIZED)
     {
@@ -33,6 +39,11 @@ namespace tuxnet
     // Destructor.
     peer::~peer()
     {
+        disconnect();
+        if (m_poll_thread != nullptr)
+        {
+            m_poll_thread->join();
+        }
         if (m_fd != 0)
         {
             ::close(m_fd);
@@ -67,6 +78,67 @@ namespace tuxnet
 
     // Methods. ---------------------------------------------------------------
 
+    // Sets up peer for event monitoring.
+    bool peer::initialize()
+    {
+        log::get().debug("peer::initialize()");
+        m_epoll_fd = create_event_listener();
+        if (m_epoll_fd == -1) return false;
+        if (event_monitor(m_fd, m_epoll_fd) != true) return false;
+        m_state = PEER_STATE_CONNECTED;
+        m_poll_thread = new std::thread([=](){
+            while(m_state == PEER_STATE_CONNECTED)
+            {
+                poll();
+            }
+        });
+        m_poll_thread->detach();
+        return true;
+    }
+
+    void peer::poll()
+    {
+        log::get().debug("peer::poll()");
+        if (m_state != PEER_STATE_CONNECTED) return;
+        /// @todo make last argument to epoll_wait configurable (timeout).
+        int event_count = epoll_wait(
+            m_epoll_fd, 
+            m_epoll_events, 
+            config::get().get_listen_socket_epoll_max_events(), 
+            -1);
+        if (event_count == -1)
+        {
+            std::string errstr = "Epoll error on peer socket : ";
+            errstr += strerror(errno);
+            errstr += "(errno=" + std::to_string(errno) + ")";
+            log::get().error(errstr);
+            disconnect();
+            return;
+        }
+        for (int n_event = 0 ; n_event < event_count ; ++n_event)
+        {
+            int event_fd = m_epoll_events[n_event].data.fd;
+            if (
+                (m_epoll_events[n_event].events & EPOLLERR)
+                or (m_epoll_events[n_event].events & EPOLLHUP)
+                or (not (m_epoll_events[n_event].events & EPOLLIN))
+            )
+            {
+                log::get().error("epoll error on peer socket.");
+                disconnect();
+                return;
+            }
+            if (event_fd == m_fd)
+            {
+                m_socket->on_receive(this);
+            }
+            else
+            {
+                log::get().error("fd mismatch on peer socket.");
+            }
+        }
+    }
+
     // Reads up to a given number of characters into string.
     std::string peer::read_string(int characters)
     {
@@ -82,7 +154,11 @@ namespace tuxnet
         while (read_so_far < characters)
         {
             if (m_state != PEER_STATE_CONNECTED) return result;
-            int count = read(m_fd, &buffer, sizeof(buffer) * sizeof(char));
+            int count = recv(
+                m_fd, 
+                &buffer, 
+                sizeof(buffer) * sizeof(char),
+                MSG_DONTWAIT);
             if (count > 0)
             {
                 read_so_far += count;
@@ -198,6 +274,7 @@ namespace tuxnet
     // Reads everything the client sent.
     std::string peer::read_all()
     {
+        log::get().debug("peer::read_all()");
         if (m_state != PEER_STATE_CONNECTED) return "";
         char buffer;
         std::string result;
@@ -243,16 +320,21 @@ namespace tuxnet
     {
         if (m_state != PEER_STATE_CONNECTED) return;
         if (m_fd == 0) return;
-        std::thread([=](){
-            if (::send(m_fd, text.c_str(), text.length(), MSG_NOSIGNAL) 
+        if (::send(m_fd, text.c_str(), text.length(), MSG_NOSIGNAL) 
                 == -1)
+        {
+            if (errno == EPIPE)
             {
-                std::string errstr = "Could not write to peer: ";
-                errstr += strerror(errno);
-                errstr += " (errno=" + std::to_string(errno) + ")";
-                log::get().error(errstr);
+                // Broken pipe. Lost connection mid-write.
+                disconnect();
+                return;
             }
-        }).detach();
+            std::string errstr = "Could not write to peer: ";
+            errstr += strerror(errno);
+            errstr += " (errno=" + std::to_string(errno) + ")";
+            log::get().error(errstr);
+            disconnect();
+        }
     }
 
     // Close connection to this peer.
