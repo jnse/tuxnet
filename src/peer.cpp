@@ -83,10 +83,6 @@ namespace tuxnet
         return m_state;
     }
 
-    void peer::m_poll_thread(peer* self)
-    {
-   }
-
     // Methods. ---------------------------------------------------------------
 
     // Sets up peer for event monitoring.

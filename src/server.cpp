@@ -10,6 +10,7 @@
 #include <stdexcept>
 #include <system_error>
 #include <future>
+#include "tuxnet/config.h"
 #include "tuxnet/string.h"
 #include "tuxnet/server.h"
 #include "tuxnet/socket.h"
@@ -116,16 +117,32 @@ namespace tuxnet
     bool server::poll()
     {
         bool result = true;
-        std::vector<std::thread*> threads; 
-        m_listen_sockets.lock();
-        for (auto it = m_listen_sockets.get().begin(); 
-            it != m_listen_sockets.get().end(); ++it)
+        // Determine number of server-threads to spin up.
+        int num_threads = m_listen_sockets.get().size();
+        if (num_threads < config::get().get_server_min_threads())
         {
-            socket* cur_sock = (*it);
+            num_threads = config::get().get_server_min_threads();
+        }
+        if (num_threads > config::get().get_server_max_threads())
+        {
+            num_threads = config::get().get_server_max_threads();
+        }
+        if (num_threads < m_listen_sockets.get().size())
+            num_threads = m_listen_sockets.get().size();
+        log::get().info("Starting "+std::to_string(num_threads)+" server threads.");
+        std::vector<std::thread*> threads;
+        sockets::iterator sock_it = m_listen_sockets.get().begin();
+        for (int thread_id = 0; thread_id < num_threads; ++thread_id)
+        {
+            if (sock_it == m_listen_sockets.get().end())
+            {
+                sock_it = m_listen_sockets.get().begin();
+            }
+            socket* cur_sock = (*sock_it);
             if (cur_sock == nullptr) continue;
             threads.push_back(new std::thread(m_poll_single, cur_sock));
+            sock_it++;
         }
-        m_listen_sockets.unlock();
         for (auto it = threads.begin(); it != threads.end(); ++it)
         {
             if ((*it) == nullptr) continue;

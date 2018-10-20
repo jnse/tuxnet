@@ -32,18 +32,28 @@ namespace tuxnet
      * when writing:
      *
      * ```
-     * typedef std::vector<std::string> strvector;
-     * lockable<strvector> my_strings;
-     * my_strings.get().push_back("foo");
-     * my_strings.get().push_back("bar");
-     * 
-     * // Say that this is a function called from a thread that gets passed
-     * // the above my_strings object.
      *
-     * void do_work(const lockable<strvector>& the_strings)
+     * typedef std::vector<std::string> strvector;
+     *
+     * class string_factory
      * {
-     *     // Add another string in a way that is thread-safe.
-     *     the_strings.atomic([](strvector& s){ s.push_back("baz") });
+     *
+     *     lockable<strvector> my_strings;
+     *
+     *     public:
+     *
+     *         // constructor
+     *         string_factory() 
+     *         {
+     *             my_strings.get().push_back("foo");
+     *             my_strings.get().push_back("bar");
+     *         }
+     *
+     *         // Imagine the function below is called from a thread.
+     *         void erase_all()
+     *         {
+     *             my_strings.atomic([](strvector& s){ strvector().swap(s) });
+     *         }
      * }
      *
      * ```
