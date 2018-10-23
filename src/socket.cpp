@@ -21,9 +21,9 @@ namespace tuxnet
 
     // Constructor with local/remote saddrs.
     socket::socket(const layer4_protocol& proto) :
-        m_epoll_events(nullptr), 
-        m_epoll_fd(0), 
-        m_fd(0),
+        m_epoll_listener_events(nullptr), 
+        m_epoll_listener_fd(0), 
+        m_listen_socket_fd(0),
         m_keepalive(true),
         m_keepalive_interval(5),
         m_keepalive_retry(3),
@@ -35,8 +35,8 @@ namespace tuxnet
         m_server(nullptr),
         m_state(SOCKET_STATE_UNINITIALIZED)
     {
-        m_fd = ::socket(AF_INET, SOCK_STREAM, layer4_to_proto(proto));
-        m_epoll_events = new epoll_event[
+        m_listen_socket_fd = ::socket(AF_INET, SOCK_STREAM, layer4_to_proto(proto));
+        m_epoll_listener_events = new epoll_event[
             config::get().get_listen_socket_epoll_max_events()]();
     }
 
@@ -44,9 +44,9 @@ namespace tuxnet
     socket::~socket()
     {
         close();
-        if (m_epoll_events != nullptr)
+        if (m_epoll_listener_events != nullptr)
         {
-            delete[] m_epoll_events;
+            delete[] m_epoll_listener_events;
         }
     }
 
@@ -146,7 +146,7 @@ namespace tuxnet
         /**
          * @todo : configurable backlog with net.core.somaxconn as default.
          */
-        if (::listen(m_fd,5) == -1)
+        if (::listen(m_listen_socket_fd,5) == -1)
         {
             std::string errstr = "Could not listen on socket (error ";
             errstr += std::to_string(errno) + " : ";
@@ -156,14 +156,14 @@ namespace tuxnet
             return false;
         }
         // Make socket non-blocking.
-        if (m_make_fd_nonblocking(m_fd) != true)
+        if (m_make_fd_nonblocking(m_listen_socket_fd) != true)
         {
             return false;
         }
         // Set up epoll notifications.
-        m_epoll_fd = create_event_listener();
-        if (m_epoll_fd == -1) return false; 
-        if (event_monitor(m_fd, m_epoll_fd) == true)
+        m_epoll_listener_fd = create_event_listener();
+        if (m_epoll_listener_fd == -1) return false; 
+        if (event_monitor(m_listen_socket_fd, m_epoll_listener_fd) == true)
         {
             m_state = SOCKET_STATE_LISTENING;
             m_server = server_object;
@@ -176,14 +176,14 @@ namespace tuxnet
     void socket::close()
     {
         m_state = SOCKET_STATE_CLOSING;
-        if ((m_epoll_fd != 0) and (m_fd != 0))
+        if ((m_epoll_listener_fd != 0) and (m_listen_socket_fd != 0))
         {
-            free_monitor(m_fd, m_epoll_fd);
+            free_monitor(m_listen_socket_fd, m_epoll_listener_fd);
         }
-        if (m_fd != 0) 
+        if (m_listen_socket_fd != 0) 
         {
-            shutdown(m_fd, SHUT_RDWR);
-            m_fd = 0;
+            shutdown(m_listen_socket_fd, SHUT_RDWR);
+            m_listen_socket_fd = 0;
         }
         for (auto it = m_peers.get().begin(); it != m_peers.get().end(); ++it)
         {
@@ -221,22 +221,22 @@ namespace tuxnet
          * loop through them to handle them. */
         /// @todo make last argument to epoll_wait configurable (timeout).
         int event_count = epoll_wait(
-            m_epoll_fd, 
-            m_epoll_events, 
+            m_epoll_listener_fd, 
+            m_epoll_listener_events, 
             config::get().get_listen_socket_epoll_max_events(), 
             -1);
         for (int n_event = 0 ; n_event < event_count ; ++n_event)
         {
-            int event_fd = m_epoll_events[n_event].data.fd;
+            int event_fd = m_epoll_listener_events[n_event].data.fd;
             if (
-                (m_epoll_events[n_event].events & EPOLLERR)
-                or (m_epoll_events[n_event].events & EPOLLHUP)
-                or (not (m_epoll_events[n_event].events & EPOLLIN))
+                (m_epoll_listener_events[n_event].events & EPOLLERR)
+                or (m_epoll_listener_events[n_event].events & EPOLLHUP)
+                or (not (m_epoll_listener_events[n_event].events & EPOLLIN))
             ) 
             {
                 close();
             }
-            else if (event_fd == m_fd)
+            else if (event_fd == m_listen_socket_fd)
             {
                 /* An event came in on our socket.
                  * This is typically a connection attempt.
@@ -332,7 +332,8 @@ namespace tuxnet
             const ip4_socket_address*>(m_local_saddr);
         assert(p4saddr);
         const sockaddr_in saddr = p4saddr->get_sockaddr_in();
-        int result = ::bind(m_fd, reinterpret_cast<const sockaddr*>(&saddr), 
+        int result = ::bind(m_listen_socket_fd, 
+            reinterpret_cast<const sockaddr*>(&saddr), 
             sizeof(saddr));
         if (result == -1)
         {
@@ -344,7 +345,7 @@ namespace tuxnet
             log::get().error(errstr);
             return false;
         }
-        return m_make_fd_nonblocking(m_fd);
+        return m_make_fd_nonblocking(m_listen_socket_fd);
     }
 
     // Bind socket to an IPv6 address.
@@ -419,7 +420,7 @@ namespace tuxnet
             sockaddr_in in_addr = {};
             socklen_t in_len = sizeof(sockaddr_in);
             int in_fd = accept(
-                m_fd, 
+                m_listen_socket_fd, 
                 reinterpret_cast<sockaddr*>(&in_addr), 
                 &in_len
             );

@@ -70,14 +70,14 @@ namespace tuxnet
 
         // Private member variables. ------------------------------------------
 
-        /// epoll event buffer.
-        epoll_event* m_epoll_events;
+        /// epoll event buffer for events on the listening socket.
+        epoll_event* m_epoll_listener_events;
 
-        /// Stores epoll file descriptor for polling the socket.
-        int m_epoll_fd;
+        /// Stores epoll file descriptor for polling the listening socket.
+        int m_epoll_listener_fd;
 
         /// Stores file descriptor for the socket.
-        std::atomic<int> m_fd;
+        std::atomic<int> m_listen_socket_fd;
 
         /// Use (or don't) keepalive for this socket.
         bool m_keepalive;
