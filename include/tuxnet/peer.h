@@ -36,14 +36,10 @@ namespace tuxnet
     class peer
     {
 
-        /// epoll event buffer.
-        epoll_event* m_epoll_events;
         /// Peer state.
         std::atomic<peer_state> m_state;
         /// Socket file descriptor.
         int m_fd;
-        /// Event file descriptor.
-        int m_epoll_fd;
         /// IP and port of peer.
         socket_address* m_saddr;
         /// Pointer to parent socket.

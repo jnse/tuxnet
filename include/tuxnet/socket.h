@@ -8,6 +8,7 @@
 #include <atomic>
 #include <sys/epoll.h>
 #include <vector>
+#include <map>
 #include <unordered_map>
 #include "tuxnet/socket_address.h"
 #include "tuxnet/protocol.h"
@@ -69,6 +70,12 @@ namespace tuxnet
         friend class peer;
 
         // Private member variables. ------------------------------------------
+
+        /// epoll event buffer for events on client sockets.
+        epoll_event* m_epoll_client_events;
+
+        /// Stores epoll file descriptor for polling client sockets.
+        int m_epoll_client_fd;
 
         /// epoll event buffer for events on the listening socket.
         epoll_event* m_epoll_listener_events;
@@ -147,8 +154,8 @@ namespace tuxnet
 
         protected:
 
-            /// Storage for peer connections.
-            lockable<peers> m_peers;
+            /// Storage for peer connections, mapped by fd.
+            lockable< std::map<int,peer*> > m_peers;
 
             /**
              * Clean up after peer(s) with given file descriptor.
@@ -170,6 +177,18 @@ namespace tuxnet
             ~socket();
 
             // Getters / setters. ----------------------------------------------
+
+            /**
+             * @brief Get client epoll event handler.
+             * @return Returns the epoll event buffer array if one is 
+             *         initialized (returns nullptr if not).
+             */
+            epoll_event* get_client_epoll_event_handler() const;
+
+            /**
+             * @brief Get client epoll event file descriptor.
+             */
+            const int get_client_epoll_fd() const;
 
             /**
              * @brief Gets whether or not keepalive is enabled for this socket.
@@ -373,7 +392,14 @@ namespace tuxnet
              * @brief Checks if any events happened on the socket.
              * @return Returns true on success, false on error.
              */
-            bool poll();
+            bool poll_server();
+
+            /**
+             * @brief Checks if there is any incomming client data
+             *        events.
+             * @return Returns true on success, false on error.
+             */
+            bool poll_clients();
 
         // Events. ------------------------------------------------------------
 

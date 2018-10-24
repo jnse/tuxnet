@@ -51,7 +51,11 @@ namespace tuxnet
     bool server::m_poll_single(socket* const sock)
     {
         if (sock == nullptr) return false;
-        while(sock->poll() == true){ }
+        while(true)
+        {
+            if (sock->poll_server() != true) break;
+            if (sock->poll_clients() != true) break;
+        }
         return true;
     }
 

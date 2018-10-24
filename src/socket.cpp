@@ -21,6 +21,8 @@ namespace tuxnet
 
     // Constructor with local/remote saddrs.
     socket::socket(const layer4_protocol& proto) :
+        m_epoll_client_events(nullptr),
+        m_epoll_client_fd(0),
         m_epoll_listener_events(nullptr), 
         m_epoll_listener_fd(0), 
         m_listen_socket_fd(0),
@@ -38,6 +40,9 @@ namespace tuxnet
         m_listen_socket_fd = ::socket(AF_INET, SOCK_STREAM, layer4_to_proto(proto));
         m_epoll_listener_events = new epoll_event[
             config::get().get_listen_socket_epoll_max_events()]();
+        /// @TODO create separate config option for client max events.
+        m_epoll_client_events = new epoll_event[
+            config::get().get_listen_socket_epoll_max_events()]();
     }
 
     // Destructor.
@@ -48,9 +53,25 @@ namespace tuxnet
         {
             delete[] m_epoll_listener_events;
         }
+        if (m_epoll_client_events != nullptr)
+        {
+            delete[] m_epoll_client_events;
+        }
     }
 
     // Getters / setters. -----------------------------------------------------
+
+    // Get client epoll event handler.
+    epoll_event* socket::get_client_epoll_event_handler() const
+    {
+        return m_epoll_client_events;
+    }
+
+    // Get client epoll event file descriptor.
+    const int socket::get_client_epoll_fd() const
+    {
+        return m_epoll_client_fd;
+    }
 
     // Gets whether or not keepalive is enabled for this socket.
     bool socket::get_keepalive() const
@@ -162,7 +183,9 @@ namespace tuxnet
         }
         // Set up epoll notifications.
         m_epoll_listener_fd = create_event_listener();
-        if (m_epoll_listener_fd == -1) return false; 
+        m_epoll_client_fd = create_event_listener();
+        if (m_epoll_listener_fd == -1) return false;
+        if (m_epoll_client_fd == -1) return false;
         if (event_monitor(m_listen_socket_fd, m_epoll_listener_fd) == true)
         {
             m_state = SOCKET_STATE_LISTENING;
@@ -187,14 +210,17 @@ namespace tuxnet
         }
         for (auto it = m_peers.get().begin(); it != m_peers.get().end(); ++it)
         {
-            if ((*it) != nullptr)
+            peer* p = (*it).second;
+            if (p != nullptr)
             {
-                shutdown((*it)->get_fd(), SHUT_RDWR);
+                shutdown(p->get_fd(), SHUT_RDWR);
             }
-            delete (*it);
-            (*it) = nullptr;
+            delete p;
+            (*it).second = nullptr;
         }
-        m_peers.atomic([](peers& p){ peers().swap(p); });
+        m_peers.atomic([](std::map<int,peer*>& pm){
+            pm.clear();
+        });
         m_state = SOCKET_STATE_CLOSED;
     }
 
@@ -204,8 +230,59 @@ namespace tuxnet
         client->disconnect();
     }
 
-    // Checks for any events on the socket.
-    bool socket::poll()
+    // Checks for any incomming client events.
+    bool socket::poll_clients()
+    {
+        if ((m_epoll_client_fd == 0) or (m_epoll_client_events == nullptr))
+            return false;
+        /// @todo make last argument to epoll_wait configurable (timeout).
+        int event_count = epoll_wait(
+            m_epoll_client_fd,
+            m_epoll_listener_events,
+            config::get().get_listen_socket_epoll_max_events(), 
+            -1);
+        if (event_count == -1)
+        {
+            /// @TODO disconnect peer? (which one?!)
+        }
+        for (int n_event = 0 ; n_event < event_count ; ++n_event)
+        {
+            int event_fd = m_epoll_client_events[n_event].data.fd;
+            // See if we can find a peer who owns this fd.
+            auto conn_it = m_peers.get().find(event_fd);
+            if (conn_it == m_peers.get().end())
+            {
+                // wtf?
+                /*
+                log::get().error(
+                    "Received event for a peer "
+                    "I don't know anything about.");
+                return false;
+                */
+            }
+            peer* p = (*conn_it).second;
+            if (p == nullptr)
+            {
+                // also wtf?
+                log::get().error(
+                    "Received event for a peer"
+                    " that has a nullptr.");
+                return false;
+            }
+            if (
+                (m_epoll_client_events[n_event].events & EPOLLERR)
+                or (m_epoll_client_events[n_event].events & EPOLLHUP)
+                or (not (m_epoll_client_events[n_event].events & EPOLLIN))
+            )
+            {
+                p->disconnect();
+            }
+            on_receive(p);
+        }
+    }
+
+    // Checks for any incomming server listening socket events.
+    bool socket::poll_server()
     {
         if (
             (m_state != SOCKET_STATE_STATELESS)
@@ -248,7 +325,7 @@ namespace tuxnet
                     if (my_peer != nullptr)
                     {
                         m_peers.lock();
-                        m_peers.get().push_back(my_peer);
+                        m_peers.get().insert(std::make_pair(my_peer->get_fd(), my_peer));
                         m_peers.unlock();
                         if (m_server != nullptr)
                         {
@@ -399,7 +476,7 @@ namespace tuxnet
         auto it = m_peers.get().begin();
         for (;it != m_peers.get().end();++it)
         {
-            if ((*it) == client) break;
+            if ((*it).second == client) break;
         }
         // Delete peer if found.
         if (it != m_peers.get().end())
