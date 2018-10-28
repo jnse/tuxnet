@@ -78,6 +78,9 @@ namespace tuxnet
         int epoll_fd = m_socket->get_client_epoll_fd();
         if (epoll_fd <= 0) return false;
         if (event_monitor(m_fd, epoll_fd) != true) return false;
+        log::get().debug(
+            "Created peer event monitor (sock_fd=" + std::to_string(m_fd)
+            + ", epoll_fd=" + std::to_string(epoll_fd) + ")");
         m_state = PEER_STATE_CONNECTED;
         std::thread thread([this](){
             while (this->m_state == PEER_STATE_CONNECTED)
@@ -91,43 +94,13 @@ namespace tuxnet
 
     void peer::poll()
     {
+        /*
         int epoll_fd = m_socket->get_client_epoll_fd();
-        epoll_event* event_buffer = m_socket->get_client_epoll_event_handler();
+        lockable<epoll_event** event_buffer = m_socket->get_client_epoll_event_handler();
         if (epoll_fd == 0) return;
         if (event_buffer == nullptr) return;
         if (m_state != PEER_STATE_CONNECTED) return;
-        /// @todo make last argument to epoll_wait configurable (timeout).
-        int event_count = epoll_wait(
-            epoll_fd,
-            event_buffer,
-            config::get().get_listen_socket_epoll_max_events(), 
-            -1);
-        if (event_count == -1)
-        {
-            disconnect();
-            return;
-        }
-        for (int n_event = 0 ; n_event < event_count ; ++n_event)
-        {
-            int event_fd = event_buffer[n_event].data.fd;
-            if (
-                (event_buffer[n_event].events & EPOLLERR)
-                or (event_buffer[n_event].events & EPOLLHUP)
-                or (not (event_buffer[n_event].events & EPOLLIN))
-            )
-            {
-                disconnect();
-                return;
-            }
-            if (event_fd == m_fd)
-            {
-                m_socket->on_receive(this);
-            }
-            else
-            {
-                log::get().error("fd mismatch on peer socket.");
-            }
-        }
+        */
     }
 
     // Reads up to a given number of characters into string.

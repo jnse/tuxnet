@@ -41,8 +41,9 @@ namespace tuxnet
         m_epoll_listener_events = new epoll_event[
             config::get().get_listen_socket_epoll_max_events()]();
         /// @TODO create separate config option for client max events.
-        m_epoll_client_events = new epoll_event[
-            config::get().get_listen_socket_epoll_max_events()]();
+        epoll_event* event_buffer = new epoll_event[
+            config::get().get_listen_socket_epoll_max_events()];
+        m_epoll_client_events = new lockable<epoll_event*>(event_buffer);
     }
 
     // Destructor.
@@ -62,9 +63,9 @@ namespace tuxnet
     // Getters / setters. -----------------------------------------------------
 
     // Get client epoll event handler.
-    epoll_event* socket::get_client_epoll_event_handler() const
+    const lockable<epoll_event*> & socket::get_client_epoll_event_handler() const
     {
-        return m_epoll_client_events;
+        return std::cref(*m_epoll_client_events);
     }
 
     // Get client epoll event file descriptor.
@@ -188,6 +189,11 @@ namespace tuxnet
         if (m_epoll_client_fd == -1) return false;
         if (event_monitor(m_listen_socket_fd, m_epoll_listener_fd) == true)
         {
+            log::get().debug(
+                "Created server event monitor (sock_fd="
+                + std::to_string(m_listen_socket_fd) + ", epoll_fd="
+                + std::to_string(m_epoll_listener_fd) + ")"
+            );
             m_state = SOCKET_STATE_LISTENING;
             m_server = server_object;
             return true;
@@ -233,46 +239,49 @@ namespace tuxnet
     // Checks for any incomming client events.
     bool socket::poll_clients()
     {
-        if ((m_epoll_client_fd == 0) or (m_epoll_client_events == nullptr))
-            return false;
+        int efd = m_epoll_client_fd;
+        epoll_event* event_buffer = m_epoll_client_events->get();
+        assert(efd != 0);
+        assert(event_buffer != nullptr);
         /// @todo make last argument to epoll_wait configurable (timeout).
+        m_epoll_client_events->lock();
         int event_count = epoll_wait(
             m_epoll_client_fd,
-            m_epoll_listener_events,
+            event_buffer,
             config::get().get_listen_socket_epoll_max_events(), 
             -1);
         if (event_count == -1)
         {
-            /// @TODO disconnect peer? (which one?!)
+            log::get().debug(std::string("Epoll error: ") + strerror(errno));
         }
+        m_epoll_client_events->unlock();
         for (int n_event = 0 ; n_event < event_count ; ++n_event)
         {
-            int event_fd = m_epoll_client_events[n_event].data.fd;
+            int event_fd = event_buffer[n_event].data.fd;
             // See if we can find a peer who owns this fd.
             auto conn_it = m_peers.get().find(event_fd);
             if (conn_it == m_peers.get().end())
             {
                 // wtf?
-                /*
-                log::get().error(
+                log::get().debug(
                     "Received event for a peer "
-                    "I don't know anything about.");
-                return false;
-                */
+                    "I don't know anything about. (fd="
+                    + std::to_string(event_fd) + ", n_event="
+                    + std::to_string(n_event) + ")");
+                continue;
             }
             peer* p = (*conn_it).second;
             if (p == nullptr)
             {
-                // also wtf?
-                log::get().error(
-                    "Received event for a peer"
-                    " that has a nullptr.");
-                return false;
+                // should not happen.
+                log::get().debug(
+                    "Received event for a peer with a nullptr handle.");
+                continue;
             }
             if (
-                (m_epoll_client_events[n_event].events & EPOLLERR)
-                or (m_epoll_client_events[n_event].events & EPOLLHUP)
-                or (not (m_epoll_client_events[n_event].events & EPOLLIN))
+                (event_buffer[n_event].events & EPOLLERR)
+                or (event_buffer[n_event].events & EPOLLHUP)
+                or (not (event_buffer[n_event].events & EPOLLIN))
             )
             {
                 p->disconnect();

@@ -72,10 +72,10 @@ namespace tuxnet
         // Private member variables. ------------------------------------------
 
         /// epoll event buffer for events on client sockets.
-        epoll_event* m_epoll_client_events;
+        lockable<epoll_event*>* m_epoll_client_events;
 
         /// Stores epoll file descriptor for polling client sockets.
-        int m_epoll_client_fd;
+        std::atomic<int> m_epoll_client_fd;
 
         /// epoll event buffer for events on the listening socket.
         epoll_event* m_epoll_listener_events;
@@ -183,7 +183,7 @@ namespace tuxnet
              * @return Returns the epoll event buffer array if one is 
              *         initialized (returns nullptr if not).
              */
-            epoll_event* get_client_epoll_event_handler() const;
+            const lockable<epoll_event*> & get_client_epoll_event_handler() const;
 
             /**
              * @brief Get client epoll event file descriptor.
