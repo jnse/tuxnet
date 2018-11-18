@@ -15,15 +15,11 @@ namespace tuxnet
 
     // IPV4 constructor.
     peer::peer(int fd, const sockaddr_in& in_addr, socket* const parent) : 
-        m_fd(fd), m_epoll_fd(0), 
-        m_socket(parent), 
-        m_state(PEER_STATE_UNINITIALIZED)
+        m_fd(fd), m_socket(parent), m_state(PEER_STATE_UNINITIALIZED)
     {
         m_saddr = dynamic_cast<socket_address*>(
             new ip4_socket_address(in_addr)
         );
-        m_epoll_events = new epoll_event[
-            config::get().get_listen_socket_epoll_max_events()]();
     }
 
     // IPV6 constructor.
@@ -40,11 +36,6 @@ namespace tuxnet
     // Destructor.
     peer::~peer()
     {
-        if ((m_fd != 0) and (m_epoll_fd != 0))
-        {
-            free_monitor(m_fd, m_epoll_fd);
-            m_epoll_fd = 0;
-        } 
         if (m_fd != 0)
         {
             shutdown(m_fd, SHUT_RDWR);
@@ -55,11 +46,6 @@ namespace tuxnet
         {
             delete m_saddr;
             m_saddr = nullptr;
-        }
-        if (m_epoll_events != nullptr)
-        {
-            delete[] m_epoll_events;
-            m_epoll_events = nullptr;
         }
     }
 
@@ -88,9 +74,13 @@ namespace tuxnet
     // Sets up peer for event monitoring.
     bool peer::initialize()
     {
-        m_epoll_fd = create_event_listener();
-        if (m_epoll_fd == -1) return false;
-        if (event_monitor(m_fd, m_epoll_fd) != true) return false;
+        if (m_socket == nullptr) return false;
+        int epoll_fd = m_socket->get_client_epoll_fd();
+        if (epoll_fd <= 0) return false;
+        if (event_monitor(m_fd, epoll_fd) != true) return false;
+        log::get().debug(
+            "Created peer event monitor (sock_fd=" + std::to_string(m_fd)
+            + ", epoll_fd=" + std::to_string(epoll_fd) + ")");
         m_state = PEER_STATE_CONNECTED;
         std::thread thread([this](){
             while (this->m_state == PEER_STATE_CONNECTED)
@@ -104,39 +94,13 @@ namespace tuxnet
 
     void peer::poll()
     {
+        /*
+        int epoll_fd = m_socket->get_client_epoll_fd();
+        lockable<epoll_event** event_buffer = m_socket->get_client_epoll_event_handler();
+        if (epoll_fd == 0) return;
+        if (event_buffer == nullptr) return;
         if (m_state != PEER_STATE_CONNECTED) return;
-        /// @todo make last argument to epoll_wait configurable (timeout).
-        int event_count = epoll_wait(
-            m_epoll_fd, 
-            m_epoll_events, 
-            config::get().get_listen_socket_epoll_max_events(), 
-            -1);
-        if (event_count == -1)
-        {
-            disconnect();
-            return;
-        }
-        for (int n_event = 0 ; n_event < event_count ; ++n_event)
-        {
-            int event_fd = m_epoll_events[n_event].data.fd;
-            if (
-                (m_epoll_events[n_event].events & EPOLLERR)
-                or (m_epoll_events[n_event].events & EPOLLHUP)
-                or (not (m_epoll_events[n_event].events & EPOLLIN))
-            )
-            {
-                disconnect();
-                return;
-            }
-            if (event_fd == m_fd)
-            {
-                m_socket->on_receive(this);
-            }
-            else
-            {
-                log::get().error("fd mismatch on peer socket.");
-            }
-        }
+        */
     }
 
     // Reads up to a given number of characters into string.
